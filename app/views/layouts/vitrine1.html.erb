@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Bisso Fragrance - L'Art de la Parfumerie</title>
+  <title>Bisso Fragrance - Symphonie Olfactive</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <%= stylesheet_link_tag "vitrine1","brands", "category_cards","gender_category_cards","vitrine_parfum_detail","cart_styles","collection_listing_styles","all_perfumes_listing","search","contact","logo_links","all_brands","footer_enhanced","checkout", media: "all" %>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <%= stylesheet_link_tag "vitrine1", "brands", "category_cards", "gender_category_cards", "vitrine_parfum_detail", "cart_styles", "collection_listing_styles", "all_perfumes_listing", "search", "contact", "logo_links", "all_brands", "footer_enhanced", "checkout", media: "all" %>
   <%= javascript_importmap_tags %>
   <%= javascript_include_tag "application", type: "module" %>
   <%= favicon_link_tag asset_path('favicon_black.png') %>
@@ -16,17 +16,22 @@
 </head>
 
 <body data-controller="cart">
-  <header class="header" data-controller="header-scroll">
-    <nav data-controller="vitrine1" class="nav">
-        <%= link_to root_path, class: "logo" do %>
-          <%= image_tag "bisso fragrance new logo transparent no letters.png", alt: "Bisso Fragrance", class: "logo-icon" %>
-          <span class="logo-text">Bisso Fragrance</span>
-        <% end %>
+  <header class="header header-artistic" data-controller="header-scroll header-artistic">
+    <nav data-controller="vitrine1 vitrine3" class="nav nav-artistic">
+      <%= link_to root_path, class: "logo logo-artistic" do %>
+        <div class="logo-emblem">
+          <div class="emblem-inner"></div>
+        </div>
+        <div class="logo-text">
+         <!--Logo à inserer ici-->
+          <span class="brand-name logo-text">100%</span>
+          <span class="brand-tagline">Parfum</span>
+        </div>
+      <% end %>
       
-      <ul data-vitrine1-target="menu" class="menu">
+      <ul data-vitrine1-target="menu" data-vitrine3-target="menu" class="menu menu-artistic">
         <li class="menu-mobile-search">
           <div class="mobile-search" data-controller="search" data-search-open-value="true">
-            <!-- Champ de recherche mobile (utilise ton contrôleur search existant) -->
             <div class="mobile-search-input-area">
               <input type="text"
                     name="mobile-search"
@@ -35,30 +40,32 @@
                     data-search-target="input"
                     data-action="input->search#search" />
             </div>
-
-            <!-- Résultats (on réutilise tes mêmes cibles Stimulus) -->
             <div class="inline-search-results-dropdown" data-search-target="results">
               <div data-search-target="perfumeResults"></div>
               <div data-search-target="brandResults"></div>
             </div>
           </div>
         </li>
-
         <li><%= link_to "Accueil", root_path, class: "nav-link #{'active' if current_page?(root_path)}" %></li>
-        <li><%= link_to "Parfums", vitrine_all_perfumes_path, class: "nav-link #{'active' if current_page?(vitrine_all_perfumes_path)}" %></li>
+        <li class="dropdown">
+          <%= link_to "Parfums", vitrine_all_perfumes_path, class: "nav-link #{'active' if current_page?(vitrine_all_perfumes_path)}" %>
+          <div class="dropdown-menu">
+            <a href="<%= category_perfumes_path(filter_type: 'fragrance_class', filter_value: 'designer') %>">Designer</a>
+            <a href="<%= category_perfumes_path(filter_type: 'fragrance_class', filter_value: 'niche') %>">Niche</a>
+            <a href="<%= category_perfumes_path(filter_type: 'fragrance_class', filter_value: 'collection_privee') %>">Collection Privée</a>
+          </div>
+        </li>
         <li><%= link_to "Marques", vitrine_all_brands_path, class: "nav-link #{'active' if current_page?(vitrine_all_brands_path)}" %></li>
         <li><%= link_to "Contact", vitrine_contact_path, class: "nav-link #{'active' if current_page?(vitrine_contact_path)}" %></li>
       </ul>
 
-      <div class="nav-actions" data-controller="search">
-       
-        <button class="inline-search-btn search-btn" aria-label="Rechercher" data-action="click->search#toggle">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <div class="nav-actions nav-actions-artistic" data-controller="search">
+        <button class="inline-search-btn search-btn search-artistic" aria-label="Rechercher" data-action="click->search#toggle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
             <circle cx="11" cy="11" r="8"/>
             <path d="m21 21-4.35-4.35"/>
           </svg>
         </button>
-
         <div class="inline-search-wrapper" data-search-target="wrapper">
           <div class="inline-search-input-area" data-search-target="inputArea">
             <input type="text" name="search" placeholder="Rechercher un parfum ou une marque..." class="inline-search-input" data-search-target="input" data-action="input->search#search" />
@@ -68,119 +75,128 @@
               </svg>
             </button>
           </div>
-        
           <div class="inline-search-results-dropdown" data-search-target="results">
             <div data-search-target="perfumeResults"></div>
             <div data-search-target="brandResults"></div>
           </div>
         </div>
-
-       
-        <button class="cart-btn" aria-label="Panier" data-action="click->cart#toggle" data-cart-target="cartButton">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
-            <line x1="3" y1="6" x2="21" y2="6"/>
-            <path d="m16 10a4 4 0 0 1-8 0"/>
+        <button class="cart-btn cart-artistic" aria-label="Panier" data-action="click->cart#toggle" data-cart-target="cartButton">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M3 3h2l.4 2m0 0L8 18h8l3-9H5.4z"/>
+            <circle cx="9" cy="22" r="1"/>
+            <circle cx="20" cy="22" r="1"/>
           </svg>
-          <span class="cart-count" data-cart-target="cartCount">0</span>
+          <span class="cart-count" data-cart-target="cartCount">2</span>
+          <div class="cart-total">127€</div>
+        </button>
+        <button id="menu-toggle" class="menu-toggle-artistic" data-action="click->vitrine1#toggleMenu click->vitrine3#toggleMenu" aria-label="Ouvrir menu">
+          <span class="toggle-line"></span>
+          <span class="toggle-line"></span>
+          <span class="toggle-line"></span>
         </button>
       </div>
-
-      <button id="menu-toggle" data-action="click->vitrine1#toggleMenu" aria-label="Ouvrir menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
     </nav>
   </header>
-
-<!--
-<div class="search-overlay" data-search-target="overlay">
-  <div class="search-overlay-content">
-    <button class="close-search-button" data-action="click->search#close">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x">
-        <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
-      </svg>
-    </button>
-    <input type="text" placeholder=" un parfum ou une marque..." class="search-input" data-search-target="input" data-action="input->search#search">
-    <div class="search-results" data-search-target="results">
-      <div data-search-target="perfumeResults"></div>
-      <div data-search-target="brandResults"></div>
-    </div>
-  </div>
-</div> -->
 
   <main>
     <%= yield %>
   </main>
 
-  <footer class="footer">
+  <footer class="footer footer-artistic">
     <div class="container">
-      <div class="footer-content">
-        <div class="footer-section">
-          <div class="footer-logo">
-            <%= link_to root_path, class: "logo" do %>
-              <%= image_tag "bisso fragrance new logo transparent no letters.png", alt: "Bisso Fragrance", class: "logo-icon" %>
-              <span class="logo-text">Bisso Fragrance</span>
+      <div class="footer-content footer-content-artistic">
+        <div class="footer-section footer-main">
+          <div class="footer-logo footer-brand-artistic">
+            <%= link_to root_path, class: "logo logo-artistic" do %>
+              <div class="logo-emblem">
+                <div class="emblem-inner"></div>
+              </div>
+              <div class="logo-text">
+                <!--logo à inserer ici-->
+                <span class="brand-name logo-text">100%</span>
+                <span class="brand-tagline">Parfum</span>
+              </div>
             <% end %>
+            <p class="brand-description">
+              L'art de la parfumerie révélé à travers une sélection exceptionnelle de décants premium. 
+              Chaque fragrance raconte une histoire unique.
+            </p>
+            <div class="social-links social-artistic">
+              <a href="https://www.instagram.com/bisso.fragrance" target="_blank" aria-label="Instagram" class="social-link instagram social-instagram">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                  <circle cx="12" cy="12" r="4"/>
+                  <circle cx="18.5" cy="5.5" r="1"/>
+                </svg>
+              </a>
+              <a href="https://www.facebook.com/Bissoooriginal" target="_blank" aria-label="Facebook" class="social-link facebook social-facebook">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+              </a>
+              <a href="https://www.tiktok.com/@bissou.fragrance" target="_blank" aria-label="TikTok" class="social-link tiktok social-tiktok">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
+                </svg>
+              </a>
+            </div>
           </div>
-          <p>L'art de la parfumerie à portée de main. Découvrez nos décants de fragrances d'exception.</p>
-          <div class="social-links">
-            <a href="https://www.instagram.com/bisso.fragrance" target="_blank" aria-label="Instagram" class="social-instagram">
+          
+          <div class="footer-section footer-links-artistic">
+            <h4>Contactez-nous</h4>
+            <ul>
+              <li><%= link_to "Page de contact", vitrine_contact_path %></li>
+            </ul>
+          </div>
+
+          <div class="footer-section footer-links-artistic">
+            <h4>Merci pour votre visite</h4>
+            <p>Nous apprécions votre confiance et espérons vous revoir bientôt pour découvrir de nouvelles fragrances exceptionnelles.</p>
+            <div class="footer-thanks-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-                <circle cx="12" cy="12" r="4"/>
-                <circle cx="18.5" cy="5.5" r="1"/>
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
               </svg>
-            </a>
-            <a href="https://www.facebook.com/Bissoooriginal" target="_blank" aria-label="Facebook" class="social-facebook">
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-              </svg>
-            </a>
-            <a href="https://www.tiktok.com/@bissou.fragrance" target="_blank" aria-label="TikTok" class="social-tiktok">
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
-              </svg>
-            </a>
+            </div>
           </div>
         </div>
-
-        <div class="footer-section">
-          <h4>Contactez-nous</h4>
-          <ul>
-            <li><%= link_to "Page de contact", vitrine_contact_path %></li>
-          </ul>
-        </div>
-
-        <div class="footer-section">
-          <h4>Merci pour votre visite</h4>
-          <p>Nous apprécions votre confiance et espérons vous revoir bientôt pour découvrir de nouvelles fragrances exceptionnelles.</p>
-          <div class="footer-thanks-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-            </svg>
+        <!--
+        <div class="footer-newsletter">
+          <div class="newsletter-artistic">
+            <h3>Restez Inspiré</h3>
+            <p>Recevez nos dernières découvertes olfactives et offres exclusives</p>
+            <form class="newsletter-form-artistic" data-controller="newsletter-artistic">
+              <div class="input-group">
+                <input type="email" placeholder="Votre adresse email" required>
+                <button type="submit" class="subscribe-btn">
+                  <span>S'abonner</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="22" y1="2" x2="11" y2="13"/>
+                    <polygon points="22,2 15,22 11,13 2,9 22,2"/>
+                  </svg>
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
-
-      <div class="footer-bottom">
-        <p>&copy; 2025 Bisso Fragrance. Tous droits réservés.</p>
+      -->
+      <div class="footer-bottom footer-bottom-artistic">
+        <p>&copy; 2025 100% Parfum. Tous droits réservés.</p>
       </div>
     </div>
   </footer>
-
 
   <div class="cart-slider-overlay" data-cart-target="overlay" data-action="click->cart#close:self">
     <div class="cart-slider-content">
       <div class="cart-slider-header">
         <h3>Votre Panier</h3>
         <button class="cart-slider-close-btn" data-action="click->cart#close" aria-label="Fermer le panier">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x">
+            <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+          </svg>
         </button>
       </div>
       <div class="cart-slider-items" data-cart-target="cartItems">
-        
         <p class="cart-slider-empty-message">Votre panier est vide.</p>
       </div>
       <div class="cart-slider-summary">

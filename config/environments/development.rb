@@ -79,5 +79,5 @@ Rails.application.configure do
   config.assets.compile = true
     Rails.application.routes.default_url_options[:host] = "localhost:3000"
   # Autoriser l'hôte ngrok
-  config.hosts << "8baf22177999.ngrok-free.app"
+  config.hosts << "40b882a99b73.ngrok-free.app"
 end
