@@ -1,0 +1,419 @@
+/* app/assets/stylesheets/search.css */
+
+/* Styles pour le conteneur des actions de navigation (pour aligner les éléments) */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Réduit pour rapprocher les icônes */
+  position: relative;
+  overflow: visible;
+  z-index: 1100;
+  justify-content: flex-end;
+  height: 44px; /* Hauteur fixe pour éviter l'expansion */
+}
+
+/* Conteneur principal de la recherche inline (wrapper) */
+.inline-search-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 36px;
+  height: 44px; /* Hauteur fixe */
+}
+
+/* Bouton de l'icône de recherche */
+.inline-search-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px; /* Padding uniforme */
+  margin-left: 5px; /* Décalage vers la droite pour rapprocher du panier */
+  margin-right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color, #222);
+  transition: color 0.3s ease;
+  flex-shrink: 0;
+  z-index: 1200;
+  opacity: 1;
+  visibility: visible;
+  width: 44px; /* Largeur fixe */
+  height: 44px; /* Hauteur fixe */
+}
+
+.inline-search-btn:hover {
+  color: var(--gold-accent, #d4af37);
+}
+
+.inline-search-btn svg {
+  width: 24px;
+  height: 24px;
+  stroke: #fff;
+  flex-shrink: 0; /* Empêche la réduction */
+}
+
+/* Zone de l'input de recherche (s'ouvre vers la gauche) */
+.inline-search-input-area {
+  position: absolute;
+  right: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  overflow: hidden;
+  transition: width 0.28s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.2s ease;
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: var(--soft-cream, #fff);
+  border-radius: 8px;
+  padding: 6px 10px;
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.12);
+  height: 40px;
+  z-index: 1190;
+  min-height: 40px;
+  box-sizing: border-box;
+}
+
+/* when open on desktop */
+.inline-search-wrapper.is-open .inline-search-input-area {
+  width: 250px;
+  opacity: 1;
+  padding-left: 40px;
+}
+
+/* Input de recherche */
+.inline-search-input {
+  flex-grow: 1;
+  padding: 8px 10px;
+  border: 1px solid var(--gold-accent, #d4af37);
+  border-radius: 5px;
+  font-size: 1rem;
+  color: #222;
+  background-color: #fff;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  min-width: 120px;
+}
+
+.inline-search-input::placeholder {
+  color: var(--text-color-light, #9aa0a6);
+}
+
+.inline-search-input:focus {
+  border-color: var(--dark-gold, #b58825);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.08);
+}
+
+/* Bouton de fermeture de l'input */
+.inline-search-close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  font-size: 1.2rem;
+  transition: color 0.2s ease;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+}
+
+.inline-search-close-btn:hover {
+  color: var(--dark-gold, #b58825);
+}
+
+.inline-search-close-btn svg {
+  width: 20px;
+  height: 20px;
+  stroke: #000;
+  display: block;
+}
+
+/* Dropdown des résultats de recherche */
+.inline-search-results-dropdown {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: calc(100% + 8px);
+  width: 250px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  max-height: 400px;
+  overflow-y: auto;
+  display: none;
+  z-index: 2000;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+/* visible state */
+.inline-search-results-dropdown.is-open {
+  display: block;
+}
+
+/* Titles */
+.inline-search-results-dropdown h3 {
+  font-family: var(--font-heading, "Playfair Display", serif);
+  font-size: 1.2rem;
+  color: #111;
+  margin: 8px 0;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.12);
+  padding-bottom: 6px;
+}
+
+/* Force readable text color inside dropdown */
+.inline-search-results-dropdown a,
+.inline-search-results-dropdown span,
+.inline-search-results-dropdown p,
+.inline-search-results-dropdown div {
+  color: #111 !important;
+}
+
+/* grid */
+.inline-search-results-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+/* item */
+.inline-search-result-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: #fff;
+  padding: 8px;
+  border-radius: 6px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.14s ease, box-shadow 0.14s ease;
+}
+
+.inline-search-result-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+/* image fixed size, preserve ratio (no dilation) */
+.inline-search-result-image {
+  width: 48px;
+  height: 48px;
+  border-radius: 6px;
+  object-fit: cover;
+  flex-shrink: 0;
+  display: block;
+}
+
+/* info */
+.inline-search-result-info h4 {
+  font-family: var(--font-heading, "Playfair Display", serif);
+  font-size: 0.95rem;
+  color: var(--dark-gold, #b58825);
+  margin: 0 0 4px 0;
+}
+
+.inline-search-result-info p {
+  font-size: 0.8rem;
+  color: var(--text-color-light, #6b6f73);
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* messages */
+.inline-search-error-message,
+.inline-search-no-results-message {
+  text-align: center;
+  color: var(--text-color-light, #6b6f73);
+  font-size: 0.95rem;
+  padding: 10px;
+}
+
+/* Styles pour éviter que la navbar couvre le contenu - SANS forcer la couleur */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  /* Suppression du background-color forcé pour garder la couleur originale */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.nav {
+  height: 70px; /* Hauteur fixe pour la navbar */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Espacement pour le contenu principal */
+main {
+  margin-top: 70px; /* Même hauteur que la navbar */
+  padding-top: 0; /* Suppression complète de l'espacement */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+  .inline-search-wrapper.is-open .inline-search-input-area {
+    width: 220px;
+  }
+
+  .inline-search-results-dropdown {
+    width: 220px;
+    right: calc(100% + 8px);
+    top: calc(100% + 12px);
+  }
+}
+
+@media (max-width: 768px) {
+  .nav {
+    height: 60px;
+    padding: 0 15px;
+  }
+
+  main {
+    margin-top: 60px;
+    padding-top: 0; /* Suppression complète */
+  }
+}
+
+@media (max-width: 480px) {
+  .nav {
+    height: 55px;
+    padding: 0 10px;
+  }
+
+  main {
+    margin-top: 55px;
+    padding-top: 0; /* Suppression complète */
+  }
+}
+
+/* Style pour le bouton du panier pour maintenir la cohérence */
+.cart-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color, #222);
+  transition: color 0.3s ease;
+  position: relative;
+  width: 44px;
+  height: 44px;
+}
+
+.cart-btn svg {
+  width: 24px;
+  height: 24px;
+  stroke: #fff;
+}
+
+.cart-count {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: var(--gold-accent, #d4af37);
+  color: white;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: bold;
+}
+
+/* ====== Recherche dans le menu burger (mobile only) ====== */
+
+/* Par défaut : le bloc de recherche mobile est caché (visible uniquement <=768px) */
+.menu .menu-mobile-search {
+  display: none;
+}
+
+/* Ne pas casser le desktop : on masque la recherche inline SEULEMENT sur mobile */
+@media (max-width: 768px) {
+  /* 1) Cacher la recherche inline de la navbar (mais garder le panier) */
+  .nav-actions .inline-search-btn,
+  .nav-actions .inline-search-wrapper {
+    display: none !important;
+  }
+
+  /* 2) Afficher la recherche au-dessus des liens du menu burger */
+  .menu .menu-mobile-search {
+    display: block;
+    width: 100%;
+    padding: 10px 12px;
+    box-sizing: border-box;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    background: var(--soft-cream, #fff);
+  }
+
+  .menu .mobile-search {
+    display: block;
+    width: 100%;
+  }
+
+  .menu .mobile-search-input-area {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .menu .mobile-search-input {
+    flex: 1;
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--gold-accent, #d4af37);
+    border-radius: 6px;
+    font-size: 1rem;
+    color: #222;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    background-color: #fff;
+  }
+
+  .menu .mobile-search-input::placeholder {
+    color: var(--text-color-light, #9aa0a6);
+  }
+
+  .menu .mobile-search-input:focus {
+    border-color: var(--dark-gold, #b58825);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.08);
+  }
+
+  /* 3) Adapter l’affichage des résultats à l’intérieur du menu (pas en position absolue) */
+  .menu .mobile-search .inline-search-results-dropdown {
+    position: static;        /* au flux */
+    right: auto;
+    top: auto;
+    width: 100%;
+    max-height: 50vh;        /* scroll si long */
+    overflow-y: auto;
+    margin-top: 8px;
+    display: none;           /* contrôlé par .is-open (comme desktop) */
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06); /* plus doux dans le menu */
+  }
+
+  .menu .mobile-search .inline-search-results-dropdown.is-open {
+    display: block;
+  }
+
+  /* Harmoniser les cartes de résultats dans le menu */
+  .menu .mobile-search .inline-search-result-item {
+    padding: 10px;
+    border-radius: 8px;
+  }
+}

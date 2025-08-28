@@ -1,0 +1,310 @@
+/* ===== ADMIN IMAGE LOADERS STYLES ===== */
+/* Système de spinner pour les images dans l'admin panel */
+
+/* Container principal pour les images avec loader */
+.admin-image-loader-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+/* Spinner de chargement */
+.admin-image-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3; /* Plus élevé que l'image */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  background: rgba(248, 249, 250, 0.95); /* Fond semi-transparent */
+  padding: 20px;
+  border-radius: 8px;
+  transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
+}
+
+/* Animation du spinner */
+.admin-spinner-circle {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #e9ecef;
+  border-top: 3px solid #4b3cc4;
+  border-radius: 50%;
+  animation: admin-spin 1s linear infinite;
+}
+
+/* Animation de rotation */
+@keyframes admin-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Texte du spinner */
+.admin-spinner-text {
+  font-size: 0.8rem;
+  color: #6c757d;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* Image en cours de chargement (cachée) */
+.admin-image-loading {
+  opacity: 0;
+  visibility: hidden;
+  position: relative;
+  z-index: 1;
+  transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
+}
+
+/* Image chargée (visible) */
+.admin-image-loaded {
+  opacity: 1;
+  visibility: visible;
+  position: relative;
+  z-index: 2;
+  transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
+}
+
+/* Spinner caché quand l'image est chargée */
+.admin-image-spinner.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
+}
+
+/* Styles spécifiques pour les cartes de parfums */
+.admin-parfum-image-container {
+  height: 300px;
+  max-height: 300px;
+}
+
+.admin-parfum-image-container .admin-image-spinner {
+  color: #4b3cc4;
+}
+
+.admin-parfum-image-container .admin-spinner-circle {
+  border-top-color: #4b3cc4;
+}
+
+/* Styles spécifiques pour les cartes de marques */
+.admin-brand-image-container {
+  height: 120px;
+}
+
+.admin-brand-image-container .admin-image-spinner {
+  color: #4b3cc4;
+  padding: 15px;
+}
+
+.admin-brand-image-container .admin-spinner-circle {
+  width: 30px;
+  height: 30px;
+  border-width: 2px;
+  border-top-color: #4b3cc4;
+}
+
+.admin-brand-image-container .admin-spinner-text {
+  font-size: 0.7rem;
+}
+
+/* Animation d'apparition pour les images */
+@keyframes admin-fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.admin-image-fade-in {
+  animation: admin-fadeIn 0.5s ease-out forwards;
+}
+
+/* Effet de pulsation pour le spinner */
+.admin-spinner-pulse {
+  animation: admin-pulse 2s ease-in-out infinite;
+}
+
+@keyframes admin-pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.05);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+/* État d'erreur de chargement */
+.admin-image-error {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 4; /* Plus élevé que tout */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: #dc3545;
+  background: rgba(248, 249, 250, 0.95);
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
+}
+
+/* État d'erreur caché */
+.admin-image-error.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.admin-error-icon {
+  width: 32px;
+  height: 32px;
+  border: 2px solid #dc3545;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+.admin-error-text {
+  font-size: 0.75rem;
+  text-align: center;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* Placeholder pour les images manquantes */
+.admin-no-image-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #6c757d;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  height: 100%;
+  width: 100%;
+}
+
+.admin-no-image-icon {
+  width: 40px;
+  height: 40px;
+  border: 2px dashed #adb5bd;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #adb5bd;
+}
+
+.admin-no-image-text {
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* IMPORTANT: S'assurer qu'un seul état est visible à la fois */
+.admin-image-loader-container .admin-image-spinner:not(.hidden) ~ .admin-image-error {
+  display: none !important;
+}
+
+.admin-image-loader-container .admin-image-error:not(.hidden) ~ .admin-image-spinner {
+  display: none !important;
+}
+
+.admin-image-loader-container .admin-image-loaded ~ .admin-image-spinner,
+.admin-image-loader-container .admin-image-loaded ~ .admin-image-error {
+  display: none !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .admin-spinner-circle {
+    width: 35px;
+    height: 35px;
+    border-width: 2px;
+  }
+
+  .admin-brand-image-container .admin-spinner-circle {
+    width: 25px;
+    height: 25px;
+  }
+
+  .admin-spinner-text {
+    font-size: 0.75rem;
+  }
+
+  .admin-brand-image-container .admin-spinner-text {
+    font-size: 0.65rem;
+  }
+
+  .admin-image-spinner,
+  .admin-image-error {
+    padding: 15px;
+  }
+
+  .admin-brand-image-container .admin-image-spinner,
+  .admin-brand-image-container .admin-image-error {
+    padding: 10px;
+  }
+}
+
+/* Amélioration de l'accessibilité */
+.admin-image-spinner[aria-hidden="true"] {
+  pointer-events: none;
+}
+
+/* Préchargement optimisé */
+.admin-image-preload {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Animation de succès */
+@keyframes admin-checkmark {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+.admin-load-success {
+  animation: admin-checkmark 0.6s ease-out;
+}

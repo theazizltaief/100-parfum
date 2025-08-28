@@ -1,0 +1,6 @@
+<%= turbo_stream.replace "modal" do %>
+  <div class="modal-content">
+    <h1>Ajouter un parfum</h1>
+    <%= render "form", parfum: @parfum, brands: @brands %>
+  </div>
+<% end %>

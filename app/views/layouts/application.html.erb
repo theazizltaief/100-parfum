@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <title><%= content_for(:title) || "Bisso Fragrance Admin" %></title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="turbo-cache-control" content="no-cache">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    
+    
+    <%= stylesheet_link_tag "application", "admin_orders", "admin_image_loaders", "admin_search", "data-turbo-track": "reload", media: "all" %>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <%= favicon_link_tag asset_path('favicon_black.png') %>
+    <!-- CSS personnalisé pour corriger les conflits -->
+    <style>
+      /* Corrections pour le layout responsive */
+      .main-content {
+        width: 100%;
+        max-width: 100%;
+        padding-left: 0;
+        padding-right: 0;
+      }
+      
+      /* Sidebar responsive améliorée */
+      .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 250px;
+        background: #1a252f;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 1050;
+      }
+      
+      .sidebar.show {
+        transform: translateX(0);
+      }
+      
+      /* Desktop: sidebar visible */
+      @media (min-width: 768px) {
+        .sidebar {
+          position: fixed;
+          transform: translateX(0);
+        }
+        
+        .main-content.ms-md-sidebar {
+          margin-left: 250px;
+          width: calc(100% - 250px);
+        }
+      }
+      
+      /* Mobile: sidebar cachée par défaut */
+      @media (max-width: 767px) {
+        .main-content.ms-md-sidebar {
+          margin-left: 0;
+          width: 100%;
+        }
+        
+        .sidebar {
+          width: 280px;
+        }
+      }
+      
+      /* Overlay pour mobile */
+      .sidebar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1040;
+        display: none;
+      }
+      
+      .sidebar-overlay.show {
+        display: block;
+      }
+      
+      /* Navigation links */
+      .nav-link {
+        display: block;
+        padding: 0.75rem 1rem;
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        border-radius: 0.375rem;
+        transition: all 0.2s ease;
+      }
+      
+      .nav-link:hover,
+      .nav-link.active {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+      }
+      
+      /* Header responsive */
+      .main-content header {
+        position: sticky;
+        top: 0;
+        z-index: 1030;
+        width: 100%;
+      }
+      
+      /* Container pour le contenu principal */
+      .main-content main {
+        width: 100%;
+        max-width: 100%;
+        padding: 1rem;
+      }
+      
+      @media (min-width: 768px) {
+        .main-content main {
+          padding: 1.5rem;
+        }
+      }
+
+      /* Styles pour la recherche dans le header */
+      .admin-search-dropdown-header {
+        padding: 0.75rem 1rem 0.5rem;
+        border-bottom: 1px solid #dee2e6;
+      }
+
+      .admin-search-dropdown-section {
+        padding: 0.5rem 0;
+      }
+
+      .admin-search-dropdown-title {
+        padding: 0.5rem 1rem;
+        margin: 0;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #4b3cc4;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .admin-search-dropdown-item {
+        display: block;
+        padding: 0.75rem 1rem;
+        color: #333;
+        text-decoration: none;
+        transition: background-color 0.2s ease;
+      }
+
+      .admin-search-dropdown-item:hover {
+        background: #f8f9fa;
+        color: #333;
+        text-decoration: none;
+      }
+
+      .admin-search-dropdown-footer {
+        padding: 0.75rem 1rem;
+        border-top: 1px solid #dee2e6;
+        background: #f8f9fa;
+      }
+
+      .admin-search-view-all {
+        color: #4b3cc4;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.9rem;
+      }
+
+      .admin-search-view-all:hover {
+        color: #3d2f9f;
+        text-decoration: none;
+      }
+
+      .admin-search-dropdown-empty {
+        padding: 1rem;
+        text-align: center;
+      }
+    </style>
+    
+    <%= yield :head %>
+  </head>
+
+  <body class="<%= admin_signed_in? ? 'admin-panel' : '' %>" data-controller="admin-search" data-action="click@document->admin-search#clickOutside">
+    <div class="d-flex">
+      <% if admin_signed_in? %>
+        <!-- Overlay pour mobile -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar shadow-sm text-white">
+          <div class="text-center py-4 border-bottom border-light border-opacity-10 position-relative">
+            <h4 class="mb-1 fw-bold">Bisso Fragrance</h4>
+            <small class="text-white-50">Admin Panel</small>
+            <button id="sidebarClose" class="btn-close btn-close-white position-absolute top-0 end-0 m-3 d-md-none" aria-label="Fermer"></button>
+          </div>
+          <nav class="p-3">
+            <%= link_to admin_panel_root_path,
+                        class: "nav-link mb-2 #{'active' if current_page?(admin_panel_root_path)}" do %>
+              <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+            <% end %>
+            <%= link_to admin_panel_parfums_path,
+                        class: "nav-link mb-2 #{'active' if current_page?(admin_panel_parfums_path)}" do %>
+              <i class="fas fa-box-open me-2"></i> Parfums
+            <% end %>
+            <%= link_to admin_panel_brands_path,
+                        class: "nav-link mb-2 #{'active' if current_page?(admin_panel_brands_path)}" do %>
+              <i class="fas fa-tags me-2"></i> Marques
+            <% end %>
+            <%= link_to admin_panel_orders_path,
+                        class: "nav-link mb-2 #{'active' if current_page?(admin_panel_orders_path) || (params[:controller] == 'admin_panel/orders')}" do %>
+              <i class="fas fa-shopping-cart me-2"></i> Commandes
+            <% end %>
+            <div class="mt-4 pt-3 border-top border-light border-opacity-10">
+              <%= button_to destroy_admin_session_path,
+                          method: :delete,
+                          class: "nav-link text-start w-100 bg-transparent border-0 text-danger-hover p-2",
+                          form: { class: "d-inline", data: { turbo: false } } do %>
+                <i class="fas fa-sign-out-alt me-2"></i> Déconnexion
+              <% end %>
+            </div>
+          </nav>
+        </aside>
+      <% end %>
+      
+      <!-- Main content -->
+      <div class="main-content <%= admin_signed_in? ? 'ms-md-sidebar' : '' %>">
+        <!-- Header -->
+        <header class="bg-white border-bottom px-3 px-md-4 py-3 d-flex justify-content-between align-items-center">
+          <div class="d-flex align-items-center">
+            <button class="btn btn-outline-secondary d-md-none me-3" id="sidebarToggle">
+              <i class="fas fa-bars"></i>
+            </button>
+            <h1 class="h5 mb-0"><%= content_for(:page_title) || "Tableau de bord" %></h1>
+          </div>
+          
+          <% if admin_signed_in? %>
+            <!-- NOUVELLE BARRE DE RECHERCHE -->
+            <div class="d-flex align-items-center gap-3">
+              <%= form_with url: admin_panel_search_index_path, method: :get, local: true, 
+                           class: "admin-search-form", 
+                           data: { 
+                             controller: "admin-search",
+                             admin_search_url_value: admin_panel_search_index_path,
+                             action: "submit->admin-search#submit"
+                           } do |form| %>
+                <%= form.text_field :q, 
+                    placeholder: "Rechercher parfums, marques, commandes...", 
+                    class: "admin-search-input",
+                    data: { 
+                      admin_search_target: "input",
+                      action: "input->admin-search#search focus->admin-search#search"
+                    },
+                    value: params[:q] %>
+                <button type="submit" class="admin-search-btn">
+                  <i class="fas fa-search"></i>
+                </button>
+                
+                <!-- Dropdown de suggestions -->
+                <div class="admin-search-dropdown" data-admin-search-target="dropdown">
+                  <!-- Les résultats seront insérés ici par JavaScript -->
+                </div>
+              <% end %>
+              
+              <span class="text-muted small d-none d-sm-inline">Admin connecté</span>
+            </div>
+          <% else %>
+            <span class="text-muted small d-none d-sm-inline">Admin connecté</span>
+          <% end %>
+        </header>
+        
+        <!-- Flash messages -->
+        <div id="flash-container" class="px-3 px-md-4 mt-3">
+          <% flash.each do |type, message| %>
+            <% bootstrap_class = type == "notice" ? "success" : "danger" %>
+            <div class="alert alert-<%= bootstrap_class %> alert-dismissible fade show" role="alert">
+              <%= message %>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          <% end %>
+        </div>
+        
+        <!-- Page content -->
+        <main class="flex-grow-1">
+          <%= yield %>
+          <% if content_for?(:cards) %>
+            <div class="row mt-4">
+              <%= yield :cards %>
+            </div>
+          <% end %>
+        </main>
+        
+        <% if admin_signed_in? %>
+          <!-- Footer -->
+          <footer class="bg-white border-top text-center py-3 text-muted small">
+            &copy; <%= Time.current.year %>  Bisso Fragrance   —————————————————————————————   BackOffice
+          </footer>
+        <% end %>
+      </div>
+    </div>
+    
+    <!-- JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      document.addEventListener('turbo:load', function () {
+        const sidebar = document.getElementById('sidebar');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebarClose = document.getElementById('sidebarClose');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        
+        function showSidebar() {
+          if (sidebar) {
+            sidebar.classList.add('show');
+            if (sidebarOverlay) sidebarOverlay.classList.add('show');
+          }
+        }
+        
+        function hideSidebar() {
+          if (sidebar) {
+            sidebar.classList.remove('show');
+            if (sidebarOverlay) sidebarOverlay.classList.remove('show');
+          }
+        }
+        
+        if (sidebarToggle) {
+          sidebarToggle.addEventListener('click', showSidebar);
+        }
+        
+        if (sidebarClose) {
+          sidebarClose.addEventListener('click', hideSidebar);
+        }
+        
+        if (sidebarOverlay) {
+          sidebarOverlay.addEventListener('click', hideSidebar);
+        }
+        
+        // Fermer la sidebar quand on clique sur un lien (mobile)
+        if (sidebar) {
+          const links = sidebar.querySelectorAll('a');
+          links.forEach(link => {
+            link.addEventListener('click', () => {
+              if (window.innerWidth < 768) {
+                hideSidebar();
+              }
+            });
+          });
+        }
+
+        // Debug: vérifier que Stimulus est chargé
+        console.log('Stimulus application:', window.Stimulus);
+      });
+    </script>
+    <%= javascript_include_tag "application", type: "module", "data-turbo-track": "reload" %>
+  </body>
+</html>

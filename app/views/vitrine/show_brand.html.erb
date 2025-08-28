@@ -1,0 +1,32 @@
+
+
+<div class="brand-page-container" data-controller="brand-perfumes" data-brand-perfumes-brand-id-value="<%= @brand_id %>">
+  <div class="container">
+    <% if flash[:alert] %>
+      <div class="alert alert-danger"><%= flash[:alert] %></div>
+    <% end %>
+
+    <header class="brand-header">
+      <img src="/placeholder.svg?height=200&width=200" alt="Brand Logo" class="brand-logo" data-brand-perfumes-target="brandImage">
+      <h1 class="brand-title" data-brand-perfumes-target="brandName">Chargement de la marque...</h1>
+      <p class="brand-slogan" data-brand-perfumes-target="brandSlogan">Chargement du slogan...</p>
+    </header>
+
+    <section class="perfumes-section">
+      <h2 class="section-subtitle">Nos Parfums</h2>
+      
+      <div class="perfumes-grid" data-brand-perfumes-target="perfumesGrid">
+        <!-- Les cartes de parfums seront insérées ici par le contrôleur Stimulus -->
+        <p class="loading-message">Chargement des parfums...</p>
+      </div>
+
+      <div class="pagination-container" data-brand-perfumes-target="pagination">
+        <!-- La pagination sera insérée ici par le contrôleur Stimulus -->
+      </div>
+    </section>
+
+    <div class="back-link">
+      <%= link_to "Retour à l'accueil", root_path %>
+    </div>
+  </div>
+</div>

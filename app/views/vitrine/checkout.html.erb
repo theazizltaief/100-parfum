@@ -1,0 +1,168 @@
+<div class="checkout-page">
+  <div class="container">
+    <div class="checkout-header">
+      <h1 class="checkout-title">Finaliser votre commande</h1>
+      <p class="checkout-subtitle">Remplissez vos informations pour passer votre commande</p>
+    </div>
+
+    <%= form_with model: @order, url: process_checkout_path, local: true, class: "checkout-form" do |form| %>
+      <div class="checkout-content">
+        <div class="billing-section">
+          <h2 class="section-title">Détails de facturation</h2>
+
+          <div class="form-row">
+            <div class="form-group">
+              <%= form.label :first_name, "Prénom", class: "form-label" %>
+              <%= form.text_field :first_name,
+                    class: "form-input #{'error' if @order.errors[:first_name].any?}",
+                    required: true,
+                    maxlength: 15 %>
+              <% if @order.errors[:first_name].any? %>
+                <span class="error-message"><%= @order.errors[:first_name].first %></span>
+              <% end %>
+            </div>
+
+            <div class="form-group">
+              <%= form.label :last_name, "Nom", class: "form-label" %>
+              <%= form.text_field :last_name,
+                    class: "form-input #{'error' if @order.errors[:last_name].any?}",
+                    required: true,
+                    maxlength: 15 %>
+              <% if @order.errors[:last_name].any? %>
+                <span class="error-message"><%= @order.errors[:last_name].first %></span>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :phone, "Téléphone", class: "form-label" %>
+            <%= form.telephone_field :phone,
+                  class: "form-input #{'error' if @order.errors[:phone].any?}",
+                  required: true,
+                  placeholder: "Ex: +216 12 345 678",
+                  pattern: "^(\\+216[0-9]{8}|[0-9]{8})$",
+                  inputmode: "tel",
+                  title: "Numéro valide : soit 8 chiffres, soit +216 suivi de 8 chiffres" %>
+            <% if @order.errors[:phone].any? %>
+              <span class="error-message"><%= @order.errors[:phone].first %></span>
+            <% end %>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :address, "Adresse de livraison", class: "form-label" %>
+            <%= form.text_area :address,
+                  rows: 3,
+                  class: "form-input #{'error' if @order.errors[:address].any?}",
+                  required: true,
+                  maxlength: 100 %>
+            <% if @order.errors[:address].any? %>
+              <span class="error-message"><%= @order.errors[:address].first %></span>
+            <% end %>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <%= form.label :city, "Ville", class: "form-label" %>
+              <%= form.text_field :city,
+                    class: "form-input #{'error' if @order.errors[:city].any?}",
+                    required: true,
+                    maxlength: 20 %>
+              <% if @order.errors[:city].any? %>
+                <span class="error-message"><%= @order.errors[:city].first %></span>
+              <% end %>
+            </div>
+
+            <div class="form-group">
+              <%= form.label :postal_code, "Code Postal", class: "form-label" %>
+              <%= form.text_field :postal_code,
+                    class: "form-input #{'error' if @order.errors[:postal_code].any?}",
+                    required: true,
+                    pattern: "^[0-9]{4}$",
+                    inputmode: "numeric",
+                    maxlength: 4,
+                    minlength: 4,
+                    title: "Veuillez entrer un code postal valide à 4 chiffres" %>
+              <% if @order.errors[:postal_code].any? %>
+                <span class="error-message"><%= @order.errors[:postal_code].first %></span>
+              <% end %>
+            </div>
+          </div> <!-- fin form-row ville + code postal -->
+
+          <div class="form-group">
+            <%= form.label :notes, "Notes (optionnel)", class: "form-label" %>
+            <%= form.text_area :notes,
+                  rows: 2,
+                  class: "form-input",
+                  placeholder: "Instructions spéciales pour la livraison...",
+                  maxlength: 100 %>
+          </div>
+
+        </div>
+
+        <div class="order-summary">
+          <h2 class="section-title">Résumé de votre commande</h2>
+
+          <div class="order-items">
+            <% @cart_items.each do |item| %>
+              <div class="order-item">
+                <img src="<%= item['imageUrl'] %>" alt="<%= item['name'] %>" class="order-item-image">
+                <div class="order-item-info">
+                  <h4 class="order-item-name"><%= item['name'] %></h4>
+                  <p class="order-item-details">10ml × <%= item['quantity'] %></p>
+                </div>
+                <div class="order-item-total">
+                  <%= number_to_currency(item['price'].to_f * item['quantity'].to_i, unit: '', precision: 2) %> TND
+                </div>
+              </div>
+            <% end %>
+          </div>
+
+          <div class="order-totals">
+            <div class="total-line">
+              <span>Sous-total:</span>
+              <span><%= number_to_currency(@subtotal, unit: '', precision: 2) %> TND</span>
+            </div>
+            <div class="total-line">
+              <span>Frais de livraison:</span>
+              <span><%= number_to_currency(@delivery_fee, unit: '', precision: 2) %> TND</span>
+            </div>
+            <div class="total-line total-final">
+              <span>Total:</span>
+              <span><%= number_to_currency(@total, unit: '', precision: 2) %> TND</span>
+            </div>
+          </div>
+
+          <div class="payment-method">
+            <h3 class="payment-title">Méthode de paiement</h3>
+            <div class="payment-option">
+              <input type="radio" id="cash_on_delivery" name="payment_method" value="cash_on_delivery" checked>
+              <label for="cash_on_delivery" class="payment-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"/>
+                  <path d="M4 6v12c0 1.1.9 2 2 2h14v-4"/>
+                  <path d="M18 12a2 2 0 0 0-2 2c0 1.1.9 2 2 2h4v-4h-4z"/>
+                </svg>
+                Paiement à la livraison
+              </label>
+            </div>
+          </div>
+
+          <input type="hidden" name="cart_items_data" value="<%= @cart_items.to_json %>">
+
+          <div class="checkout-info-text">
+            <p><strong>Note :</strong> Le paiement cash à la livraison</p>
+          </div>
+
+          <button type="submit" class="checkout-submit-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 12l2 2 4-4"/>
+              <path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 9 4.03 9 9z"/>
+            </svg>
+            Passer la commande
+          </button>
+        </div> <!-- fin order-summary -->
+
+      </div> <!-- fin checkout-content -->
+    <% end %>
+  </div> <!-- fin container -->
+</div> <!-- fin checkout-page -->

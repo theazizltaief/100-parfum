@@ -1,0 +1,61 @@
+/* Styles pour les liens logo dans le header et footer */
+
+/* Logo dans le header */
+.nav .logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.nav .logo:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+.nav .logo:focus {
+  outline: 2px solid var(--gold-accent, #d4af37);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+/* Logo dans le footer */
+.footer-logo .logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  margin-bottom: 1rem;
+}
+
+.footer-logo .logo:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+.footer-logo .logo:focus {
+  outline: 2px solid var(--gold-accent, #d4af37);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+/* Assurer que les éléments du logo restent alignés */
+.logo-icon {
+  flex-shrink: 0;
+}
+
+.logo-text {
+  flex-shrink: 0;
+}
+
+/* Responsive - sur mobile, garder la même fonctionnalité */
+@media (max-width: 768px) {
+  .nav .logo:hover,
+  .footer-logo .logo:hover {
+    transform: scale(1.02); /* Effet plus subtil sur mobile */
+  }
+}

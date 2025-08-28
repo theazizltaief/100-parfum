@@ -1,0 +1,269 @@
+/* app/assets/stylesheets/collection_listing_styles.css */
+
+/* Styles pour la section des classes de parfum sur la page d'accueil */
+.collection-class-section {
+  padding: 80px 20px;
+  background-color: var(--background-color); /* Ou une autre couleur de fond si désirée */
+  text-align: center;
+}
+
+.collection-class-section h2 {
+  font-family: var(--font-heading);
+  font-size: 3.2rem;
+  color: var(--dark-gold);
+  margin-bottom: 60px;
+  position: relative;
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.collection-class-section h2::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -15px;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background-color: var(--gold-accent);
+  border-radius: 2px;
+}
+
+.collection-class-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Ajusté pour correspondre aux cartes de genre */
+  gap: 40px; /* Ajusté pour correspondre aux cartes de genre */
+  max-width: 1200px; /* Ajusté pour correspondre aux cartes de genre */
+  margin: 0 auto;
+}
+
+/* Individual collection class card */
+.collection-class-card {
+  height: 400px; /* Ajusté pour correspondre aux cartes de genre */
+  border-radius: 25px; /* Ajusté pour correspondre aux cartes de genre */
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Ajusté pour correspondre aux cartes de genre */
+  transition: transform 0.4s ease, box-shadow 0.4s ease; /* Removed filter transition from here */
+  text-decoration: none;
+  color: #fff; /* Couleur du texte sur l'image de fond */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* Aligne le contenu en bas de la carte */
+  position: relative; /* Needed for absolute positioning of ::before and overlay */
+  /* Removed background-image, background-size, background-position, background-repeat from here */
+  /* Removed filter from here */
+  border: 2px solid rgba(212, 175, 55, 0.2);
+  cursor: pointer;
+}
+
+/* Pseudo-element for the background image and its filters */
+.collection-class-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0; /* Behind content and overlay */
+  transition: filter 0.4s ease; /* Apply filter transition here */
+  filter: grayscale(0%) blur(0px); /* Initial state: no filter */
+}
+
+.collection-class-card:hover {
+  transform: translateY(-15px) scale(1.02); /* Ajusté pour correspondre aux cartes de genre */
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25); /* Ajusté pour correspondre aux cartes de genre */
+}
+
+/* Hover effect for the pseudo-element */
+.collection-class-card:hover::before {
+  filter: grayscale(100%) blur(2px); /* On hover: grayscale and blur */
+}
+
+/* Images de fond spécifiques pour chaque carte de collection (CHEMINS DIRECTS DEPUIS PUBLIC/IMAGES) */
+/* Apply background-image to the pseudo-element */
+.collection-card-designer::before {
+  background-image: url('/images/designer.jpg');
+}
+.collection-card-niche::before {
+  background-image: url('/images/niche.jpg');
+}
+.collection-card-private::before {
+  background-image: url('/images/collection le gemme.jpg');
+}
+
+/* Superposition dégradée pour le texte (similaire aux cartes de genre) */
+.collection-class-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 60%);
+  transition: background 0.4s ease;
+  z-index: 1; /* Ensure it's above the ::before pseudo-element */
+}
+
+.collection-class-card:hover .collection-class-overlay {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 70%);
+}
+
+/* Contenu de la carte (titre et description) */
+.collection-class-content {
+  position: relative;
+  z-index: 2; /* Ensure it's above the overlay and pseudo-element */
+  padding: 30px;
+  text-align: left;
+}
+
+.collection-class-title {
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  color: #fff;
+  margin-bottom: 15px;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.collection-class-description {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+/* Styles pour la page de liste des parfums de classe */
+.perfume-class-listing-page-container {
+  padding-top: 80px; /* Espace pour la navbar */
+  padding-bottom: 40px;
+  min-height: calc(100vh - 120px); /* Pour que le footer ne remonte pas */
+  background-color: var(--background-color);
+}
+
+.perfume-class-listing-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.perfume-class-listing-title {
+  font-family: var(--font-heading);
+  font-size: 3.5rem;
+  color: var(--dark-gold);
+  margin-bottom: 10px;
+}
+
+.perfume-class-listing-slogan {
+  font-family: var(--font-body);
+  font-size: 1.2rem;
+  color: var(--text-color-light);
+  max-width: 700px;
+  line-height: 1.6;
+}
+
+/* Section des filtres */
+.perfume-class-listing-filter-section {
+  display: flex;
+  justify-content: flex-end; /* Aligner à droite */
+  align-items: center;
+  gap: 25px; /* Espace entre les groupes de filtres */
+  margin-bottom: 40px;
+  padding: 15px 20px;
+  background-color: var(--soft-cream);
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  max-width: 1200px;
+  margin-left: auto; /* Pousser à droite */
+  margin-right: auto; /* Centrer si l'espace le permet */
+  flex-wrap: wrap; /* Permet aux filtres de passer à la ligne sur mobile */
+}
+
+.perfume-class-listing-filter-section .filter-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.perfume-class-listing-filter-label {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+.perfume-class-listing-filter-dropdown {
+  padding: 10px 15px;
+  border: 2px solid var(--gold-accent);
+  border-radius: 8px;
+  background-color: #fff;
+  font-size: 1rem;
+  color: var(--text-color);
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  -webkit-appearance: none; /* Supprime le style par défaut du navigateur */
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23D4AF37%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13.2-6.4H18.6c-5%200-9.3%201.8-12.9%205.4-3.6%203.6-5.4%207.8-5.4%2012.8%200%205%201.8%209.2%205.4%2012.8l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095.1c3.6-3.6%205.4-7.8%205.4-12.8%200-5-1.8-9.2-5.4-12.8z%22%2F%3E%3C%2Fsvg%3E'); /* Flèche personnalisée */
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 12px;
+  padding-right: 30px; /* Espace pour la flèche */
+}
+
+.perfume-class-listing-filter-dropdown:focus {
+  border-color: var(--dark-gold);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .collection-class-section {
+    padding: 50px 15px;
+  }
+  .collection-class-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+  }
+  .collection-class-grid {
+    grid-template-columns: 1fr;
+  }
+  .collection-class-card {
+    height: 320px; /* Ajusté pour correspondre aux cartes de genre sur mobile */
+    padding: 25px;
+  }
+  .collection-class-title {
+    font-size: 2rem; /* Ajusté pour correspondre aux cartes de genre sur mobile */
+  }
+  .collection-class-description {
+    font-size: 0.95rem; /* Ajusté pour correspondre aux cartes de genre sur mobile */
+  }
+  .perfume-class-listing-page-container {
+    padding-top: 60px;
+  }
+  .perfume-class-listing-title {
+    font-size: 2.8rem;
+  }
+  .perfume-class-listing-slogan {
+    font-size: 1rem;
+  }
+  .perfume-class-listing-filter-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 15px;
+  }
+  .perfume-class-listing-filter-dropdown {
+    width: 100%;
+  }
+  .perfume-class-listing-filter-section .filter-group {
+    width: 100%; /* Chaque groupe de filtre prend toute la largeur */
+    justify-content: space-between; /* Espacer label et dropdown */
+  }
+}

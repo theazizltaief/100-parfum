@@ -1,0 +1,28 @@
+<% content_for :title, "Connexion - Bisso Fragrance" %>
+
+<%= form_with scope: :admin, url: session_path(:admin), class: "auth-form" do |f| %>
+  <div class="mb-3">
+    <%= f.label :email, "Adresse email", class: "form-label fw-semibold" %>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "admin@bisso.com" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :password, "Mot de passe", class: "form-label fw-semibold" %>
+    <%= f.password_field :password, autocomplete: "current-password", class: "form-control", placeholder: "********" %>
+  </div>
+
+  <% if devise_mapping.rememberable? %>
+    <div class="mb-3 form-check">
+      <%= f.check_box :remember_me, class: "form-check-input" %>
+      <%= f.label :remember_me, "Se souvenir de moi", class: "form-check-label" %>
+    </div>
+  <% end %>
+
+  <%= f.submit "Se connecter", class: "btn btn-primary mb-3 w-100" %>
+
+ <div class="links">
+    <% if devise_mapping.recoverable? %>
+      <%= link_to "Mot de passe oublié ?", new_password_path(:admin) %>
+    <% end %>
+  </div>
+<% end %>

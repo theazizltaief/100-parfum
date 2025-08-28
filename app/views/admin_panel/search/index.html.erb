@@ -1,0 +1,142 @@
+<% content_for :page_title, "Résultats de recherche" %>
+
+<div class="admin-search-results-container">
+  <div class="admin-search-header">
+    <h2>Résultats pour "<%= @query %>"</h2>
+    <p class="text-muted">
+      <%= pluralize(@total_results, 'résultat') %> trouvé<%= 's' if @total_results > 1 %>
+    </p>
+  </div>
+
+  <% if @total_results > 0 %>
+    <!-- Résultats Parfums -->
+    <% if @results[:parfums].any? %>
+      <div class="admin-search-section">
+        <h3 class="admin-search-section-title">
+          <i class="fas fa-box-open me-2"></i>
+          Parfums (<%= @results[:parfums].count %>)
+        </h3>
+        <div class="admin-search-results-grid">
+          <% @results[:parfums].each do |parfum| %>
+            <div class="admin-search-result-card">
+              <%= link_to admin_panel_parfum_path(parfum), class: "admin-search-result-link" do %>
+                <div class="admin-search-result-image">
+                  <% if parfum.image.attached? %>
+                    <img src="<%= url_for(parfum.image.variant(resize_to_limit: [60, 60])) %>" 
+                         alt="<%= parfum.name %>" 
+                         class="img-fluid rounded">
+                  <% else %>
+                    <div class="admin-search-no-image">
+                      <i class="fas fa-image"></i>
+                    </div>
+                  <% end %>
+                </div>
+                <div class="admin-search-result-info">
+                  <h4 class="admin-search-result-title"><%= parfum.name %></h4>
+                  <p class="admin-search-result-subtitle">
+                    <%= parfum.brand&.name || 'Sans marque' %>
+                  </p>
+                  <div class="admin-search-result-meta">
+                    <span class="badge bg-<%= parfum.disponible? ? 'success' : 'danger' %>">
+                      <%= parfum.disponible? ? 'Disponible' : 'Rupture' %>
+                    </span>
+                    <span class="admin-search-result-price">
+                      <%= number_to_currency(parfum.prix, unit: 'TND', separator: ',', delimiter: ' ', format: '%n %u') %>
+                    </span>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <!-- Résultats Marques -->
+    <% if @results[:brands].any? %>
+      <div class="admin-search-section">
+        <h3 class="admin-search-section-title">
+          <i class="fas fa-tags me-2"></i>
+          Marques (<%= @results[:brands].count %>)
+        </h3>
+        <div class="admin-search-results-grid">
+          <% @results[:brands].each do |brand| %>
+            <div class="admin-search-result-card">
+              <%= link_to admin_panel_brand_path(brand), class: "admin-search-result-link" do %>
+                <div class="admin-search-result-image">
+                  <% if brand.image.attached? %>
+                    <img src="<%= url_for(brand.image.variant(resize_to_limit: [60, 60])) %>" 
+                         alt="<%= brand.name %>" 
+                         class="img-fluid rounded">
+                  <% else %>
+                    <div class="admin-search-no-image">
+                      <i class="fas fa-tag"></i>
+                    </div>
+                  <% end %>
+                </div>
+                <div class="admin-search-result-info">
+                  <h4 class="admin-search-result-title"><%= brand.name %></h4>
+                  <p class="admin-search-result-subtitle">
+                    <%= pluralize(brand.parfums.count, 'parfum') %>
+                  </p>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <!-- Résultats Commandes -->
+    <% if @results[:orders].any? %>
+      <div class="admin-search-section">
+        <h3 class="admin-search-section-title">
+          <i class="fas fa-shopping-cart me-2"></i>
+          Commandes (<%= @results[:orders].count %>)
+        </h3>
+        <div class="admin-search-results-list">
+          <% @results[:orders].each do |order| %>
+            <div class="admin-search-order-card">
+              <%= link_to admin_panel_order_path(order), class: "admin-search-result-link" do %>
+                <div class="admin-search-order-info">
+                  <div class="admin-search-order-header">
+                    <h4 class="admin-search-result-title">Commande #<%= order.id %></h4>
+                    <span class="admin-status-badge admin-status-<%= order.status_name %>">
+                      <%= case order.status_name
+                          when 'pending' then 'En attente'
+                          when 'confirmed' then 'Confirmée'
+                          when 'shipped' then 'Expédiée'
+                          when 'delivered' then 'Livrée'
+                          when 'cancelled' then 'Annulée'
+                          else order.status_name.capitalize
+                          end %>
+                    </span>
+                  </div>
+                  <p class="admin-search-result-subtitle">
+                    <%= order.full_name %> • <%= order.phone %>
+                  </p>
+                  <div class="admin-search-result-meta">
+                    <span class="admin-search-result-date">
+                      <%= order.created_at.strftime("%d/%m/%Y à %H:%M") %>
+                    </span>
+                    <span class="admin-search-result-price">
+                      <%= order.formatted_total %>
+                    </span>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="admin-search-empty">
+      <div class="admin-search-empty-icon">
+        <i class="fas fa-search"></i>
+      </div>
+      <h3>Aucun résultat trouvé</h3>
+      <p>Essayez avec d'autres mots-clés ou vérifiez l'orthographe.</p>
+    </div>
+  <% end %>
+</div>

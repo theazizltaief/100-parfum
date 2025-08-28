@@ -1,0 +1,211 @@
+<% content_for :page_title, "Gestion des Commandes" %>
+
+<div class="admin-orders-container" data-controller="admin-orders">
+  <div class="admin-orders-header">
+    <div class="admin-orders-stats">
+      <div class="admin-stat-card admin-stat-total">
+        <div class="admin-stat-number"><%= @stats[:total] %></div>
+        <div class="admin-stat-label">Total</div>
+      </div>
+      <div class="admin-stat-card admin-stat-pending">
+        <div class="admin-stat-number"><%= @stats[:pending] %></div>
+        <div class="admin-stat-label">En attente</div>
+      </div>
+      <div class="admin-stat-card admin-stat-confirmed">
+        <div class="admin-stat-number"><%= @stats[:confirmed] %></div>
+        <div class="admin-stat-label">Confirmées</div>
+      </div>
+      <div class="admin-stat-card admin-stat-shipped">
+        <div class="admin-stat-number"><%= @stats[:shipped] %></div>
+        <div class="admin-stat-label">Expédiées</div>
+      </div>
+      <div class="admin-stat-card admin-stat-delivered">
+        <div class="admin-stat-number"><%= @stats[:delivered] %></div>
+        <div class="admin-stat-label">Livrées</div>
+      </div>
+      <div class="admin-stat-card admin-stat-cancelled">
+        <div class="admin-stat-number"><%= @stats[:cancelled] %></div>
+        <div class="admin-stat-label">Annulées</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="admin-orders-filters">
+    <%= form_with url: admin_panel_orders_path, method: :get, local: true, class: "admin-filter-form" do |form| %>
+      <div class="admin-filter-group">
+        <%= form.select :status, 
+            options_for_select([
+              ['Toutes les commandes', 'all'],
+              ['En attente', 'pending'],
+              ['Confirmées', 'confirmed'],
+              ['Expédiées', 'shipped'],
+              ['Livrées', 'delivered'],
+              ['Annulées', 'cancelled']
+            ], params[:status] || 'all'),
+            {}, 
+            { class: "admin-filter-select", onchange: "this.form.submit();" } %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="admin-orders-table-container">
+    <% if @orders.any? %>
+      <table class="admin-orders-table">
+        <thead>
+          <tr>
+            <th class="admin-th-id">ID</th>
+            <th class="admin-th-client">Client</th>
+            <th class="admin-th-phone">Téléphone</th>
+            <th class="admin-th-total">Total</th>
+            <th class="admin-th-status">Statut</th>
+            <th class="admin-th-date">Date</th>
+            <th class="admin-th-actions">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @orders.each do |order| %>
+            <tr class="admin-order-row">
+              <td class="admin-td-id">#<%= order.id %></td>
+              <td class="admin-td-client">
+                <div class="admin-client-info">
+                  <div class="admin-client-name"><%= order.full_name %></div>
+                  <div class="admin-client-city"><%= order.city %></div>
+                </div>
+              </td>
+              <td class="admin-td-phone"><%= order.phone %></td>
+              <td class="admin-td-total">
+                <span class="admin-total-amount"><%= order.formatted_total %></span>
+              </td>
+              <td class="admin-td-status">
+                <span class="admin-status-badge admin-status-<%= order.status_name %>">
+                  <%= case order.status_name
+                      when 'pending' then 'En attente'
+                      when 'confirmed' then 'Confirmée'
+                      when 'shipped' then 'Expédiée'
+                      when 'delivered' then 'Livrée'
+                      when 'cancelled' then 'Annulée'
+                      else order.status_name.capitalize
+                      end %>
+                </span>
+              </td>
+              <td class="admin-td-date">
+                <div class="admin-date-info">
+                  <div class="admin-date-day"><%= order.created_at.strftime("%d/%m/%Y") %></div>
+                  <div class="admin-date-time"><%= order.created_at.strftime("%H:%M") %></div>
+                </div>
+              </td>
+              <td class="admin-td-actions">
+                <div class="admin-actions-group">
+                  <%= link_to admin_panel_order_path(order), class: "admin-action-btn admin-btn-view", title: "Voir détails" do %>
+                    <i class="fas fa-eye"></i>
+                  <% end %>
+                  
+                  <div class="admin-status-dropdown">
+                    <button class="admin-action-btn admin-btn-status" 
+                            type="button" 
+                            title="Changer statut"
+                            data-action="click->admin-orders#toggleDropdown">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    <div class="admin-status-menu">
+                      <%= link_to update_status_admin_panel_order_path(order, new_status: 'pending'), 
+                          method: :patch,
+                          class: "admin-status-option", 
+                          data: { 
+                            action: "click->admin-orders#confirmStatusChange",
+                            order_id: order.id
+                          } do %>
+                        <span class="admin-status-badge admin-status-pending">En attente</span>
+                      <% end %>
+                      <%= link_to update_status_admin_panel_order_path(order, new_status: 'confirmed'), 
+                          method: :patch,
+                          class: "admin-status-option", 
+                          data: { 
+                            action: "click->admin-orders#confirmStatusChange",
+                            order_id: order.id
+                          } do %>
+                        <span class="admin-status-badge admin-status-confirmed">Confirmée</span>
+                      <% end %>
+                      <%= link_to update_status_admin_panel_order_path(order, new_status: 'shipped'), 
+                          method: :patch,
+                          class: "admin-status-option", 
+                          data: { 
+                            action: "click->admin-orders#confirmStatusChange",
+                            order_id: order.id
+                          } do %>
+                        <span class="admin-status-badge admin-status-shipped">Expédiée</span>
+                      <% end %>
+                      <%= link_to update_status_admin_panel_order_path(order, new_status: 'delivered'), 
+                          method: :patch,
+                          class: "admin-status-option", 
+                          data: { 
+                            action: "click->admin-orders#confirmStatusChange",
+                            order_id: order.id
+                          } do %>
+                        <span class="admin-status-badge admin-status-delivered">Livrée</span>
+                      <% end %>
+                      <%= link_to update_status_admin_panel_order_path(order, new_status: 'cancelled'), 
+                          method: :patch,
+                          class: "admin-status-option", 
+                          data: { 
+                            action: "click->admin-orders#confirmStatusChange",
+                            order_id: order.id
+                          } do %>
+                        <span class="admin-status-badge admin-status-cancelled">Annulée</span>
+                      <% end %>
+                    </div>
+                  </div>
+                  
+                  <%= link_to admin_panel_order_path(order), 
+                      method: :delete,
+                      class: "admin-action-btn admin-btn-delete", 
+                      title: "Supprimer",
+                      data: { 
+                        action: "click->admin-orders#confirmDelete",
+                        order_id: order.id,
+                        confirm_message: "Cette action supprimera définitivement la commande ##{order.id} et toutes ses données associées."
+                      } do %>
+                    <i class="fas fa-trash"></i>
+                  <% end %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <div class="admin-empty-state">
+        <div class="admin-empty-icon">
+          <i class="fas fa-shopping-cart"></i>
+        </div>
+        <h3>Aucune commande trouvée</h3>
+        <p>Il n'y a pas encore de commandes dans le système.</p>
+      </div>
+    <% end %>
+  </div>
+
+  <% if @orders.respond_to?(:current_page) %>
+    <div class="admin-pagination-container">
+      <div class="admin-pagination">
+        <% if @orders.prev_page %>
+          <%= link_to admin_panel_orders_path(page: @orders.prev_page, status: params[:status]), 
+              class: "admin-pagination-btn admin-pagination-prev" do %>
+            <i class="fas fa-chevron-left"></i> Précédent
+          <% end %>
+        <% end %>
+        
+        <div class="admin-pagination-info">
+          Page <%= @orders.current_page %> sur <%= @orders.total_pages %>
+          (<%= @orders.total_count %> commandes au total)
+        </div>
+        
+        <% if @orders.next_page %>
+          <%= link_to admin_panel_orders_path(page: @orders.next_page, status: params[:status]), 
+              class: "admin-pagination-btn admin-pagination-next" do %>
+            Suivant <i class="fas fa-chevron-right"></i>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,16 @@
+<% content_for :title, "Mot de passe oublié - Bisso Fragrance" %>
+
+<%= form_with scope: :admin, url: password_path(:admin), class: "auth-form" do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
+
+  <div class="mb-3">
+    <%= f.label :email, "Adresse email", class: "form-label fw-semibold" %>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "admin@bisso.com" %>
+  </div>
+
+  <%= f.submit "Envoyer le lien de réinitialisation", class: "btn btn-primary mb-3 w-100" %>
+
+  <div class="links">
+    <%= link_to "Retour à la connexion", new_session_path(:admin) %>
+  </div>
+<% end %>

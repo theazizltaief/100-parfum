@@ -1,0 +1,211 @@
+/* Styles pour la section des catégories sur la page d'accueil */
+.category-cards-section {
+  padding: 80px 20px;
+  background-color: var(--soft-cream);
+  text-align: center;
+}
+
+.category-cards-section h2 {
+  font-family: var(--font-heading);
+  font-size: 3.2rem;
+  color: var(--dark-gold);
+  margin-bottom: 60px;
+  position: relative;
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.category-cards-section h2::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -15px;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background-color: var(--gold-accent);
+  border-radius: 2px;
+}
+
+.category-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* NOUVEAUX STYLES POUR LES CARTES DE CATÉGORIE */
+.category-card {
+  height: 400px;
+  border-radius: 25px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  text-decoration: none;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: 2px solid rgba(212, 175, 55, 0.2);
+  cursor: pointer;
+}
+
+.category-card:hover {
+  transform: translateY(-15px) scale(1.02);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+}
+
+/* Images de fond symboliques (CHEMINS DIRECTS DEPUIS LE DOSSIER PUBLIC) */
+.category-card-homme {
+  background-image: url('/images/parfum homme.jpg'); /* Chemin direct */
+}
+.category-card-femme {
+  background-image: url('/images/parfum femme.jpg'); /* Chemin direct */
+}
+.category-card-unisexe {
+  background-image: url('/images/parfum unisexe.jpg'); /* Chemin direct */
+}
+
+/* Superposition dégradée pour le texte */
+.category-card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0) 60%);
+  transition: background 0.4s ease;
+}
+
+.category-card:hover .category-card-overlay {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0) 70%);
+}
+
+.category-card-content {
+  position: relative;
+  z-index: 1;
+  padding: 30px;
+  text-align: left;
+}
+
+.category-card-title {
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  color: #fff;
+  margin-bottom: 15px;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.category-card-description {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+/* Styles pour la page de catégorie (similaire à brands.css) */
+.category-perfumes-page-container {
+  padding-top: 80px;
+  padding-bottom: 40px;
+  min-height: calc(100vh - 120px);
+  background-color: var(--background-color);
+}
+
+.category-perfumes-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.category-perfumes-title {
+  font-family: var(--font-heading);
+  font-size: 3.5rem;
+  color: var(--dark-gold);
+  margin-bottom: 10px;
+}
+
+.category-perfumes-slogan {
+  font-family: var(--font-body);
+  font-size: 1.2rem;
+  color: var(--text-color-light);
+  max-width: 700px;
+  line-height: 1.6;
+}
+
+/* NOUVEAUX STYLES POUR LE BOUTON "AJOUTER AU PANIER" SUR LES CARTES DE LISTE */
+.perfume-card-add-to-cart-btn {
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background-color: var(--gold-accent);
+  color: #fff;
+  border: 2px solid var(--gold-accent);
+  width: 100%; /* Pour qu'il prenne toute la largeur disponible */
+  margin-top: 10px; /* Espace au-dessus du bouton */
+}
+
+.perfume-card-add-to-cart-btn:hover:not(:disabled) {
+  background-color: var(--dark-gold);
+  border-color: var(--dark-gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(212, 175, 55, 0.3);
+}
+
+.perfume-card-add-to-cart-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: #cccccc; /* Couleur grisée pour désactivé */
+  border-color: #cccccc;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .category-cards-section {
+    padding: 50px 15px;
+  }
+  .category-cards-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+  }
+  .category-cards-grid {
+    grid-template-columns: 1fr;
+  }
+  .category-card {
+    height: 320px;
+    padding: 25px;
+  }
+  .category-card-title {
+    font-size: 2rem;
+  }
+  .category-card-description {
+    font-size: 0.95rem;
+  }
+  .category-perfumes-page-container {
+    padding-top: 60px;
+  }
+  .category-perfumes-title {
+    font-size: 2.8rem;
+  }
+  .category-perfumes-slogan {
+    font-size: 1rem;
+  }
+  .perfume-card-add-to-cart-btn {
+    font-size: 0.8rem;
+    padding: 8px 12px;
+  }
+}

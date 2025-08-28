@@ -1,0 +1,148 @@
+<% content_for :page_title, "Commande ##{@order.id}" %>
+
+<div class="admin-order-detail-container" data-controller="admin-orders">
+  <div class="admin-order-detail-header">
+    <div class="admin-order-detail-title">
+      <h2>Commande #<%= @order.id %></h2>
+      <span class="admin-status-badge admin-status-<%= @order.status_name %>">
+        <%= case @order.status_name
+            when 'pending' then 'En attente'
+            when 'confirmed' then 'Confirmée'
+            when 'shipped' then 'Expédiée'
+            when 'delivered' then 'Livrée'
+            when 'cancelled' then 'Annulée'
+            else @order.status_name.capitalize
+            end %>
+      </span>
+    </div>
+    <div class="admin-order-detail-date">
+      Passée le <%= @order.created_at.strftime("%d/%m/%Y à %H:%M") %>
+    </div>
+  </div>
+
+  <div class="admin-order-detail-content">
+    <div class="admin-order-section">
+      <h3 class="admin-section-title">Informations client</h3>
+      <div class="admin-order-info-grid">
+        <div class="admin-info-item">
+          <label>Nom complet</label>
+          <span><%= @order.full_name %></span>
+        </div>
+        <div class="admin-info-item">
+          <label>Téléphone</label>
+          <span><%= @order.phone %></span>
+        </div>
+        <div class="admin-info-item">
+          <label>Ville</label>
+          <span><%= @order.city %></span>
+        </div>
+        <div class="admin-info-item">
+          <label>Code postal</label>
+          <span><%= @order.postal_code %></span>
+        </div>
+        <div class="admin-info-item admin-info-full">
+          <label>Adresse de livraison</label>
+          <span><%= @order.address %></span>
+        </div>
+        <% if @order.notes.present? %>
+          <div class="admin-info-item admin-info-full">
+            <label>Notes</label>
+            <span><%= @order.notes %></span>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="admin-order-section">
+      <h3 class="admin-section-title">Articles commandés</h3>
+      <div class="admin-order-items">
+        <% @order.items.each do |item| %>
+          <div class="admin-order-item">
+            <img src="<%= item['imageUrl'] %>" alt="<%= item['name'] %>" class="admin-item-image">
+            <div class="admin-item-info">
+              <h4 class="admin-item-name"><%= item['name'] %></h4>
+              <p class="admin-item-details">10ml × <%= item['quantity'] %></p>
+            </div>
+            <div class="admin-item-total">
+              <%= number_to_currency(item['price'].to_f * item['quantity'].to_i, unit: '', precision: 2) %> TND
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="admin-order-section">
+      <h3 class="admin-section-title">Résumé financier</h3>
+      <div class="admin-order-totals">
+        <div class="admin-total-line">
+          <span>Sous-total</span>
+          <span><%= number_to_currency(@order.subtotal, unit: '', precision: 2) %> TND</span>
+        </div>
+        <div class="admin-total-line">
+          <span>Frais de livraison</span>
+          <span><%= number_to_currency(@order.delivery_fee, unit: '', precision: 2) %> TND</span>
+        </div>
+        <div class="admin-total-line admin-total-final">
+          <span>Total</span>
+          <span><%= @order.formatted_total %></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="admin-order-detail-actions">
+    <%= link_to admin_panel_orders_path, class: "admin-btn admin-btn-secondary" do %>
+      <i class="fas fa-arrow-left"></i> Retour à la liste
+    <% end %>
+    
+    <div class="admin-status-actions">
+      <% unless @order.confirmed? %>
+        <%= link_to update_status_admin_panel_order_path(@order, new_status: 'confirmed'), 
+            method: :patch,
+            class: "admin-btn admin-btn-success",
+            data: { 
+              action: "click->admin-orders#confirmDetailStatusChange",
+              order_id: @order.id
+            } do %>
+          <i class="fas fa-check"></i> Confirmer
+        <% end %>
+      <% end %>
+      
+      <% if @order.confirmed? && !@order.shipped? %>
+        <%= link_to update_status_admin_panel_order_path(@order, new_status: 'shipped'), 
+            method: :patch,
+            class: "admin-btn admin-btn-info",
+            data: { 
+              action: "click->admin-orders#confirmDetailStatusChange",
+              order_id: @order.id
+            } do %>
+          <i class="fas fa-truck"></i> Marquer comme expédiée
+        <% end %>
+      <% end %>
+      
+      <% if @order.shipped? && !@order.delivered? %>
+        <%= link_to update_status_admin_panel_order_path(@order, new_status: 'delivered'), 
+            method: :patch,
+            class: "admin-btn admin-btn-primary",
+            data: { 
+              action: "click->admin-orders#confirmDetailStatusChange",
+              order_id: @order.id
+            } do %>
+          <i class="fas fa-check-circle"></i> Marquer comme livrée
+        <% end %>
+      <% end %>
+      
+      <% unless @order.cancelled? %>
+        <%= link_to update_status_admin_panel_order_path(@order, new_status: 'cancelled'), 
+            method: :patch,
+            class: "admin-btn admin-btn-danger",
+            data: { 
+              action: "click->admin-orders#confirmDetailStatusChange",
+              order_id: @order.id
+            } do %>
+          <i class="fas fa-times"></i> Annuler
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,205 @@
+/* Importation des polices Google Fonts (Sans-Serif) */
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* ====== RESET GLOBAL ====== */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* ====== Variables globales ====== */
+:root {
+  --color-primary: #4b3cc4;
+  --color-secondary: #f4f2ff;
+  --color-accent: #d2b4ff;
+  --color-success: #28c76f;
+  --color-danger: #ea5455;
+  --sidebar-bg: linear-gradient(135deg, #1f1c2c, #4b3cc4);
+  --sidebar-width: 250px;
+}
+
+/* ====== Styles admin-panel ====== */
+body.admin-panel {
+  font-family: 'Inter', sans-serif;
+  background: #f9fafc;
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ==================== Sidebar ==================== */
+body.admin-panel .sidebar {
+  background: var(--sidebar-bg);
+  height: 100vh;
+  width: var(--sidebar-width);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1050;
+  box-shadow: 3px 0 15px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: left 0.3s ease;
+}
+
+body.admin-panel .sidebar .text-center h4 {
+  font-weight: bold;
+  color: #fff;
+}
+
+body.admin-panel .sidebar a {
+  color: rgba(255, 255, 255, 0.9);
+  padding: 12px 20px;
+  display: block;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+body.admin-panel .sidebar a:hover,
+body.admin-panel .sidebar a.active {
+  background-color: rgba(255,255,255,0.15);
+  color: #fff;
+  transform: translateX(3px);
+}
+
+/* ==================== Main content ==================== */
+body.admin-panel .main-content {
+  margin-left: var(--sidebar-width);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - var(--sidebar-width));
+  transition: margin-left 0.3s;
+}
+
+/* Neutraliser padding Bootstrap container-fluid sur main-content */
+.container-fluid {
+  max-width: 1400px; /* ou une autre valeur */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+body.admin-panel .main-content.container-fluid {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  max-width: 100% !important;
+}
+
+/* Responsive sidebar & main content */
+@media (max-width: 767.98px) {
+  body.admin-panel .sidebar {
+    left: -100%;
+  }
+
+  body.admin-panel .sidebar.show {
+    left: 0;
+  }
+
+  body.admin-panel .main-content {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+}
+
+/* ==================== Header ==================== */
+body.admin-panel header {
+  background: white;
+  border-bottom: 1px solid #e5e5e5;
+  padding: 15px 20px;
+}
+
+body.admin-panel header h1 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+/* ==================== Boutons ==================== */
+body.admin-panel .btn {
+  border-radius: 30px;
+  transition: all 0.3s ease;
+}
+
+body.admin-panel .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+body.admin-panel .btn-primary {
+  background: var(--color-primary);
+  border: none;
+}
+
+body.admin-panel .btn-primary:hover {
+  background: #3a2fa0;
+}
+
+body.admin-panel .btn-outline-primary {
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+}
+
+body.admin-panel .btn-outline-primary:hover {
+  background: var(--color-primary);
+  color: white;
+}
+
+body.admin-panel .btn-outline-danger {
+  border: 1px solid var(--color-danger);
+  color: var(--color-danger);
+}
+
+body.admin-panel .btn-outline-danger:hover {
+  background: var(--color-danger);
+  color: white;
+}
+
+/* ==================== Cartes ==================== */
+body.admin-panel .card {
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+body.admin-panel .card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+body.admin-panel .card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #444;
+}
+
+/* ==================== Responsive Images ==================== */
+body.admin-panel img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ==================== Sidebar Responsive - Important pour la fermeture sur mobile ==================== */
+@media (max-width: 768px) {
+  body.admin-panel .sidebar {
+    left: -100%;
+  }
+
+  body.admin-panel .sidebar.show {
+    left: 0;
+  }
+}
+
+/* Sidebar close button (mobile) */
+.sidebar .btn-close {
+  filter: invert(1);
+}
+
+/* Empêche débordement vertical du contenu */
+body.admin-panel main {
+  overflow-y: auto;
+}

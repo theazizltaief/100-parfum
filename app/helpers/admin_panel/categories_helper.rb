@@ -1,0 +1,2 @@
+module AdminPanel::CategoriesHelper
+end

@@ -1,0 +1,11 @@
+<% if object.errors.any? %>
+  <div class="alert alert-danger alert-dismissible fade show">
+    <h5 class="alert-heading"><%= pluralize(object.errors.count, "erreur") %> :</h5>
+    <ul class="mb-0">
+      <% object.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% end %>

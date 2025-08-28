@@ -1,0 +1,2 @@
+module AdminPanel::OrdersHelper
+end

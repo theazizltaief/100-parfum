@@ -1,0 +1,22 @@
+<% content_for :title, "Réinitialiser le mot de passe - Bisso Fragrance" %>
+
+<%= form_with scope: :admin, url: password_path(:admin), class: "auth-form", method: :put do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
+  <%= f.hidden_field :reset_password_token %>
+
+  <div class="mb-3">
+    <%= f.label :password, "Nouveau mot de passe", class: "form-label fw-semibold" %>
+    <%= f.password_field :password, autocomplete: "new-password", class: "form-control", placeholder: "********" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :password_confirmation, "Confirmer le mot de passe", class: "form-label fw-semibold" %>
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", placeholder: "********" %>
+  </div>
+
+  <%= f.submit "Changer mon mot de passe", class: "btn btn-primary mb-3 w-100" %>
+
+  <div class="links">
+    <%= link_to "Retour à la connexion", new_session_path(:admin) %>
+  </div>
+<% end %>

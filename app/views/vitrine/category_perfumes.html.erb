@@ -1,0 +1,62 @@
+<div class="perfume-class-listing-page-container"
+   data-controller="category-perfumes"
+   data-category-perfumes-filter-type-value="<%= params[:filter_type] %>"
+   data-category-perfumes-filter-value-value="<%= params[:filter_value] %>">
+
+  <div class="container">
+    <% if flash[:alert] %>
+      <div class="alert alert-danger"><%= flash[:alert] %></div>
+    <% end %>
+
+    <header class="perfume-class-listing-header">
+      <h1 class="perfume-class-listing-title" data-category-perfumes-target="categoryTitle">
+        Chargement des parfums...
+      </h1>
+      <p class="perfume-class-listing-slogan" data-category-perfumes-target="categorySlogan">
+        Découvrez notre sélection de parfums.
+      </p>
+    </header>
+
+    <!-- Section des filtres -->
+    <section class="perfume-class-listing-filter-section">
+      <div class="filter-group">
+        <label for="dynamic-filter-dropdown" class="perfume-class-listing-filter-label" data-category-perfumes-target="dynamicFilterLabel">
+          Filtrer :
+        </label>
+        <select id="dynamic-filter-dropdown"
+                class="perfume-class-listing-filter-dropdown"
+                data-category-perfumes-target="dynamicFilterDropdown"
+                data-action="change->category-perfumes#filterPerfumes">
+          <!-- Options will be dynamically inserted by Stimulus -->
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="price-filter-dropdown" class="perfume-class-listing-filter-label">Trier par prix :</label>
+        <select id="price-filter-dropdown"
+                class="perfume-class-listing-filter-dropdown"
+                data-category-perfumes-target="priceFilter"
+                data-action="change->category-perfumes#filterPerfumes">
+          <option value="none">Par défaut</option>
+          <option value="asc">Prix croissant</option>
+          <option value="desc">Prix décroissant</option>
+        </select>
+      </div>
+    </section>
+
+    <section class="perfumes-grid-container">
+      <h2 class="section-subtitle">Parfums</h2>
+      <div class="perfumes-grid" data-category-perfumes-target="perfumesGrid">
+        <!-- Les cartes de parfums seront insérées ici par le contrôleur Stimulus -->
+        <p class="loading-message">Chargement des parfums...</p>
+      </div>
+      <div class="pagination-container" data-category-perfumes-target="pagination">
+        <!-- La pagination sera insérée ici par le contrôleur Stimulus -->
+      </div>
+    </section>
+
+    <div class="back-link">
+      <%= link_to "Retour à l'accueil", root_path %>
+    </div>
+  </div>
+</div>

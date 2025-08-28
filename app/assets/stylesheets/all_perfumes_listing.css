@@ -1,0 +1,146 @@
+/* app/assets/stylesheets/all_perfumes_listing.css */
+
+/* Styles pour la page de liste de tous les parfums */
+.all-perfumes-page-container {
+  padding-top: 80px; /* Espace pour la navbar */
+  padding-bottom: 40px;
+  min-height: calc(100vh - 120px); /* Pour que le footer ne remonte pas */
+  background-color: var(--background-color);
+}
+
+.all-perfumes-listing-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.all-perfumes-listing-title {
+  font-family: var(--font-heading);
+  font-size: 3.5rem;
+  color: var(--dark-gold);
+  margin-bottom: 10px;
+}
+
+.all-perfumes-listing-slogan {
+  font-family: var(--font-body);
+  font-size: 1.2rem;
+  color: var(--text-color-light);
+  max-width: 700px;
+  line-height: 1.6;
+}
+
+/* Section des filtres */
+.all-perfumes-listing-filter-section {
+  display: flex;
+  justify-content: flex-end; /* Aligner à droite */
+  align-items: center;
+  gap: 25px; /* Espace entre les groupes de filtres */
+  margin-bottom: 40px;
+  padding: 15px 20px;
+  background-color: var(--soft-cream);
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  max-width: 1200px;
+  margin-left: auto; /* Pousser à droite */
+  margin-right: auto; /* Centrer si l'espace le permet */
+  flex-wrap: wrap; /* Permet aux filtres de passer à la ligne sur mobile */
+}
+
+.all-perfumes-listing-filter-section .filter-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.all-perfumes-listing-filter-label {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+.all-perfumes-listing-filter-dropdown {
+  padding: 10px 15px;
+  border: 2px solid var(--gold-accent);
+  border-radius: 8px;
+  background-color: #fff;
+  font-size: 1rem;
+  color: var(--text-color);
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  -webkit-appearance: none; /* Supprime le style par défaut du navigateur */
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23D4AF37%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13.2-6.4H18.6c-5%200-9.3%201.8-12.9%205.4-3.6%203.6-5.4%207.8-5.4%2012.8%200%205%201.8%209.2%205.4%2012.8l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095.1c3.6-3.6%205.4-7.8%205.4-12.8%200-5-1.8-9.2-5.4-12.8z%22%2F%3E%3C%2Fsvg%3E'); /* Flèche personnalisée */
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 12px;
+  padding-right: 30px; /* Espace pour la flèche */
+}
+
+.all-perfumes-listing-filter-dropdown:focus {
+  border-color: var(--dark-gold);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+}
+
+/* Styles pour la grille de parfums (réutilise les styles existants de .perfumes-grid) */
+.all-perfumes-grid-container {
+  max-width: 1200px;
+  margin: 0 auto 40px;
+}
+
+.all-perfumes-grid-container .section-subtitle {
+  font-family: var(--font-heading);
+  font-size: 2.2rem;
+  color: var(--dark-gold);
+  margin-bottom: 30px;
+  text-align: center;
+  position: relative;
+  display: inline-block;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.all-perfumes-grid-container .section-subtitle::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -8px;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background-color: var(--gold-accent);
+  border-radius: 2px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .all-perfumes-page-container {
+    padding: 60px 15px;
+  }
+  .all-perfumes-listing-title {
+    font-size: 2.8rem;
+  }
+  .all-perfumes-listing-slogan {
+    font-size: 1rem;
+  }
+  .all-perfumes-listing-filter-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 15px;
+  }
+  .all-perfumes-listing-filter-dropdown {
+    width: 100%;
+  }
+  .all-perfumes-listing-filter-section .filter-group {
+    width: 100%; /* Chaque groupe de filtre prend toute la largeur */
+    justify-content: space-between; /* Espacer label et dropdown */
+  }
+  .all-perfumes-grid-container .section-subtitle {
+    font-size: 1.8rem;
+  }
+}

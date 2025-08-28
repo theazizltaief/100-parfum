@@ -1,0 +1,74 @@
+<div class="all-perfumes-page-container"
+   data-controller="all-perfumes">
+
+  <div class="container">
+    <% if flash[:alert] %>
+      <div class="alert alert-danger"><%= flash[:alert] %></div>
+    <% end %>
+
+    <header class="all-perfumes-listing-header">
+      <h1 class="all-perfumes-listing-title" data-all-perfumes-target="pageTitle">
+        Tous nos Parfums
+      </h1>
+      <p class="all-perfumes-listing-slogan" data-all-perfumes-target="pageSlogan">
+        Découvrez l'intégralité de notre collection de fragrances d'exception.
+      </p>
+    </header>
+
+    
+    <section class="all-perfumes-listing-filter-section">
+      <div class="filter-group">
+        <label for="gender-filter-dropdown" class="all-perfumes-listing-filter-label">Filtrer par Genre :</label>
+        <select id="gender-filter-dropdown"
+                class="all-perfumes-listing-filter-dropdown"
+                data-all-perfumes-target="genderFilter"
+                data-action="change->all-perfumes#filterPerfumes">
+          <option value="all_genders">Tous les genres</option>
+          <option value="homme">Homme</option>
+          <option value="femme">Femme</option>
+          <option value="unisexe">Unisexe</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="class-filter-dropdown" class="all-perfumes-listing-filter-label">Filtrer par Classe :</label>
+        <select id="class-filter-dropdown"
+                class="all-perfumes-listing-filter-dropdown"
+                data-all-perfumes-target="classFilter"
+                data-action="change->all-perfumes#filterPerfumes">
+          <option value="all_classes">Toutes les classes</option>
+          <option value="designer">Designer</option>
+          <option value="niche">Niche</option>
+          <option value="collection_privee">Collection Privée</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="price-filter-dropdown" class="all-perfumes-listing-filter-label">Trier par Prix :</label>
+        <select id="price-filter-dropdown"
+                class="all-perfumes-listing-filter-dropdown"
+                data-all-perfumes-target="priceFilter"
+                data-action="change->all-perfumes#filterPerfumes">
+          <option value="none">Par défaut</option>
+          <option value="asc">Prix croissant</option>
+          <option value="desc">Prix décroissant</option>
+        </select>
+      </div>
+    </section>
+
+    <section class="all-perfumes-grid-container">
+      <h2 class="section-subtitle">Notre Sélection</h2>
+      <div class="perfumes-grid" data-all-perfumes-target="perfumesGrid">
+         Les cartes de parfums seront insérées ici par le contrôleur Stimulus 
+        <p class="loading-message">Chargement des parfums...</p>
+      </div>
+      <div class="pagination-container" data-all-perfumes-target="pagination">
+         La pagination sera insérée ici par le contrôleur Stimulus 
+      </div>
+    </section>
+
+    <div class="back-link">
+      <%= link_to "Retour à l'accueil", root_path %>
+    </div>
+  </div>
+</div>

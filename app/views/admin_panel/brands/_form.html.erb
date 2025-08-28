@@ -1,0 +1,35 @@
+<%= form_with model: [:admin_panel, brand], local: true, html: { multipart: true } do |f| %>
+  <div class="mb-3">
+    <%= f.label :name, "Nom de la marque" %><br>
+    <%= f.text_field :name, maxlength: 30, required: true, class: "form-control" %>
+  </div>
+
+<div class="mb-3">
+  <%= f.label :image, "Logo de la marque", class: "form-label" %>
+  <%= f.file_field :image, class: "form-control" %>
+  
+  <% if @brand.image.attached? %>
+    <div class="mt-2">
+      <%= image_tag @brand.image.variant(resize_to_limit: [100, 100]), class: "img-thumbnail" %>
+      <div class="form-check mt-2">
+        <%= f.check_box :remove_image, { class: "form-check-input" }, '1', '0' %>
+        <%= f.label :remove_image, "Supprimer l'image", class: "form-check-label" %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+
+  <div class="mb-3">
+    <%= f.submit "Enregistrer", class: "btn btn-primary" %>
+  </div>
+
+  <% if Brand.exists? %>
+    <p>Nombre de marques disponibles : <%= Brand.count %></p>
+  <% end %>
+
+  <p>
+    Vous ne trouvez pas votre marque ?
+    <%= link_to "Ajouter une nouvelle marque", new_admin_panel_brand_path(redirect_to: request.fullpath) %>
+  </p>
+<% end %>

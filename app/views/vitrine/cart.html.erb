@@ -1,0 +1,45 @@
+<div class="cart-page-container">
+  <div class="cart-page-wrapper">
+    <h1 class="cart-page-title">Votre Panier</h1>
+
+    <div class="cart-table-wrapper">
+      <table class="cart-table">
+        <thead>
+          <tr class="cart-table-header">
+            <th class="cart-table-cell">Produit</th>
+            <th class="cart-table-cell">Quantité</th>
+            <th class="cart-table-cell">Prix Unitaire</th>
+            <th class="cart-table-cell">Actions</th>
+          </tr>
+        </thead>
+        <tbody data-cart-target="cartPageItems">
+          <!-- Les articles du panier seront insérés ici par Stimulus -->
+          <tr>
+            <td colspan="4" class="cart-table-empty-message">Votre panier est vide.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="cart-page-summary">
+      <div class="summary-line">
+        <span>Sous-total:</span>
+        <span data-cart-target="subtotalPageDisplay">0,00 TND</span>
+      </div>
+      <div class="summary-line">
+        <span>Frais de livraison:</span>
+        <span data-cart-target="deliveryPageDisplay">0,00 TND</span>
+      </div>
+      <div class="summary-line total-line">
+        <span>Total à payer:</span>
+        <span data-cart-target="totalPageDisplay">0,00 TND</span>
+      </div>
+    </div>
+
+    <div class="cart-page-actions">
+      <%= link_to "Continuer les achats", root_path, class: "cart-page-continue-btn" %>
+      <button class="cart-page-buy-btn" data-action="click->cart#orderCart">Acheter</button>
+    </div>
+
+  </div>
+</div>

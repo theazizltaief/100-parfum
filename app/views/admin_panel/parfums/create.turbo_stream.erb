@@ -1,0 +1,3 @@
+<%= turbo_stream.prepend "parfums_container", partial: "parfum", locals: { parfum: @parfum } %>
+<%= turbo_stream.replace "flash", partial: "shared/flash", locals: { notice: "Parfum créé avec succès" } %>
+<%= turbo_stream.replace "new_parfum_form", "" %>  <!-- Vide le formulaire -->

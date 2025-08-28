@@ -1,0 +1,39 @@
+fr:
+  devise:
+    failure:
+      unauthenticated: "Vous devez vous connecter pour continuer."
+      already_authenticated: "Vous êtes déjà connecté."
+      admin:
+        unauthenticated: "Vous devez vous connecter comme administrateur pour continuer."
+        already_authenticated: "Vous êtes déjà connecté en tant qu'administrateur."
+      unconfirmed: "Vous devez confirmer votre compte avant de vous connecter."
+      locked: "Votre compte est verrouillé."
+      invalid: "Adresse e-mail ou mot de passe invalide."
+      last_attempt: "Dernière tentative avant verrouillage du compte."
+      inactive: "Votre compte est désactivé."
+      timeout: "Votre session a expiré. Veuillez vous reconnecter."
+    sessions:
+      signed_in: "Connexion réussie."
+      signed_out: "Déconnexion réussie."
+      already_signed_in: "Vous êtes déjà connecté."
+    registrations:
+      signed_up: "Bienvenue ! Vous vous êtes inscrit avec succès."
+      admin:
+        signed_up: "Bienvenue administrateur ! Votre compte a été créé avec succès."
+      updated: "Votre compte a été mis à jour avec succès."
+      destroyed: "Votre compte a été supprimé avec succès."
+      signed_up_but_unconfirmed: "Vous vous êtes inscrit avec succès, mais vous devez confirmer votre adresse e-mail."
+      signed_up_but_inactive: "Vous vous êtes inscrit avec succès, mais votre compte est inactif."
+    passwords:
+      send_instructions: "Vous allez recevoir un e-mail avec les instructions pour réinitialiser votre mot de passe."
+      send_paranoid_instructions: "Si votre adresse e-mail figure dans notre base, vous recevrez un e-mail avec les instructions."
+      updated: "Votre mot de passe a été changé avec succès."
+      updated_not_active: "Votre mot de passe a été changé, mais votre compte est inactif."
+      no_token: "Vous ne pouvez pas accéder à cette page sans un token de réinitialisation."
+      token_invalid: "Le token de réinitialisation est invalide."
+    confirmations:
+      send_instructions: "Vous allez recevoir un e-mail avec les instructions pour confirmer votre compte."
+      send_paranoid_instructions: "Si votre adresse e-mail figure dans notre base, vous recevrez un e-mail avec les instructions."
+      confirmed: "Votre compte a été confirmé avec succès."
+      already_confirmed: "Votre compte a déjà été confirmé."
+      not_found: "Le token de confirmation est invalide."

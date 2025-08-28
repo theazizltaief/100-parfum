@@ -1,0 +1,158 @@
+<section class="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1 class="hero-title-animated">L'Art de la Parfumerie au cœur de la médina.</h1>
+    <p>Découvrez nos décants de parfums d'exception, une sélection raffinée de fragrances designer, niche et collections privées.</p>
+      <a href="<%= vitrine_all_perfumes_path %>" class="btn-primary">
+        <span>Explorer la Collection</span>
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+  </div>
+  <div class="hero-decoration"></div>
+</section>
+<section class="collection-class-section">
+  <div class="container">
+    <h2>Nos Collections</h2>
+    <div class="collection-class-grid">
+
+     
+      <a href="<%= category_perfumes_path(filter_type: 'fragrance_class', filter_value: 'designer') %>" class="collection-class-card collection-card-designer">
+        <div class="collection-class-overlay"></div>
+        <div class="collection-class-content">
+          <h3 class="collection-class-title">Designer</h3>
+          <p class="collection-class-description">Les grandes maisons de parfumerie : l'essence du luxe, de l'histoire et de la sophistication.</p>
+        </div>
+      </a>
+
+      
+      <a href="<%= category_perfumes_path(filter_type: 'fragrance_class', filter_value: 'niche') %>" class="collection-class-card collection-card-niche">
+        <div class="collection-class-overlay"></div>
+        <div class="collection-class-content">
+          <h3 class="collection-class-title">Niche</h3>
+          <p class="collection-class-description">Les créations artisanales exclusives : l'essence de l'originalité, le savoir-faire unique et la rareté.</p>
+        </div>
+      </a>
+
+      
+      <a href="<%= category_perfumes_path(filter_type: 'fragrance_class', filter_value: 'collection_privee') %>" class="collection-class-card collection-card-private">
+        <div class="collection-class-overlay"></div>
+        <div class="collection-class-content">
+          <h3 class="collection-class-title">Collection Privée</h3>
+          <p class="collection-class-description">Plongez dans l'univers des éditions limitées et des créations exclusives.</p>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<section class="why-choose-us">
+  <div class="container">
+    <div class="section-header-artistic">
+      <span class="section-subtitle">Notre Engagement</span>
+      <h2 class="section-title">Pourquoi Choisir Bisso Fragrance ?</h2>
+      <p class="section-description">
+        Nous nous engageons à vous offrir une expérience olfactive inégalée, alliant qualité irréprochable et service d'excellence.
+      </p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card authenticity">
+        <div class="feature-icon">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="goldSealGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#FFD700"/>
+                <stop offset="100%" stop-color="#B8860B"/>
+              </linearGradient>
+            </defs>
+            <circle cx="50" cy="50" r="40" fill="url(#goldSealGradient)"/>
+            <path d="M30 50 L45 65 L70 35" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="50" cy="50" r="48" stroke="url(#goldSealGradient)" stroke-width="2" fill="none"/>
+          </svg>
+        </div>
+        <h3>Authenticité Garantie</h3>
+        <p>Chaque décant provient directement de flacons originaux, assurant une pureté et une fidélité absolues à la fragrance.</p>
+      </div>
+
+      <div class="feature-card fast-delivery">
+        <div class="feature-icon">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="deliveryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#6A4C93"/>
+                <stop offset="100%" stop-color="#9B59B6"/>
+              </linearGradient>
+            </defs>
+            <rect x="20" y="35" width="60" height="30" rx="8" fill="url(#deliveryGradient)"/>
+            <path d="M20 35 L50 20 L80 35" stroke="url(#deliveryGradient)" stroke-width="4" fill="url(#deliveryGradient)"/>
+            <line x1="50" y1="20" x2="50" y2="65" stroke="#FFFFFF" stroke-width="2" stroke-dasharray="4 4"/>
+            <path d="M15 50 H85" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+            <path d="M10 55 H90" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+            <path d="M5 60 H95" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
+          </svg>
+        </div>
+        <h3>Livraison Rapide et Soignée</h3>
+        <p>Vos précieuses fragrances sont expédiées avec le plus grand soin et arrivent rapidement à votre porte, partout en Tunisie.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="gender-category-cards-section">
+  <div class="container">
+    <h2>Explorez par Genre</h2>
+    <div class="gender-category-cards-grid">
+
+      <!-- Carte Homme -->
+      <a href="<%= category_perfumes_path(filter_type: 'category', filter_value: 'homme') %>" class="gender-category-card gender-category-card-homme">
+        <div class="gender-category-card-overlay"></div>
+        <div class="gender-category-card-content">
+          <h3 class="gender-category-card-title">Homme</h3>
+          <p class="gender-category-card-description">Des fragrances puissantes et sophistiquées pour l'homme moderne.</p>
+        </div>
+      </a>
+
+      <!-- Carte Femme -->
+      <a href="<%= category_perfumes_path(filter_type: 'category', filter_value: 'femme') %>" class="gender-category-card gender-category-card-femme">
+        <div class="gender-category-card-overlay"></div>
+        <div class="gender-category-card-content">
+          <h3 class="gender-category-card-title">Femme</h3>
+          <p class="gender-category-card-description">Des senteurs délicates et envoûtantes pour la femme élégante.</p>
+        </div>
+      </a>
+
+      <!-- Carte Unisexe -->
+      <a href="<%= category_perfumes_path(filter_type: 'category', filter_value: 'unisexe') %>" class="gender-category-card gender-category-card-unisexe">
+        <div class="gender-category-card-overlay"></div>
+        <div class="gender-category-card-content">
+          <h3 class="gender-category-card-title">Unisexe</h3>
+          <p class="gender-category-card-description">Des parfums qui transcendent les genres, pour une expression unique.</p>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="brands-slider" data-controller="brands-slider" >
+  <div class="container">
+    <div class="section-header">
+      <h2>Nos Marques Partenaires</h2>
+      <p>Découvrez les maisons de parfumerie d'exception dont nous proposons les décants.</p>
+    </div>
+  </div>
+  <div class="slider-container">
+    <div class="brands-track" data-brands-slider-target="track">
+      <!-- Les logos des marques seront insérés ici par JavaScript -->
+    </div>
+  </div>
+</section>
+<br>
+

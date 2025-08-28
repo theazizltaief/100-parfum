@@ -1,0 +1,52 @@
+<div id="<%= dom_id parfum %>" class="col-sm-12 col-md-6 col-lg-4 d-flex">
+  <div class="card mb-4 flex-fill">
+    <% if parfum.image.attached? %>
+      <div class="card-img-top admin-image-loader-container admin-parfum-image-container" 
+           data-controller="admin-image-loader"
+           data-admin-image-loader-timeout-value="8000"
+           data-admin-image-loader-retry-count-value="3">
+        
+        <div class="admin-image-spinner admin-spinner-pulse" 
+             data-admin-image-loader-target="spinner"
+             aria-hidden="false">
+          <div class="admin-spinner-circle"></div>
+          <div class="admin-spinner-text">Chargement...</div>
+        </div>
+
+        <div class="admin-image-error hidden" 
+             data-admin-image-loader-target="errorState">
+          <div class="admin-error-icon">⚠</div>
+          <div class="admin-error-text">Erreur de chargement</div>
+          <button class="btn btn-sm btn-outline-primary mt-2" 
+                  data-action="click->admin-image-loader#retry">
+          </button>
+        </div>
+
+        <img data-admin-image-loader-target="image"
+             data-src="<%= url_for(parfum.image.variant(resize_to_limit: [300, 300])) %>"
+             alt="<%= parfum.name %>"
+             class="img-fluid w-100 object-fit-contain admin-image-loading"
+             style="max-height: 300px;" />
+      </div>
+    <% else %>
+      <div class="card-img-top admin-no-image-placeholder" style="height: 300px;">
+        <div class="admin-no-image-icon">
+          <i class="fas fa-image"></i>
+        </div>
+        <div class="admin-no-image-text">Pas encore d'image</div>
+      </div>
+    <% end %>
+    
+    <div class="card-body d-flex flex-column">
+      <h5 class="card-title"><%= parfum.name %></h5>
+      <p class="mb-2">
+        <strong>Disponibilité :</strong>
+        <%= parfum.disponible? ? "✅ Disponible" : "❌ Rupture de stock" %>
+      </p>
+      <div class="mt-auto">
+        <%= link_to "Voir", admin_panel_parfum_path(parfum), class: "btn btn-sm btn-outline-primary me-2 mb-2" %>
+        <%= link_to "Modifier", edit_admin_panel_parfum_path(parfum), class: "btn btn-sm btn-outline-secondary mb-2" %>
+      </div>
+    </div>
+  </div>
+</div>

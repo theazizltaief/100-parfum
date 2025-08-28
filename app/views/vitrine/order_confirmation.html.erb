@@ -1,0 +1,60 @@
+<div class="order-confirmation-page">
+  <div class="container">
+    <div class="confirmation-content">
+      <div class="success-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+          <polyline points="22,4 12,14.01 9,11.01"/>
+        </svg>
+      </div>
+      
+      <h1 class="confirmation-title">Commande confirmée !</h1>
+      <p class="confirmation-subtitle">
+        Votre commande a été envoyée avec succès.<br>
+        Nous vous contacterons pour confirmer votre commande.
+      </p>
+
+      <!-- NOUVEAU : Durée de livraison -->
+      <div class="delivery-info">
+        <div class="delivery-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="1" y="3" width="15" height="13"/>
+            <polygon points="16,8 20,8 23,11 23,16 16,16"/>
+            <circle cx="5.5" cy="18.5" r="2.5"/>
+            <circle cx="18.5" cy="18.5" r="2.5"/>
+          </svg>
+        </div>
+        <div class="delivery-text">
+          <h3>Durée de livraison</h3>
+          <p>24h à 72h</p>
+        </div>
+      </div>
+
+      <div class="order-details">
+        <h2>Détails de votre commande</h2>
+        <div class="order-info">
+          <p><strong>Numéro de commande:</strong> #<%= @order.id %></p>
+          <p><strong>Nom:</strong> <%= @order.full_name %></p>
+          <p><strong>Téléphone:</strong> <%= @order.phone %></p>
+          <p><strong>Adresse:</strong> <%= @order.address %>, <%= @order.city %> <%= @order.postal_code %></p>
+          <p><strong>Total:</strong> <%= @order.formatted_total %></p>
+        </div>
+
+        <div class="order-items-summary">
+          <h3>Articles commandés:</h3>
+          <% @order.items.each do |item| %>
+            <div class="confirmation-item">
+              <span><%= item['name'] %> × <%= item['quantity'] %></span>
+              <span><%= number_to_currency(item['price'].to_f * item['quantity'].to_i, unit: '', precision: 2) %> TND</span>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="confirmation-actions">
+        <%= link_to "Retour à l'accueil", root_path, class: "btn btn-primary" %>
+        <%= link_to "Continuer vos achats", vitrine_all_perfumes_path, class: "btn btn-secondary" %>
+      </div>
+    </div>
+  </div>
+</div>

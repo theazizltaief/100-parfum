@@ -1,0 +1,17 @@
+<% content_for :title, "Inviter un admin - Bisso Fragrance" %>
+
+<h1>Inviter un nouvel admin</h1>
+
+<%= form_with url: admin_panel_invite_admin_path, method: :post, class: "auth-form" do |f| %>
+  <div class="mb-3">
+    <%= f.label :email, "Adresse email de l'admin à inviter", class: "form-label fw-semibold" %>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "exemple@gmail.com" %>
+    <small class="form-text text-muted">L'email doit être valide (ex: @gmail.com, @yahoo.com). Un mot de passe temporaire sera généré et envoyé.</small>
+  </div>
+
+  <%= f.submit "Inviter", class: "btn btn-primary mb-3" %>
+<% end %>
+
+<div class="links">
+  <%= link_to "Retour au dashboard", admin_panel_root_path %>
+</div>

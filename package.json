@@ -1,0 +1,33 @@
+{
+  "name": "bissowebsite",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theazizltaief/bisso.git"
+  },
+  "author": "theazizltaief <ltaief2022@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@hotwired/stimulus": "^3.2.2",
+    "@hotwired/turbo-rails": "7.3.0",
+    "sweetalert2": "^11.22.2"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.8"
+  },
+  "scripts": {
+    "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets",
+    "build:css": "sass ./app/assets/stylesheets/application.sass.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules"
+  },
+  "description": "This README would normally document whatever steps are necessary to get the application up and running.",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/theazizltaief/bisso/issues"
+  },
+  "homepage": "https://github.com/theazizltaief/bisso#readme"
+}

@@ -1,0 +1,25 @@
+
+<% content_for :title, "Créer un compte - Bisso Fragrance" %>
+
+<%= form_with scope: :admin, url: registration_path(:admin), class: "auth-form" do |f| %>
+  <div class="mb-3">
+    <%= f.label :email, "Adresse email", class: "form-label fw-semibold" %>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "admin@bisso.com" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :password, "Mot de passe", class: "form-label fw-semibold" %>
+    <%= f.password_field :password, autocomplete: "new-password", class: "form-control", placeholder: "********" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :password_confirmation, "Confirmer le mot de passe", class: "form-label fw-semibold" %>
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", placeholder: "********" %>
+  </div>
+
+  <%= f.submit "Créer un compte", class: "btn btn-primary mb-3" %>
+
+  <div class="links">
+    <%= link_to "Déjà un compte ? Connectez-vous", new_session_path(:admin) %>
+  </div>
+<% end %>

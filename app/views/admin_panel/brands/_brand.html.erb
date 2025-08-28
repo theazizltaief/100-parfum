@@ -1,0 +1,66 @@
+<div class="col" id="<%= dom_id(brand) %>">
+  <div class="card shadow-sm h-100" style="max-width: 200px;">
+    <div class="card-img-container admin-image-loader-container admin-brand-image-container" 
+         data-controller="admin-image-loader"
+         data-admin-image-loader-timeout-value="6000"
+         data-admin-image-loader-retry-count-value="2">
+      
+      <% if brand.image.attached? %>
+        <div class="admin-image-spinner admin-spinner-pulse" 
+             data-admin-image-loader-target="spinner"
+             aria-hidden="false">
+          <div class="admin-spinner-circle"></div>
+          <div class="admin-spinner-text">Chargement...</div>
+        </div>
+
+        <div class="admin-image-error hidden" 
+             data-admin-image-loader-target="errorState">
+          <div class="admin-error-icon">⚠</div>
+          <div class="admin-error-text">Erreur</div>
+          <button class="btn btn-sm btn-outline-primary mt-1" 
+                  data-action="click->admin-image-loader#retry"
+                  style="font-size: 0.7rem; padding: 2px 8px;">
+          </button>
+        </div>
+
+        <%= link_to admin_panel_brand_path(brand) do %>
+          <img data-admin-image-loader-target="image"
+               data-src="<%= url_for(brand.image.variant(resize_to_limit: [400, 400])) %>"
+               alt="<%= brand.name %>"
+               class="img-fluid w-100 h-100 admin-image-loading"
+               style="object-fit: cover; object-position: center;" />
+        <% end %>
+      <% else %>
+        <div class="admin-no-image-placeholder">
+          <div class="admin-no-image-icon">
+            <i class="fas fa-tag"></i>
+          </div>
+          <div class="admin-no-image-text">Pas d'image</div>
+        </div>
+      <% end %>
+    </div>
+    
+    <div class="card-body p-2 d-flex flex-column">
+      <h6 class="card-title mb-2 text-truncate"><%= brand.name %></h6>
+      
+      <div class="d-flex justify-content-between mt-3">
+        <%= link_to edit_admin_panel_brand_path(brand),
+                    class: "btn btn-outline-primary btn-sm rounded-pill flex-fill me-1" do %>
+          <i class="fas fa-edit me-1"></i> Modifier
+        <% end %>
+        <%= button_to admin_panel_brand_path(brand),
+                      method: :delete,
+                      form: {
+                        class: "d-inline",
+                        "data-controller": "confirm",
+                        "data-action": "submit->confirm#confirm",
+                        "data-confirm-message": "⚠️ Supprimer cette marque supprimera aussi ses parfums.",
+                        "data-turbo-frame": "_top"
+                      },
+                      class: "btn btn-outline-danger btn-sm rounded-pill flex-fill ms-1" do %>
+          <i class="fas fa-trash-alt me-1"></i> Supprimer
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

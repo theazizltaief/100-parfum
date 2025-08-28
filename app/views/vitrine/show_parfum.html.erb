@@ -1,0 +1,78 @@
+<div class="vitrine-parfum-detail-page-container" data-controller="cart">
+  <div class="vitrine-parfum-detail-content-wrapper">
+    <div class="vitrine-parfum-detail-image-section">
+      <% if @parfum.image.attached? %>
+        <img src="<%= url_for(@parfum.image) %>" alt="<%= @parfum.name %>" class="vitrine-parfum-detail-main-image">
+      <% else %>
+        <img src="/placeholder.svg?height=500&width=500&text=Parfum" alt="<%= @parfum.name %>" class="vitrine-parfum-detail-main-image">
+      <% end %>
+      <% if !@parfum.disponible %>
+        <div class="vitrine-parfum-detail-unavailable-overlay">Rupture de stock</div>
+      <% end %>
+    </div>
+    <div class="vitrine-parfum-detail-info-section">
+      <h1 class="vitrine-parfum-detail-title"><%= @parfum.name %></h1>
+      <p class="vitrine-parfum-detail-brand">Par <%= @parfum.brand&.name || 'Marque Inconnue' %></p>
+      <p class="vitrine-parfum-detail-description"><%= @parfum.description %></p>
+      <div class="vitrine-parfum-detail-meta-info">
+        <span class="vitrine-parfum-detail-category">Catégorie : <%= @parfum.category ? @parfum.category.capitalize : 'N/A' %></span>
+        <span class="vitrine-parfum-detail-class">Classe : <%= @parfum.fragrance_class ? @parfum.fragrance_class.capitalize : 'N/A' %></span>
+      </div>
+      <div class="vitrine-parfum-detail-price-status">
+        <span class="vitrine-parfum-detail-price"><%= number_to_currency(@parfum.prix, unit: "TND", separator: ",", delimiter: " ", format: "%n %u") %></span>
+        <span class="vitrine-parfum-detail-volume">10ml</span>
+        <span class="vitrine-parfum-detail-availability <%= @parfum.disponible ? 'is-available' : 'is-unavailable' %>">
+          <%= @parfum.disponible ? 'Disponible' : 'Rupture de stock' %>
+        </span>
+      </div>
+      <div class="vitrine-parfum-detail-actions">
+        <button
+          class="vitrine-parfum-detail-add-to-cart-btn"
+          <%= 'disabled' unless @parfum.disponible %>
+          data-action="click->cart#addToCart"
+          data-parfum-id="<%= @parfum.id %>"
+          data-parfum-name="<%= @parfum.name %>"
+          data-parfum-price="<%= @parfum.prix %>"
+          data-parfum-image-url="<%= @parfum.image.attached? ? url_for(@parfum.image) : '/placeholder.svg?height=50&width=50&text=P' %>"
+        >
+          Ajouter au panier
+        </button>
+        <button 
+          class="vitrine-parfum-detail-buy-now-btn" 
+          <%= 'disabled' unless @parfum.disponible %>
+          data-action="click->cart#buyNow"
+          data-parfum-id="<%= @parfum.id %>"
+          data-quantity="1"
+        >
+          Acheter maintenant
+        </button>
+      </div>
+    </div>
+  </div>
+  <% if @associated_parfums.any? %>
+    <section class="vitrine-associated-parfums-section">
+      <h2 class="vitrine-associated-parfums-title">Autres parfums de <%= @parfum.brand&.name || 'cette marque' %></h2>
+      <div class="vitrine-associated-parfums-grid">
+        <% @associated_parfums.each do |associated_parfum| %>
+          <a href="<%= vitrine_parfum_show_path(associated_parfum) %>" class="vitrine-associated-parfum-card">
+            <div class="vitrine-associated-parfum-image-wrapper">
+              <% if associated_parfum.image.attached? %>
+                <img src="<%= url_for(associated_parfum.image) %>" alt="<%= associated_parfum.name %>" class="vitrine-associated-parfum-image">
+              <% else %>
+                <img src="/placeholder.svg?height=200&width=200&text=Parfum" alt="<%= associated_parfum.name %>" class="vitrine-associated-parfum-image">
+              <% end %>
+              <div class="vitrine-associated-parfum-overlay"></div>
+            </div>
+            <div class="vitrine-associated-parfum-content">
+              <h3 class="vitrine-associated-parfum-name"><%= associated_parfum.name %></h3>
+              <p class="vitrine-associated-parfum-price"><%= number_to_currency(associated_parfum.prix, unit: "TND", separator: ",", delimiter: " ", format: "%n %u") %></p>
+            </div>
+          </a>
+        <% end %>
+      </div>
+    </section>
+  <% end %>
+  <div class="vitrine-parfum-detail-back-link">
+    <%= link_to "Retour", :back %>
+  </div>
+</div>
