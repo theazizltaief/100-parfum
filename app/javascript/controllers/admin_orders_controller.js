@@ -2,9 +2,10 @@ import { Controller } from "@hotwired/stimulus"
 import Swal from "sweetalert2"
 
 export default class extends Controller {
-  static targets = ["deleteForm"]
+  static targets = ["deleteForm", "dropdown"]
 
   connect() {
+    console.log("AdminOrders controller connected")
     document.addEventListener("click", this.closeAllDropdowns.bind(this))
   }
 
@@ -12,8 +13,25 @@ export default class extends Controller {
     document.removeEventListener("click", this.closeAllDropdowns.bind(this))
   }
 
-  closeAllDropdowns() {
-    // Méthode vide, car plus de dropdowns
+  closeAllDropdowns(event) {
+    const dropdowns = document.querySelectorAll(".admin-status-menu")
+    dropdowns.forEach(dropdown => {
+      if (!dropdown.contains(event.target) && !event.target.closest(".admin-status-dropdown button")) {
+        dropdown.style.display = "none"
+      }
+    })
+  }
+
+  toggleDropdown(event) {
+    console.log("toggleDropdown triggered")
+    event.preventDefault()
+    const menu = event.currentTarget.nextElementSibling
+    if (menu && menu.classList.contains("admin-status-menu")) {
+      menu.style.display = menu.style.display === "block" ? "none" : "block"
+      console.log("Menu display toggled to:", menu.style.display)
+    } else {
+      console.error("Menu not found or invalid structure")
+    }
   }
 
   confirmDelete(event) {
@@ -92,6 +110,37 @@ export default class extends Controller {
     Swal.fire({
       title: `${actionText.charAt(0).toUpperCase() + actionText.slice(1)} la commande ?`,
       text: `Voulez-vous ${actionText} la commande #${orderId} vers "${statusText}" ?`,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#007bff",
+      cancelButtonColor: "#6c757d",
+      confirmButtonText: "Oui, continuer",
+      cancelButtonText: "Annuler",
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.submitStatusChangeForm(actionUrl)
+
+        Swal.fire({
+          title: "Mise à jour en cours...",
+          allowOutsideClick: false,
+          didOpen: () => Swal.showLoading(),
+        })
+      }
+    })
+  }
+
+  confirmStatusChange(event) {
+    event.preventDefault()
+
+    const link = event.currentTarget
+    const orderId = link.dataset.orderId
+    const actionUrl = link.getAttribute("href")
+    const statusText = link.querySelector(".admin-status-badge").textContent
+
+    Swal.fire({
+      title: "Changer le statut ?",
+      text: `Voulez-vous changer le statut de la commande #${orderId} vers "${statusText}" ?`,
       icon: "question",
       showCancelButton: true,
       confirmButtonColor: "#007bff",

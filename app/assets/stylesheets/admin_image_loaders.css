@@ -97,9 +97,10 @@
   border-top-color: #4b3cc4;
 }
 
-/* Styles spécifiques pour les cartes de marques */
+/* Styles spécifiques pour les cartes de marques (ajusté) */
 .admin-brand-image-container {
-  height: 120px;
+  height: auto; /* Rendre la hauteur dynamique */
+  min-height: 120px; /* Hauteur minimale pour maintenir un aspect cohérent */
 }
 
 .admin-brand-image-container .admin-image-spinner {

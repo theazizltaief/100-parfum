@@ -157,13 +157,14 @@ body.admin-panel .btn-outline-danger:hover {
   color: white;
 }
 
-/* ==================== Cartes ==================== */
+/* ==================== Cartes (ajusté pour brands) ==================== */
 body.admin-panel .card {
   border: none;
   border-radius: 16px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.05);
   overflow: hidden;
   transition: all 0.3s ease;
+  height: 100%; /* Assure que la carte prend toute la hauteur disponible */
 }
 
 body.admin-panel .card:hover {
@@ -177,10 +178,30 @@ body.admin-panel .card-title {
   color: #444;
 }
 
-/* ==================== Responsive Images ==================== */
+/* Ajustement spécifique pour les cartes des brands */
+body.admin-panel #brands_container .card {
+  flex: 0 0 100%; /* Par défaut, une carte par ligne sur mobile */
+}
+
+@media (min-width: 768px) {
+  body.admin-panel #brands_container .card {
+    flex: 0 0 33.333333%; /* 3 cartes par ligne sur desktop */
+    max-width: 33.333333%;
+  }
+}
+
+/* ==================== Responsive Images (ajusté pour brands) ==================== */
 body.admin-panel img {
   max-width: 100%;
   height: auto;
+}
+
+/* Ajustement spécifique pour les images dans les cartes des brands */
+body.admin-panel #brands_container img {
+  max-height: 200px; /* Hauteur maximale pour éviter que l'image ne dépasse */
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Remplace la logique inline si nécessaire */
 }
 
 /* ==================== Sidebar Responsive - Important pour la fermeture sur mobile ==================== */

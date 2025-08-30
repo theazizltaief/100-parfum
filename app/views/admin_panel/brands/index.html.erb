@@ -2,7 +2,7 @@
 
 <%= link_to "Ajouter une marque", new_admin_panel_brand_path, class: "btn btn-primary mb-4" %>
 
-<div id="brands_container" class="row row-cols-2 row-cols-md-4 g-3">
+<div id="brands_container" class="row row-cols-1 row-cols-md-3 g-3">
   <% @brands.each do |brand| %>
     <%= render partial: "brand", locals: { brand: brand } %>
   <% end %>
