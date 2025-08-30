@@ -1,4 +1,4 @@
-<% content_for :page_title, "Gestion des Commandes" %>
+<% content_for :page_title, "Gestion des commandes" %>
 
 <div class="admin-orders-container" data-controller="admin-orders">
   <div class="admin-orders-header">
@@ -32,25 +32,14 @@
 
   <div class="admin-orders-filters">
     <%= form_with url: admin_panel_orders_path, method: :get, local: true, class: "admin-filter-form" do |form| %>
-      <div class="admin-filter-group">
-        <%= form.select :status, 
-            options_for_select([
-              ['Toutes les commandes', 'all'],
-              ['En attente', 'pending'],
-              ['Confirmées', 'confirmed'],
-              ['Expédiées', 'shipped'],
-              ['Livrées', 'delivered'],
-              ['Annulées', 'cancelled']
-            ], params[:status] || 'all'),
-            {}, 
-            { class: "admin-filter-select", onchange: "this.form.submit();" } %>
-      </div>
+      <%= form.select :status, options_for_select([['Tous', ''], ['En attente', 'pending'], ['Confirmée', 'confirmed'], ['Expédiée', 'shipped'], ['Livrée', 'delivered'], ['Annulée', 'cancelled']], params[:status]), { include_blank: false }, class: "admin-filter-select" %>
+      <%= form.submit "Filtrer", class: "btn btn-primary" %>
     <% end %>
   </div>
 
   <div class="admin-orders-table-container">
     <% if @orders.any? %>
-      <table class="admin-orders-table">
+      <table class="admin-orders-table table">
         <thead>
           <tr>
             <th class="admin-th-id">ID</th>
@@ -65,11 +54,11 @@
         <tbody>
           <% @orders.each do |order| %>
             <tr class="admin-order-row">
-              <td class="admin-td-id">#<%= order.id %></td>
+              <td class="admin-td-id"><%= order.id %></td>
               <td class="admin-td-client">
                 <div class="admin-client-info">
-                  <div class="admin-client-name"><%= order.full_name %></div>
-                  <div class="admin-client-city"><%= order.city %></div>
+                  <span class="admin-client-name"><%= order.full_name %></span>
+                  <span class="admin-client-city"><%= order.city %></span>
                 </div>
               </td>
               <td class="admin-td-phone"><%= order.phone %></td>
@@ -90,81 +79,38 @@
               </td>
               <td class="admin-td-date">
                 <div class="admin-date-info">
-                  <div class="admin-date-day"><%= order.created_at.strftime("%d/%m/%Y") %></div>
-                  <div class="admin-date-time"><%= order.created_at.strftime("%H:%M") %></div>
+                  <span class="admin-date-day"><%= order.created_at.strftime("%d/%m/%Y") %></span>
+                  <span class="admin-date-time"><%= order.created_at.strftime("%H:%M") %></span>
                 </div>
               </td>
               <td class="admin-td-actions">
                 <div class="admin-actions-group">
-                  <%= link_to admin_panel_order_path(order), class: "admin-action-btn admin-btn-view", title: "Voir détails" do %>
+                  <%= link_to admin_panel_order_path(order), class: "admin-action-btn admin-btn-view" do %>
                     <i class="fas fa-eye"></i>
                   <% end %>
-                  
                   <div class="admin-status-dropdown">
-                    <button class="admin-action-btn admin-btn-status" 
-                            type="button" 
-                            title="Changer statut"
-                            data-action="click->admin-orders#toggleDropdown">
+                    <button class="admin-action-btn admin-btn-status" type="button" title="Changer statut" data-action="click->admin-orders#toggleDropdown">
                       <i class="fas fa-edit"></i>
                     </button>
                     <div class="admin-status-menu">
-                      <%= link_to update_status_admin_panel_order_path(order, new_status: 'pending'), 
-                          method: :patch,
-                          class: "admin-status-option", 
-                          data: { 
-                            action: "click->admin-orders#confirmStatusChange",
-                            order_id: order.id
-                          } do %>
+                      <%= link_to update_status_admin_panel_order_path(order, new_status: 'pending'), method: :patch, class: "admin-status-option", data: { action: "click->admin-orders#confirmStatusChange", order_id: order.id } do %>
                         <span class="admin-status-badge admin-status-pending">En attente</span>
                       <% end %>
-                      <%= link_to update_status_admin_panel_order_path(order, new_status: 'confirmed'), 
-                          method: :patch,
-                          class: "admin-status-option", 
-                          data: { 
-                            action: "click->admin-orders#confirmStatusChange",
-                            order_id: order.id
-                          } do %>
+                      <%= link_to update_status_admin_panel_order_path(order, new_status: 'confirmed'), method: :patch, class: "admin-status-option", data: { action: "click->admin-orders#confirmStatusChange", order_id: order.id } do %>
                         <span class="admin-status-badge admin-status-confirmed">Confirmée</span>
                       <% end %>
-                      <%= link_to update_status_admin_panel_order_path(order, new_status: 'shipped'), 
-                          method: :patch,
-                          class: "admin-status-option", 
-                          data: { 
-                            action: "click->admin-orders#confirmStatusChange",
-                            order_id: order.id
-                          } do %>
+                      <%= link_to update_status_admin_panel_order_path(order, new_status: 'shipped'), method: :patch, class: "admin-status-option", data: { action: "click->admin-orders#confirmStatusChange", order_id: order.id } do %>
                         <span class="admin-status-badge admin-status-shipped">Expédiée</span>
                       <% end %>
-                      <%= link_to update_status_admin_panel_order_path(order, new_status: 'delivered'), 
-                          method: :patch,
-                          class: "admin-status-option", 
-                          data: { 
-                            action: "click->admin-orders#confirmStatusChange",
-                            order_id: order.id
-                          } do %>
+                      <%= link_to update_status_admin_panel_order_path(order, new_status: 'delivered'), method: :patch, class: "admin-status-option", data: { action: "click->admin-orders#confirmStatusChange", order_id: order.id } do %>
                         <span class="admin-status-badge admin-status-delivered">Livrée</span>
                       <% end %>
-                      <%= link_to update_status_admin_panel_order_path(order, new_status: 'cancelled'), 
-                          method: :patch,
-                          class: "admin-status-option", 
-                          data: { 
-                            action: "click->admin-orders#confirmStatusChange",
-                            order_id: order.id
-                          } do %>
+                      <%= link_to update_status_admin_panel_order_path(order, new_status: 'cancelled'), method: :patch, class: "admin-status-option", data: { action: "click->admin-orders#confirmStatusChange", order_id: order.id } do %>
                         <span class="admin-status-badge admin-status-cancelled">Annulée</span>
                       <% end %>
                     </div>
                   </div>
-                  
-                  <%= link_to admin_panel_order_path(order), 
-                      method: :delete,
-                      class: "admin-action-btn admin-btn-delete", 
-                      title: "Supprimer",
-                      data: { 
-                        action: "click->admin-orders#confirmDelete",
-                        order_id: order.id,
-                        confirm_message: "Cette action supprimera définitivement la commande ##{order.id} et toutes ses données associées."
-                      } do %>
+                  <%= link_to admin_panel_order_path(order), method: :delete, class: "admin-action-btn admin-btn-delete", data: { confirm_message: "Êtes-vous sûr de vouloir supprimer cette commande ?", order_id: order.id, action: "click->admin-orders#confirmDelete" } do %>
                     <i class="fas fa-trash"></i>
                   <% end %>
                 </div>
@@ -175,11 +121,9 @@
       </table>
     <% else %>
       <div class="admin-empty-state">
-        <div class="admin-empty-icon">
-          <i class="fas fa-shopping-cart"></i>
-        </div>
+        <div class="admin-empty-icon"><i class="fas fa-box-open"></i></div>
         <h3>Aucune commande trouvée</h3>
-        <p>Il n'y a pas encore de commandes dans le système.</p>
+        <p>Il semble qu'il n'y ait pas de commandes correspondant à vos filtres.</p>
       </div>
     <% end %>
   </div>
@@ -188,8 +132,7 @@
     <div class="admin-pagination-container">
       <div class="admin-pagination">
         <% if @orders.prev_page %>
-          <%= link_to admin_panel_orders_path(page: @orders.prev_page, status: params[:status]), 
-              class: "admin-pagination-btn admin-pagination-prev" do %>
+          <%= link_to admin_panel_orders_path(page: @orders.prev_page, status: params[:status]), class: "admin-pagination-btn admin-pagination-prev" do %>
             <i class="fas fa-chevron-left"></i> Précédent
           <% end %>
         <% end %>
@@ -200,8 +143,7 @@
         </div>
         
         <% if @orders.next_page %>
-          <%= link_to admin_panel_orders_path(page: @orders.next_page, status: params[:status]), 
-              class: "admin-pagination-btn admin-pagination-next" do %>
+          <%= link_to admin_panel_orders_path(page: @orders.next_page, status: params[:status]), class: "admin-pagination-btn admin-pagination-next" do %>
             Suivant <i class="fas fa-chevron-right"></i>
           <% end %>
         <% end %>

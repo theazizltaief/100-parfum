@@ -102,7 +102,8 @@
             class: "admin-btn admin-btn-success",
             data: { 
               action: "click->admin-orders#confirmDetailStatusChange",
-              order_id: @order.id
+              order_id: @order.id,
+              status_text: "Confirmée"
             } do %>
           <i class="fas fa-check"></i> Confirmer
         <% end %>
@@ -114,7 +115,8 @@
             class: "admin-btn admin-btn-info",
             data: { 
               action: "click->admin-orders#confirmDetailStatusChange",
-              order_id: @order.id
+              order_id: @order.id,
+              status_text: "Expédiée"
             } do %>
           <i class="fas fa-truck"></i> Marquer comme expédiée
         <% end %>
@@ -126,7 +128,8 @@
             class: "admin-btn admin-btn-primary",
             data: { 
               action: "click->admin-orders#confirmDetailStatusChange",
-              order_id: @order.id
+              order_id: @order.id,
+              status_text: "Livrée"
             } do %>
           <i class="fas fa-check-circle"></i> Marquer comme livrée
         <% end %>
@@ -138,7 +141,8 @@
             class: "admin-btn admin-btn-danger",
             data: { 
               action: "click->admin-orders#confirmDetailStatusChange",
-              order_id: @order.id
+              order_id: @order.id,
+              status_text: "Annulée"
             } do %>
           <i class="fas fa-times"></i> Annuler
         <% end %>
