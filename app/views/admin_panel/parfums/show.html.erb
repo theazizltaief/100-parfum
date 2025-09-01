@@ -1,59 +1,56 @@
-<div class="container mt-4">
-  <div class="card shadow-sm">
-    <div class="card-body">
-      <h1 class="card-title display-5 mb-4"><%= @parfum.name %></h1>
-      
-      <div class="row">
-        <div class="col-md-6">
-          <% if @parfum.image.attached? %>
-            <div class="mb-4">
-              <%= image_tag @parfum.image.variant(resize_to_limit: [400, 400]), 
-                  class: "img-fluid rounded shadow" %>
-              <p class="text-muted mt-2">Image déjà importée</p>
-            </div>
-          <% end %>
+<div class="parfum-detail-container">
+  <div class="parfum-detail-card">
+    <h1 class="parfum-title"><%= @parfum.name %></h1>
+    
+    <div class="parfum-content">
+      <% if @parfum.image.attached? %>
+        <div class="parfum-image">
+          <%= image_tag @parfum.image.variant(resize_to_limit: [300, 300]), 
+              class: "parfum-image-img" %>
+          <p class="parfum-image-caption">Image déjà importée</p>
+          <div class="parfum-info">
+        <div class="parfum-info-item">
+          <h5 class="parfum-info-label">Marque</h5>
+          <p class="parfum-info-value"><%= @parfum.brand.name %></p>
         </div>
         
-        <div class="col-md-6">
-          <div class="mb-3">
-            <h5 class="text-muted mb-1">Marque</h5>
-            <p class="fs-5"><%= @parfum.brand.name %></p>
-          </div>
-          
-          <div class="mb-3">
-            <h5 class="text-muted mb-1">Prix</h5>
-            <p class="fs-5"><%= number_to_currency(@parfum.prix, unit: "Dt") %></p>
-          </div>
-          
-        <div class="mb-3">
-          <h5 class="text-muted mb-1">Catégorie</h5>
-          <p class="fs-5">
+        <div class="parfum-info-item">
+          <h5 class="parfum-info-label">Prix</h5>
+          <p class="parfum-info-value"><%= number_to_currency(@parfum.prix, unit: "Dt") %></p>
+        </div>
+        
+        <div class="parfum-info-item">
+          <h5 class="parfum-info-label">Catégorie</h5>
+          <p class="parfum-info-value">
             <%= t("activerecord.enums.parfum.category.#{@parfum.category}") %>
           </p>
         </div>
 
-        <div class="mb-3">
-          <h5 class="text-muted mb-1">Type</h5>
-          <p class="fs-5">
+        <div class="parfum-info-item">
+          <h5 class="parfum-info-label">Type</h5>
+          <p class="parfum-info-value">
             <%= t("activerecord.enums.parfum.fragrance_class.#{@parfum.fragrance_class}") %>
           </p>
         </div>
-          <div class="mb-4">
-            <h5 class="text-muted mb-1">Description</h5>
-            <p class="fs-5"><%= @parfum.description %></p>
-              <div class="mb-3">
-                <h5 class="text-muted mb-1">Disponibilité</h5>
-                   <p class="fs-5"><%= @parfum.disponible? ? "Disponible" : "Rupture de stock" %></p>
-             </div>
-          </div>
-        </div>
-
-      </div>
-      
-      <div class="d-flex gap-2 mt-4">
-        <%= link_to "Modifier", edit_admin_panel_parfum_path(@parfum),
-            class: "btn btn-outline-primary btn-sm px-4 py-2 rounded-pill" %>
         
+        <div class="parfum-info-item">
+          <h5 class="parfum-info-label">Description</h5>
+          <p class="parfum-info-value"><%= @parfum.description %></p>
+        </div>
+        
+        <div class="parfum-info-item">
+          <h5 class="parfum-info-label">Disponibilité</h5>
+          <p class="parfum-info-value"><%= @parfum.disponible? ? "Disponible" : "Rupture de stock" %></p>
+        </div>
+      </div>
+        </div>
+      <% end %>
+    </div>
+    
+    <div class="parfum-actions">
+      <%= link_to "Modifier", edit_admin_panel_parfum_path(@parfum),
+          class: "parfum-action-btn primary" %>
+      
       <%= button_to "Supprimer", admin_panel_parfum_path(@parfum),
           method: :delete,
           form: { 
@@ -62,13 +59,10 @@
             "data-action": "submit->confirm#confirm",
             "data-turbo-frame": "_top"
           },
-          class: "btn btn-outline-danger btn-sm px-4 py-2 rounded-pill" %>
+          class: "parfum-action-btn danger" %>
 
-        
-        <%= link_to "Retour à la liste", admin_panel_parfums_path,
-            class: "btn btn-outline-secondary btn-sm px-4 py-2 rounded-pill ms-auto" %>
-      </div>
+      <%= link_to "Retour à la liste", admin_panel_parfums_path,
+          class: "parfum-action-btn secondary" %>
     </div>
   </div>
 </div>
-

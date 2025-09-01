@@ -1,0 +1,179 @@
+/* Styles pour le conteneur principal */
+.parfum-detail-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  overflow-x: hidden; /* Évite la barre de défilement horizontale */
+}
+
+/* Styles pour la carte */
+.parfum-detail-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  overflow: visible;
+}
+
+/* Styles pour le titre */
+.parfum-title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+/* Styles pour le contenu (image et infos) */
+.parfum-content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 1rem; /* Espacement entre image et infos */
+  align-items: flex-start;
+  min-height: fit-content;
+}
+
+/* Styles pour l'image */
+.parfum-image {
+  display: flex;
+  flex-direction: column; /* Empile l'image et le caption verticalement */
+  max-width: 250px; /* Augmente pour éviter le serrage */
+  width: 100%;
+  flex-shrink: 0; /* Empêche le rétrécissement excessif */
+}
+/* Centrer l’image sur desktop */
+.parfum-image {
+  margin: 0 auto; /* Centre horizontalement */
+}
+.parfum-image-img {
+  max-width: 250px !important; /* Taille plus large pour une bonne résolution */
+  width: 100%;
+  height: auto; /* Préserve les proportions */
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.parfum-image-caption {
+  font-size: 0.875rem;
+  color: #666;
+  margin-top: 0.5rem; /* Espacement clair sous l'image */
+  text-align: center;
+  word-wrap: break-word; /* Permet le retour à la ligne */
+  width: 100%; /* Prend toute la largeur du conteneur image */
+}
+
+/* Styles pour les informations */
+.parfum-info {
+  flex-grow: 1; /* Prend l'espace restant à droite */
+  min-width: 200px;
+  padding-left: 1rem; /* Espacement après l'image */
+  overflow: visible; /* Permet au contenu de s'afficher sans coupure */
+  margin-left: 0; /* Aligne directement */
+  display: flex;
+  flex-direction: column; /* Empêche les infos de s'empiler mal */
+  max-width: calc(100% - 250px - 1rem); /* Limite la largeur pour éviter le débordement */
+}
+
+.parfum-info-item {
+  margin-bottom: 1rem;
+}
+
+.parfum-info-label {
+  font-size: 0.875rem;
+  color: #666;
+  margin-bottom: 0.25rem;
+  font-weight: 500;
+}
+
+.parfum-info-value {
+  font-size: 1.125rem;
+  color: #333;
+  margin: 0;
+}
+
+/* Styles pour les actions (boutons) */
+.parfum-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.parfum-action-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.parfum-action-btn.primary {
+  background-color: #4b3cc4;
+  color: #fff;
+}
+
+.parfum-action-btn.primary:hover {
+  background-color: #3a2fa0;
+}
+
+.parfum-action-btn.danger {
+  background-color: #ea5455;
+  color: #fff;
+}
+
+.parfum-action-btn.danger:hover {
+  background-color: #d63a3c;
+}
+
+.parfum-action-btn.secondary {
+  background-color: #6c757d;
+  color: #fff;
+}
+
+.parfum-action-btn.secondary:hover {
+  background-color: #5a6268;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .parfum-content {
+    flex-direction: column;
+    align-items: center; /* Centre les éléments */
+    width: 100%; /* Utilise toute la largeur */
+  }
+
+  .parfum-image {
+    max-width: 100% !important;
+    margin-bottom: 1rem; /* Espacement avant les infos */
+    width: 100%; /* Pleine largeur sur mobile */
+  }
+
+  .parfum-image-img {
+    max-width: 100% !important;
+    width: 100%;
+  }
+
+  .parfum-image-caption {
+    max-width: 100%; /* Pleine largeur sur mobile */
+  }
+
+  .parfum-info {
+    padding-left: 0;
+    min-width: 100%; /* Prend toute la largeur */
+    margin-left: 0;
+    max-width: 100%; /* Pas de limitation sur mobile */
+  }
+
+  .parfum-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .parfum-action-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+

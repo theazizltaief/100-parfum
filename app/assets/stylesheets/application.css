@@ -164,7 +164,9 @@ body.admin-panel .card {
   box-shadow: 0 4px 15px rgba(0,0,0,0.05);
   overflow: hidden;
   transition: all 0.3s ease;
-  height: 100%; /* Assure que la carte prend toute la hauteur disponible */
+  height: auto;
+  min-height: 300px;
+  max-height: 400px;
 }
 
 body.admin-panel .card:hover {
@@ -178,19 +180,115 @@ body.admin-panel .card-title {
   color: #444;
 }
 
-/* Ajustement spécifique pour les cartes des brands */
-body.admin-panel #brands_container .card {
-  flex: 0 0 100%; /* Par défaut, une carte par ligne sur mobile */
+/* Ajustement spécifique pour les cartes des brands avec flexbox */
+body.admin-panel .brand-list-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 1.5rem;
 }
 
-@media (min-width: 768px) {
-  body.admin-panel #brands_container .card {
-    flex: 0 0 33.333333%; /* 3 cartes par ligne sur desktop */
-    max-width: 33.333333%;
-  }
+body.admin-panel .brand-list-container .card {
+  flex: 0 0 80% !important;
+  max-width: 80% !important;
 }
 
-/* ==================== Responsive Images (ajusté pour brands) ==================== */
+/* Ajustement du corps de la carte pour un padding fixe */
+body.admin-panel .card-body {
+  padding: 1.25rem !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+/* ==================== Cartes des parfums ==================== */
+body.admin-panel .parfums-grid-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 1.5rem;
+  padding: 0 15px;
+}
+
+body.admin-panel .parfums-grid-container .parfum-card {
+  flex: 0 0 80% !important; /* Même principe que brands, 80% pour une largeur fixe */
+  max-width: 80% !important;
+  aspect-ratio: 1 / 1; /* Cartes carrées */
+  min-height: 300px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+body.admin-panel .parfum-card-image {
+  height: 60%;
+  overflow: hidden;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+body.admin-panel .parfum-card-image img {
+  width: 50%;
+  height: 50%;
+  object-fit: cover;
+  max-height: 125px;
+}
+
+body.admin-panel .parfum-card-image.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f0f0;
+  height: 100%;
+  color: #6c757d;
+}
+
+body.admin-panel .parfum-card-content {
+  padding: 1rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+body.admin-panel .parfum-card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 0.5rem;
+}
+
+body.admin-panel .parfum-card-availability {
+  font-size: 0.9rem;
+  color: #6c757d;
+  margin-bottom: 0.5rem;
+}
+
+body.admin-panel .parfum-card-actions {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+body.admin-panel .action-button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 20px;
+  color: white;
+  text-decoration: none;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+body.admin-panel .action-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* ==================== Responsive Images (ajusté pour brands et parfums) ==================== */
 body.admin-panel img {
   max-width: 100%;
   height: auto;
@@ -198,20 +296,33 @@ body.admin-panel img {
 
 /* Ajustement spécifique pour les images dans les cartes des brands */
 body.admin-panel #brands_container img {
-  max-height: 200px; /* Hauteur maximale pour éviter que l'image ne dépasse */
+  max-height: 200px;
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Remplace la logique inline si nécessaire */
+  object-fit: cover;
 }
 
 /* ==================== Sidebar Responsive - Important pour la fermeture sur mobile ==================== */
-@media (max-width: 768px) {
+@media (max-width: 767.98px) {
   body.admin-panel .sidebar {
     left: -100%;
   }
 
   body.admin-panel .sidebar.show {
     left: 0;
+  }
+
+  /* Ajustement responsive pour les cartes des parfums */
+  body.admin-panel .parfums-grid-container .parfum-card {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+    aspect-ratio: auto;
+  }
+
+  /* Ajustement responsive pour les cartes des brands */
+  body.admin-panel .brand-list-container .card {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
   }
 }
 
@@ -223,4 +334,70 @@ body.admin-panel #brands_container img {
 /* Empêche débordement vertical du contenu */
 body.admin-panel main {
   overflow-y: auto;
+}
+
+/* ==================== Cartes des parfums (show) ==================== */
+body.admin-panel .card {
+  overflow: visible;
+}
+
+body.admin-panel .card .row {
+  align-items: flex-start;
+}
+
+body.admin-panel .card .d-flex {
+  flex-wrap: nowrap;
+  width: 100%;
+}
+
+body.admin-panel .card .me-2 {
+  flex-shrink: 0;
+  max-width: 300px;
+  margin-right: 0.5rem !important;
+}
+
+body.admin-panel .card .ps-2 {
+  padding-left: 0.5rem !important;
+  flex-grow: 1;
+}
+
+body.admin-panel .card .card-body {
+  padding: 2rem;
+}
+
+
+/* Surcharge des styles SweetAlert2 pour enlever le backdrop et garder le carreau blanc */
+body.admin-panel .swal2-container {
+  --swal2-backdrop: transparent !important; /* Supprime le fond sombre */
+  background: none !important; /* Assure qu'aucun fond n'est appliqué */
+  max-width: 90vw !important; /* Garde la largeur limitée */
+  margin: 0 auto;
+}
+
+body.admin-panel .swal2-popup {
+  width: var(--swal2-width) !important;
+  padding: 1em !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: white !important; /* Assure que le carreau reste blanc */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important; /* Optionnel : ajoute une ombre légère pour le détacher */
+}
+
+body.admin-panel .swal2-icon {
+  width: 3em !important;
+  height: 3em !important;
+  margin: 1em auto 0.5em !important;
+  font-size: 2em !important;
+}
+
+body.admin-panel .swal2-warning {
+  border-color: #f8bb86 !important;
+  background-color: #f8bb86 !important;
+}
+
+body.admin-panel .swal2-icon-show {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

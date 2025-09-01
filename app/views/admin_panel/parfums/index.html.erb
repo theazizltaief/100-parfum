@@ -1,12 +1,15 @@
+<div class="container-fluid"></div>
 <h1>Liste des parfums</h1>
 
-<%= link_to "Ajouter un parfum", new_admin_panel_parfum_path, class: "btn btn-primary mb-4" %>
+<%= button_to "Ajouter un parfum", new_admin_panel_parfum_path, 
+    class: "btn btn-primary mb-4", 
+    method: :get %>
 
 <div id="flash">
   <%= render "shared/flash" %>
 </div>
 
-<div id="parfums_container" class="row">
-  <%= render @parfums %>
+  <div class="parfums-grid-container">
+    <%= render @parfums %>
+  </div>
 </div>
-
