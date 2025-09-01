@@ -401,3 +401,56 @@ body.admin-panel .swal2-icon-show {
   justify-content: center;
   align-items: center;
 }
+
+/* Styles pour l'image du logo de la marque dans brands/show */
+body.admin-panel .card-img-top.brand-logo-img {
+  max-width: 250px !important; /* Limite la largeur maximale */
+  max-height: 150px !important; /* Limite la hauteur maximale */
+  width: auto !important; /* Permet une mise à l'échelle proportionnelle */
+  height: auto !important;
+  margin: 0 auto; /* Centre l'image horizontalement */
+  object-fit: contain !important; /* Privilégie le maintien des proportions */
+}
+
+/* Applique la classe spécifique à l'image dans brands/show */
+body.admin-panel #brand-show .card .card-img-top {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+/* Styles pour les images des parfums dans brands/show */
+body.admin-panel #brand-show .card .parfum-image {
+  max-width: 200px !important; /* Limite la largeur maximale */
+  max-height: 150px !important; /* Ajuste la hauteur maximale */
+  width: auto !important; /* Permet une mise à l'échelle proportionnelle */
+  height: auto !important; /* Maintient les proportions */
+  object-fit: contain !important; /* Affiche l'image entière */
+  object-position: center !important; /* Centre l'image */
+  margin: 0 auto !important; /* Centre horizontalement */
+  display: block !important; /* Assure un comportement standard */
+}
+
+/* Supprime les styles conflictuels précédents */
+body.admin-panel #brand-show .card .parfum-image {
+  display: flex !important; /* Supprime cette règle erronée */
+  flex-direction: column !important; /* Supprime cette règle erronée */
+  width: 100% !important; /* Supprime cette règle pour éviter l'étirement */
+  flex-shrink: 0 !important; /* Supprime cette règle */
+}
+
+/* Style spécifique pour le logo du brand dans brands/show */
+.brand-logo {
+  max-width: 250px !important;
+  max-height: 150px !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  display: block !important;
+  margin: 0 auto !important; /* Centre l'image */
+}
+
+/* Annule les styles Bootstrap pour cette image */
+.brand-logo.card-img-top {
+  width: auto !important;
+}
