@@ -1,12 +1,12 @@
 /* Page de toutes les marques */
 .all-brands-page {
   min-height: 100vh;
-  background-color: var(--soft-cream, #faf9f7);
+  background-color: var(--soft-cream, #e8ece6); /* Softer cream matching vitrine1.css */
 }
 
 .brands-hero {
-  background: linear-gradient(135deg, var(--dark-gold, #b58825) 0%, var(--gold-accent, #d4af37) 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--dark-gold, #1c5c3b) 0%, var(--gold-accent, #2e8b57) 100%); /* Deep green gradient */
+  color: var(--neutral-white, #ffffff);
   padding: 60px 0;
   text-align: center;
 }
@@ -43,17 +43,17 @@
 }
 
 .brand-card {
-  background: white;
+  background: var(--neutral-white, #ffffff);
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); /* Stronger shadow for luxury */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
 }
 
 .brand-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); /* Enhanced shadow for hover */
 }
 
 .brand-link {
@@ -67,7 +67,7 @@
   position: relative;
   height: 200px;
   overflow: hidden;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  background: linear-gradient(135deg, #d8ded8 0%, #e8ece6 100%); /* Subtle green-gray gradient */
 }
 
 .brand-image {
@@ -87,13 +87,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  background: linear-gradient(135deg, #d8ded8 0%, #e8ece6 100%); /* Matching green-gray gradient */
 }
 
 .brand-placeholder svg {
   width: 60px;
   height: 60px;
-  color: #adb5bd;
+  color: var(--text-light, #7a8c7f); /* Light green-gray */
 }
 
 .brand-info {
@@ -104,12 +104,12 @@
   font-family: var(--font-heading, "Playfair Display", serif);
   font-size: 1.5rem;
   font-weight: 600;
-  color: var(--dark-gold, #b58825);
+  color: var(--dark-gold, #2e8b57); /* Muted green-gold */
   margin-bottom: 0.5rem;
 }
 
 .brand-description {
-  color: var(--text-color, #666);
+  color: var(--text-color, #4a5c4f); /* Muted green-gray for text */
   line-height: 1.6;
   margin-bottom: 1rem;
   font-size: 0.95rem;
@@ -122,8 +122,8 @@
 }
 
 .parfums-count {
-  background: linear-gradient(135deg, var(--gold-accent, #d4af37), var(--dark-gold, #b58825));
-  color: white;
+  background: linear-gradient(135deg, var(--gold-accent, #2e8b57), var(--dark-gold, #1c5c3b)); /* Green gradient */
+  color: var(--neutral-white, #ffffff);
   padding: 6px 12px;
   border-radius: 20px;
   font-size: 0.85rem;
@@ -136,7 +136,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(181, 136, 37, 0.9);
+  background: rgba(28, 92, 59, 0.9); /* Darker green overlay */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -144,7 +144,7 @@
   gap: 10px;
   opacity: 0;
   transition: opacity 0.3s ease;
-  color: white;
+  color: var(--neutral-white, #ffffff);
 }
 
 .brand-card:hover .brand-overlay {
@@ -166,7 +166,7 @@
 .no-brands {
   text-align: center;
   padding: 60px 20px;
-  color: var(--text-color, #666);
+  color: var(--text-color, #4a5c4f); /* Muted green-gray */
 }
 
 .no-brands-icon {
@@ -176,13 +176,13 @@
 .no-brands-icon svg {
   width: 80px;
   height: 80px;
-  color: #adb5bd;
+  color: var(--text-light, #7a8c7f); /* Light green-gray */
 }
 
 .no-brands h3 {
   font-family: var(--font-heading, "Playfair Display", serif);
   font-size: 1.8rem;
-  color: var(--dark-gold, #b58825);
+  color: var(--dark-gold, #2e8b57); /* Muted green-gold */
   margin-bottom: 10px;
 }
 

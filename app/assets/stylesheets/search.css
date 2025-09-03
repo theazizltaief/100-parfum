@@ -1,5 +1,3 @@
-/* app/assets/stylesheets/search.css */
-
 /* Styles pour le conteneur des actions de navigation (pour aligner les éléments) */
 .nav-actions {
   display: flex;
@@ -33,7 +31,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-color, #222);
+  color: var(--text-color, #1c2520); /* Near-black for sharp text */
   transition: color 0.3s ease;
   flex-shrink: 0;
   z-index: 1200;
@@ -44,13 +42,13 @@
 }
 
 .inline-search-btn:hover {
-  color: var(--gold-accent, #d4af37);
+  color: var(--gold-accent, #2e8b57); /* Muted green-gold */
 }
 
 .inline-search-btn svg {
   width: 24px;
   height: 24px;
-  stroke: #fff;
+  stroke: #1c2520; /* Dark near-black for search icon */
   flex-shrink: 0; /* Empêche la réduction */
 }
 
@@ -67,10 +65,10 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  background-color: var(--soft-cream, #fff);
+  background-color: var(--soft-cream, #e8ece6); /* Softer cream matching vitrine1.css */
   border-radius: 8px;
   padding: 6px 10px;
-  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.2); /* Stronger shadow for luxury */
   height: 40px;
   z-index: 1190;
   min-height: 40px;
@@ -88,23 +86,23 @@
 .inline-search-input {
   flex-grow: 1;
   padding: 8px 10px;
-  border: 1px solid var(--gold-accent, #d4af37);
+  border: 1px solid var(--gold-accent, #2e8b57); /* Muted green-gold */
   border-radius: 5px;
   font-size: 1rem;
-  color: #222;
-  background-color: #fff;
+  color: var(--text-color, #1c2520); /* Near-black */
+  background-color: var(--neutral-white, #ffffff); /* Pure white */
   outline: none;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
   min-width: 120px;
 }
 
 .inline-search-input::placeholder {
-  color: var(--text-color-light, #9aa0a6);
+  color: var(--text-color-light, #7a8c7f); /* Light green-gray */
 }
 
 .inline-search-input:focus {
-  border-color: var(--dark-gold, #b58825);
-  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.08);
+  border-color: var(--dark-gold, #1c5c3b); /* Darker green for focus */
+  box-shadow: 0 0 0 3px rgba(46, 139, 87, 0.3); /* Green-tinted shadow */
 }
 
 /* Bouton de fermeture de l'input */
@@ -112,7 +110,7 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: #fff;
+  color: var(--neutral-white, #ffffff);
   font-size: 1.2rem;
   transition: color 0.2s ease;
   flex-shrink: 0;
@@ -123,13 +121,13 @@
 }
 
 .inline-search-close-btn:hover {
-  color: var(--dark-gold, #b58825);
+  color: var(--dark-gold, #1c5c3b); /* Darker green for hover */
 }
 
 .inline-search-close-btn svg {
   width: 20px;
   height: 20px;
-  stroke: #000;
+  stroke: #1c2520; /* Dark near-black for close icon */
   display: block;
 }
 
@@ -139,9 +137,9 @@
   top: calc(100% + 12px);
   right: calc(100% + 8px);
   width: 250px;
-  background-color: #fff;
+  background-color: var(--neutral-white, #ffffff); /* Pure white */
   border-radius: 8px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25); /* Enhanced shadow for luxury */
   max-height: 400px;
   overflow-y: auto;
   display: none;
@@ -159,9 +157,9 @@
 .inline-search-results-dropdown h3 {
   font-family: var(--font-heading, "Playfair Display", serif);
   font-size: 1.2rem;
-  color: #111;
+  color: var(--text-color, #1c2520); /* Near-black */
   margin: 8px 0;
-  border-bottom: 1px solid rgba(212, 175, 55, 0.12);
+  border-bottom: 1px solid rgba(46, 139, 87, 0.2); /* Subtle green border */
   padding-bottom: 6px;
 }
 
@@ -170,7 +168,7 @@
 .inline-search-results-dropdown span,
 .inline-search-results-dropdown p,
 .inline-search-results-dropdown div {
-  color: #111 !important;
+  color: var(--text-color, #1c2520) !important; /* Near-black */
 }
 
 /* grid */
@@ -186,10 +184,10 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  background-color: #fff;
+  background-color: var(--neutral-white, #ffffff); /* Pure white */
   padding: 8px;
   border-radius: 6px;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.15); /* Stronger shadow */
   text-decoration: none;
   color: inherit;
   transition: transform 0.14s ease, box-shadow 0.14s ease;
@@ -197,7 +195,7 @@
 
 .inline-search-result-item:hover {
   transform: translateY(-3px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2); /* Enhanced shadow for hover */
 }
 
 /* image fixed size, preserve ratio (no dilation) */
@@ -214,13 +212,13 @@
 .inline-search-result-info h4 {
   font-family: var(--font-heading, "Playfair Display", serif);
   font-size: 0.95rem;
-  color: var(--dark-gold, #b58825);
+  color: var(--dark-gold, #2e8b57); /* Muted green-gold */
   margin: 0 0 4px 0;
 }
 
 .inline-search-result-info p {
   font-size: 0.8rem;
-  color: var(--text-color-light, #6b6f73);
+  color: var(--text-color-light, #7a8c7f); /* Light green-gray */
   margin: 0;
   line-height: 1.2;
 }
@@ -229,7 +227,7 @@
 .inline-search-error-message,
 .inline-search-no-results-message {
   text-align: center;
-  color: var(--text-color-light, #6b6f73);
+  color: var(--text-color-light, #7a8c7f); /* Light green-gray */
   font-size: 0.95rem;
   padding: 10px;
 }
@@ -242,7 +240,7 @@
   right: 0;
   z-index: 1000;
   /* Suppression du background-color forcé pour garder la couleur originale */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Stronger shadow for luxury */
 }
 
 .nav {
@@ -307,7 +305,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-color, #222);
+  color: var(--text-color, #1c2520); /* Near-black for sharp text */
   transition: color 0.3s ease;
   position: relative;
   width: 44px;
@@ -317,15 +315,15 @@ main {
 .cart-btn svg {
   width: 24px;
   height: 24px;
-  stroke: #fff;
+  stroke: #1c2520; /* Dark near-black for cart icon */
 }
 
 .cart-count {
   position: absolute;
   top: 0;
   right: 0;
-  background-color: var(--gold-accent, #d4af37);
-  color: white;
+  background-color: var(--gold-accent, #2e8b57); /* Muted green-gold */
+  color: var(--neutral-white, #ffffff);
   border-radius: 50%;
   width: 18px;
   height: 18px;
@@ -357,8 +355,8 @@ main {
     width: 100%;
     padding: 10px 12px;
     box-sizing: border-box;
-    border-bottom: 1px solid rgba(0,0,0,0.08);
-    background: var(--soft-cream, #fff);
+    border-bottom: 1px solid rgba(0,0,0,0.15); /* Slightly darker border */
+    background: var(--soft-cream, #e8ece6); /* Softer cream */
   }
 
   .menu .mobile-search {
@@ -376,22 +374,22 @@ main {
     flex: 1;
     width: 100%;
     padding: 10px 12px;
-    border: 1px solid var(--gold-accent, #d4af37);
+    border: 1px solid var(--gold-accent, #2e8b57); /* Muted green-gold */
     border-radius: 6px;
     font-size: 1rem;
-    color: #222;
+    color: var(--text-color, #1c2520); /* Near-black */
     outline: none;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    background-color: #fff;
+    background-color: var(--neutral-white, #ffffff); /* Pure white */
   }
 
   .menu .mobile-search-input::placeholder {
-    color: var(--text-color-light, #9aa0a6);
+    color: var(--text-color-light, #7a8c7f); /* Light green-gray */
   }
 
   .menu .mobile-search-input:focus {
-    border-color: var(--dark-gold, #b58825);
-    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.08);
+    border-color: var(--dark-gold, #1c5c3b); /* Darker green for focus */
+    box-shadow: 0 0 0 3px rgba(46, 139, 87, 0.3); /* Green-tinted shadow */
   }
 
   /* 3) Adapter l’affichage des résultats à l’intérieur du menu (pas en position absolue) */
@@ -404,7 +402,7 @@ main {
     overflow-y: auto;
     margin-top: 8px;
     display: none;           /* contrôlé par .is-open (comme desktop) */
-    box-shadow: 0 6px 18px rgba(0,0,0,0.06); /* plus doux dans le menu */
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15); /* Stronger shadow for luxury */
   }
 
   .menu .mobile-search .inline-search-results-dropdown.is-open {

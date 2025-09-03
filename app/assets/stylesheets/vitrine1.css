@@ -6,23 +6,23 @@
 }
 
 :root {
-  --primary-deep: #1a1a2e;
-  --primary-gold: #d4af37;
-  --secondary-gold: #b8860b;
-  --accent-purple: #6a4c93;
-  --accent-rose: #c9a96e;
-  --neutral-cream: #faf8f6;
-  --neutral-white: #ffffff;
-  --neutral-light: #f5f5f5;
-  --text-primary: #2c2c2c;
-  --text-secondary: #666666;
-  --text-light: #999999;
-  --gradient-primary: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);
-  --gradient-secondary: linear-gradient(135deg, #6a4c93 0%, #9b59b6 100%);
-  --gradient-accent: linear-gradient(135deg, #c9a96e 0%, #d4af37 100%);
-  --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.08);
-  --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.12);
-  --shadow-strong: 0 15px 50px rgba(0, 0, 0, 0.15);
+  --primary-deep: #1a2f26; /* Deep forest green for luxury */
+  --primary-gold: #2e8b57; /* Muted green-gold for elegance */
+  --secondary-gold: #1c5c3b; /* Darker green for depth */
+  --accent-purple: #2a3f4a; /* Deep slate for subtle contrast */
+  --accent-rose: #4a7043; /* Muted sage green for warmth */
+  --neutral-cream: #e8ece6; /* Softer cream for backgrounds */
+  --neutral-white: #ffffff; /* Unchanged pure white */
+  --neutral-light: #d8ded8; /* Light green-gray for subtle accents */
+  --text-primary: #1c2520; /* Near-black for sharp text */
+  --text-secondary: #4a5c4f; /* Muted green-gray for secondary text */
+  --text-light: #7a8c7f; /* Lighter green-gray for subtle text */
+  --gradient-primary: linear-gradient(135deg, #2e8b57 0%, #1c5c3b 100%); /* Green gradient */
+  --gradient-secondary: linear-gradient(135deg, #2a3f4a 0%, #3b5a6b 100%); /* Slate to deeper slate */
+  --gradient-accent: linear-gradient(135deg, #4a7043 0%, #2e8b57 100%); /* Sage to green-gold */
+  --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.2); /* Stronger shadow for depth */
+  --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.25); /* Enhanced for luxury */
+  --shadow-strong: 0 15px 50px rgba(0, 0, 0, 0.3); /* Bold shadow for hover effects */
   --border-radius: 12px;
   --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-bounce: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -48,15 +48,15 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  background: rgba(250, 248, 246, 0.95);
+  background: rgba(232, 236, 230, 0.95); /* Adjusted to match neutral-cream */
   backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+  border-bottom: 1px solid rgba(46, 139, 87, 0.2); /* Subtle green border */
   z-index: 1000;
   transition: var(--transition-smooth);
 }
 
 .header-artistic.scrolled {
-  background: rgba(250, 248, 246, 0.98);
+  background: rgba(232, 236, 230, 0.98);
   box-shadow: var(--shadow-medium);
 }
 
@@ -128,81 +128,74 @@ body {
 }
 
 /*brands slider*/
-/* Conteneur principal du slider */
 .brands-slider {
-  overflow: hidden; /* Cache le débordement pour l'effet slider */
+  overflow: hidden;
   position: relative;
   width: 100%;
 }
 
-/* Conteneur du track */
 .slider-container {
   width: 100%;
   overflow: hidden;
 }
 
-/* Le track avec les logos dupliqués */
 .brands-track {
-  display: flex; /* Affichage horizontal */
+  display: flex;
   flex-direction: row;
-  flex-wrap: nowrap; /* Pas de retour à la ligne */
-  animation: slide 30s linear infinite; /* Animation infini, ajustez la durée (30s) selon le nombre de marques */
-  will-change: transform; /* Optimisation pour les animations */
+  flex-wrap: nowrap;
+  animation: slide 30s linear infinite;
+  will-change: transform;
 }
 
-/* Pause au survol (optionnel, mais recommandé pour l'UX) */
 .brands-track:hover {
   animation-play-state: paused;
 }
 
-/* Chaque item de logo */
 .brand-logo-item-link {
-  flex: 0 0 auto; /* Ne pas étirer, taille fixe */
+  flex: 0 0 auto;
   display: block;
-  margin: 0 20px; /* Espacement entre logos, ajustez selon besoin */
+  margin: 0 20px;
 }
 
 .brand-logo-item {
-  width: 150px; /* Largeur fixe pour chaque logo, ajustez */
+  width: 150px;
   height: auto;
 }
 
 .brand-logo-item img {
   width: 100%;
   height: auto;
-  object-fit: contain; /* Garde les proportions des images */
+  object-fit: contain;
 }
 
-/* Animation keyframes pour le défilement infini */
 @keyframes slide {
   0% {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-50%); /* -50% car les éléments sont dupliqués */
+    transform: translateX(-50%);
   }
 }
 
-/* Optionnel : Masque gradient pour estomper les bords (effet fade) */
 .brands-slider::before,
 .brands-slider::after {
   content: '';
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 100px; /* Largeur du fade, ajustez */
+  width: 100px;
   z-index: 1;
   pointer-events: none;
 }
 
 .brands-slider::before {
   left: 0;
-  background: linear-gradient(to right, white 0%, transparent 100%); /* Ajustez la couleur de fond (white ou celle de votre page) */
+  background: linear-gradient(to right, var(--neutral-cream) 0%, transparent 100%); /* Updated to match background */
 }
 
 .brands-slider::after {
   right: 0;
-  background: linear-gradient(to left, white 0%, transparent 100%);
+  background: linear-gradient(to left, var(--neutral-cream) 0%, transparent 100%);
 }
 
 .menu-artistic {
@@ -379,7 +372,7 @@ body {
   position: absolute;
   border-radius: 50%;
   filter: blur(100px);
-  opacity: 0.3;
+  opacity: 0.4; /* Slightly increased for more luxurious effect */
   animation: float 20s ease-in-out infinite;
 }
 
@@ -518,7 +511,7 @@ body {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); /* Slightly brighter for luxury */
   transition: left 0.5s ease;
 }
 
@@ -684,7 +677,7 @@ body {
   padding: 3rem;
   text-align: center;
   transition: var(--transition-smooth);
-  border: 1px solid rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(46, 139, 87, 0.2); /* Subtle green border */
   position: relative;
   overflow: hidden;
 }
@@ -702,7 +695,7 @@ body {
 }
 
 .collection-card:hover::before {
-  opacity: 0.05;
+  opacity: 0.1; /* Increased for more visible luxury effect */
 }
 
 .collection-card:hover {
@@ -832,7 +825,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(28, 37, 32, 0.7); /* Darker green-black overlay */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1339,7 +1332,7 @@ body {
     top: 100%;
     left: 0;
     right: 0;
-    background: rgba(250, 248, 246, 0.98);
+    background: rgba(232, 236, 230, 0.98); /* Updated to match neutral-cream */
     backdrop-filter: blur(20px);
     flex-direction: column;
     padding: 2rem;
@@ -1533,4 +1526,93 @@ body {
 .fragrance-image img,
 .bottle-silhouette {
   will-change: transform;
+}
+
+/*footer parts*/
+.footer-artistic {
+  background: var(--primary-deep);
+  color: var(--neutral-white);
+  padding: 4rem 2rem 2rem;
+}
+
+.footer-content-artistic {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 3rem;
+  text-align: center;
+}
+
+.footer-section h4 {
+  font-size: 1.2rem;
+  color: var(--primary-gold);
+  margin-bottom: 1rem;
+}
+
+.footer-section p,
+.footer-section li {
+  color: var(--neutral-light);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-section a {
+  color: var(--neutral-white);
+  text-decoration: none;
+  transition: var(--transition-smooth);
+}
+
+.footer-section a:hover {
+  color: var(--primary-gold);
+}
+
+.footer-brand .brand-description {
+  margin: 1rem 0 2rem;
+  font-size: 0.95rem;
+  color: var(--neutral-light);
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.social-link svg {
+  width: 22px;
+  height: 22px;
+  transition: var(--transition-smooth);
+  color: var(--neutral-white);
+}
+
+.social-link:hover svg {
+  color: var(--primary-gold);
+  transform: scale(1.2);
+}
+
+.footer-thanks-icon {
+  margin-top: 1rem;
+}
+
+.footer-thanks-icon svg {
+  width: 40px;
+  height: 40px;
+  stroke: var(--primary-gold);
+}
+
+.footer-bottom-artistic {
+  margin-top: 3rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-light);
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 1.5rem;
 }

@@ -1,7 +1,7 @@
 /* Page Checkout */
 .checkout-page {
   min-height: 100vh;
-  background-color: var(--soft-cream, #faf9f7);
+  background-color: var(--soft-cream, #e8ece6); /* Softer cream matching vitrine1.css */
   padding: 40px 0;
 }
 
@@ -13,12 +13,12 @@
 .checkout-title {
   font-family: var(--font-heading, "Playfair Display", serif);
   font-size: 2.5rem;
-  color: var(--dark-gold, #b58825);
+  color: var(--dark-gold, #2e8b57); /* Muted green-gold */
   margin-bottom: 10px;
 }
 
 .checkout-subtitle {
-  color: var(--text-color, #666);
+  color: var(--text-color, #1c2520); /* Near-black for sharp text */
   font-size: 1.1rem;
 }
 
@@ -32,16 +32,16 @@
 
 /* Formulaire de facturation */
 .billing-section {
-  background: white;
+  background: var(--neutral-white, #ffffff); /* Pure white */
   padding: 30px;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Stronger shadow for luxury */
 }
 
 .section-title {
   font-family: var(--font-heading, "Playfair Display", serif);
   font-size: 1.8rem;
-  color: var(--dark-gold, #b58825);
+  color: var(--dark-gold, #2e8b57); /* Muted green-gold */
   margin-bottom: 25px;
 }
 
@@ -58,14 +58,14 @@
 .form-label {
   display: block;
   font-weight: 600;
-  color: var(--text-color, #333);
+  color: var(--text-color, #1c2520); /* Near-black */
   margin-bottom: 8px;
 }
 
 .form-input {
   width: 100%;
   padding: 12px 16px;
-  border: 2px solid #e1e5e9;
+  border: 2px solid #d8ded8; /* Light green-gray */
   border-radius: 8px;
   font-size: 1rem;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
@@ -73,8 +73,8 @@
 
 .form-input:focus {
   outline: none;
-  border-color: var(--gold-accent, #d4af37);
-  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+  border-color: var(--gold-accent, #2e8b57); /* Muted green-gold */
+  box-shadow: 0 0 0 3px rgba(46, 139, 87, 0.2); /* Green-tinted shadow */
 }
 
 .form-input.error {
@@ -90,10 +90,10 @@
 
 /* Résumé de commande */
 .order-summary {
-  background: white;
+  background: var(--neutral-white, #ffffff); /* Pure white */
   padding: 30px;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Stronger shadow for luxury */
   height: fit-content;
   position: sticky;
   top: 20px;
@@ -108,7 +108,7 @@
   align-items: center;
   gap: 15px;
   padding: 15px 0;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid #d8ded8; /* Light green-gray */
 }
 
 .order-item:last-child {
@@ -128,24 +128,24 @@
 
 .order-item-name {
   font-weight: 600;
-  color: var(--text-color, #333);
+  color: var(--text-color, #1c2520); /* Near-black */
   margin-bottom: 5px;
 }
 
 .order-item-details {
-  color: var(--text-color-light, #666);
+  color: var(--text-color-light, #7a8c7f); /* Light green-gray */
   font-size: 0.9rem;
   margin: 0;
 }
 
 .order-item-total {
   font-weight: 600;
-  color: var(--dark-gold, #b58825);
+  color: var(--dark-gold, #2e8b57); /* Muted green-gold */
 }
 
 /* Totaux */
 .order-totals {
-  border-top: 2px solid #f0f0f0;
+  border-top: 2px solid #d8ded8; /* Light green-gray */
   padding-top: 20px;
   margin-bottom: 25px;
 }
@@ -154,14 +154,14 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
-  color: var(--text-color, #333);
+  color: var(--text-color, #1c2520); /* Near-black */
 }
 
 .total-final {
   font-size: 1.2rem;
   font-weight: 700;
-  color: var(--dark-gold, #b58825);
-  border-top: 1px solid #f0f0f0;
+  color: var(--dark-gold, #2e8b57); /* Muted green-gold */
+  border-top: 1px solid #d8ded8; /* Light green-gray */
   padding-top: 15px;
   margin-top: 15px;
 }
@@ -174,7 +174,7 @@
 .payment-title {
   font-size: 1.2rem;
   font-weight: 600;
-  color: var(--text-color, #333);
+  color: var(--text-color, #1c2520); /* Near-black */
   margin-bottom: 15px;
 }
 
@@ -183,9 +183,9 @@
   align-items: center;
   gap: 12px;
   padding: 15px;
-  border: 2px solid #e1e5e9;
+  border: 2px solid #d8ded8; /* Light green-gray */
   border-radius: 8px;
-  background: #f8f9fa;
+  background: #e8ece6; /* Softer cream */
 }
 
 .payment-label {
@@ -193,20 +193,20 @@
   align-items: center;
   gap: 10px;
   font-weight: 500;
-  color: var(--text-color, #333);
+  color: var(--text-color, #1c2520); /* Near-black */
   cursor: pointer;
 }
 
 .payment-label svg {
   width: 20px;
   height: 20px;
-  color: var(--gold-accent, #d4af37);
+  color: #1c2520; /* Dark near-black for payment icon */
 }
 
 /* NOUVEAU : Texte informatif */
 .checkout-info-text {
-  background: #e8f4fd;
-  border: 1px solid #bee5eb;
+  background: #d8ded8; /* Light green-gray */
+  border: 1px solid #c8d2c8; /* Slightly darker green-gray */
   border-radius: 8px;
   padding: 15px;
   margin-bottom: 20px;
@@ -214,15 +214,15 @@
 
 .checkout-info-text p {
   margin: 0;
-  color: #0c5460;
+  color: var(--text-color, #1c2520); /* Near-black */
   font-size: 0.95rem;
 }
 
 /* Bouton de commande */
 .checkout-submit-btn {
   width: 100%;
-  background: linear-gradient(135deg, var(--gold-accent, #d4af37), var(--dark-gold, #b58825));
-  color: white;
+  background: linear-gradient(135deg, var(--gold-accent, #2e8b57), var(--dark-gold, #1c5c3b)); /* Green gradient */
+  color: var(--neutral-white, #ffffff);
   border: none;
   padding: 16px 24px;
   border-radius: 8px;
@@ -238,18 +238,19 @@
 
 .checkout-submit-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+  box-shadow: 0 8px 25px rgba(46, 139, 87, 0.3); /* Green-tinted shadow */
 }
 
 .checkout-submit-btn svg {
   width: 20px;
   height: 20px;
+  color: #1c2520; /* Dark near-black for submit icon */
 }
 
 /* Page de confirmation */
 .order-confirmation-page {
   min-height: 100vh;
-  background-color: var(--soft-cream, #faf9f7);
+  background-color: var(--soft-cream, #e8ece6); /* Softer cream */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -257,10 +258,10 @@
 }
 
 .confirmation-content {
-  background: white;
+  background: var(--neutral-white, #ffffff); /* Pure white */
   padding: 50px;
   border-radius: 16px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25); /* Enhanced shadow for luxury */
   text-align: center;
   max-width: 600px;
   width: 100%;
@@ -269,7 +270,7 @@
 .success-icon {
   width: 80px;
   height: 80px;
-  background: linear-gradient(135deg, #27ae60, #2ecc71);
+  background: linear-gradient(135deg, #28a745, #2ecc71); /* Keep original green for success */
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -280,7 +281,7 @@
 .success-icon svg {
   width: 40px;
   height: 40px;
-  color: white;
+  color: var(--neutral-white, #ffffff);
 }
 
 /* NOUVEAU : Info de livraison */
@@ -289,17 +290,17 @@
   align-items: center;
   justify-content: center;
   gap: 15px;
-  background: #f8f9fa;
+  background: #e8ece6; /* Softer cream */
   padding: 20px;
   border-radius: 12px;
   margin-bottom: 30px;
-  border: 2px solid #e9ecef;
+  border: 2px solid #d8ded8; /* Light green-gray */
 }
 
 .delivery-icon {
   width: 50px;
   height: 50px;
-  background: linear-gradient(135deg, var(--gold-accent, #d4af37), var(--dark-gold, #b58825));
+  background: linear-gradient(135deg, var(--gold-accent, #2e8b57), var(--dark-gold, #1c5c3b)); /* Green gradient */
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -310,7 +311,7 @@
 .delivery-icon svg {
   width: 24px;
   height: 24px;
-  color: white;
+  color: #1c2520; /* Dark near-black for delivery icon */
 }
 
 .delivery-text {
@@ -320,26 +321,26 @@
 .delivery-text h3 {
   font-family: var(--font-heading, "Playfair Display", serif);
   font-size: 1.2rem;
-  color: var(--dark-gold, #b58825);
+  color: var(--dark-gold, #2e8b57); /* Muted green-gold */
   margin: 0 0 5px 0;
 }
 
 .delivery-text p {
   font-size: 1rem;
   font-weight: 600;
-  color: var(--text-color, #333);
+  color: var(--text-color, #1c2520); /* Near-black */
   margin: 0;
 }
 
 .confirmation-title {
   font-family: var(--font-heading, "Playfair Display", serif);
   font-size: 2.2rem;
-  color: var(--dark-gold, #b58825);
+  color: var(--dark-gold, #2e8b57); /* Muted green-gold */
   margin-bottom: 15px;
 }
 
 .confirmation-subtitle {
-  color: var(--text-color, #666);
+  color: var(--text-color, #1c2520); /* Near-black */
   font-size: 1.1rem;
   line-height: 1.6;
   margin-bottom: 40px;
@@ -347,7 +348,7 @@
 
 .order-details {
   text-align: left;
-  background: #f8f9fa;
+  background: #e8ece6; /* Softer cream */
   padding: 25px;
   border-radius: 8px;
   margin-bottom: 30px;
@@ -355,13 +356,13 @@
 
 .order-details h2 {
   font-size: 1.3rem;
-  color: var(--dark-gold, #b58825);
+  color: var(--dark-gold, #2e8b57); /* Muted green-gold */
   margin-bottom: 15px;
 }
 
 .order-info p {
   margin-bottom: 8px;
-  color: var(--text-color, #333);
+  color: var(--text-color, #1c2520); /* Near-black */
 }
 
 .order-items-summary {
@@ -370,7 +371,7 @@
 
 .order-items-summary h3 {
   font-size: 1.1rem;
-  color: var(--dark-gold, #b58825);
+  color: var(--dark-gold, #2e8b57); /* Muted green-gold */
   margin-bottom: 10px;
 }
 
@@ -378,7 +379,7 @@
   display: flex;
   justify-content: space-between;
   padding: 8px 0;
-  border-bottom: 1px solid #e1e5e9;
+  border-bottom: 1px solid #d8ded8; /* Light green-gray */
 }
 
 .confirmation-item:last-child {
@@ -400,18 +401,18 @@
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--gold-accent, #d4af37), var(--dark-gold, #b58825));
-  color: white;
+  background: linear-gradient(135deg, var(--gold-accent, #2e8b57), var(--dark-gold, #1c5c3b)); /* Green gradient */
+  color: var(--neutral-white, #ffffff);
 }
 
 .btn-secondary {
-  background: #6c757d;
-  color: white;
+  background: #4a5c4f; /* Muted green-gray */
+  color: var(--neutral-white, #ffffff);
 }
 
 .btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25); /* Stronger shadow for hover */
 }
 
 /* Responsive */
