@@ -127,11 +127,41 @@ body {
   text-transform: uppercase;
 }
 
-/*brands slider*/
+/* Brands Slider */
 .brands-slider {
   overflow: hidden;
   position: relative;
   width: 100%;
+  padding: 4rem 0;
+  background: var(--neutral-white); /* Solid background for harmony */
+  box-shadow: var(--shadow-soft); /* Subtle shadow for depth */
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding: 1rem;
+  background: var(--neutral-white); /* Solid background */
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-soft);
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section-header h2 {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 2.5rem;
+  color: var(--primary-gold);
+  margin-bottom: 0.5rem;
+}
+
+.section-header p {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
 }
 
 .slider-container {
@@ -143,7 +173,7 @@ body {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  animation: slide 30s linear infinite;
+  animation: slide 15s linear infinite; /* Faster scroll (15s instead of 30s) */
   will-change: transform;
 }
 
@@ -158,14 +188,17 @@ body {
 }
 
 .brand-logo-item {
-  width: 150px;
-  height: auto;
+  width: 120px; /* Unified size */
+  height: 120px; /* Unified size */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .brand-logo-item img {
   width: 100%;
-  height: auto;
-  object-fit: contain;
+  height: 100%;
+  object-fit: contain; /* Ensures logos are balanced */
 }
 
 @keyframes slide {
@@ -190,14 +223,15 @@ body {
 
 .brands-slider::before {
   left: 0;
-  background: linear-gradient(to right, var(--neutral-cream) 0%, transparent 100%); /* Updated to match background */
+  background: linear-gradient(to right, var(--neutral-white) 0%, transparent 100%); /* Match background */
 }
 
 .brands-slider::after {
   right: 0;
-  background: linear-gradient(to left, var(--neutral-cream) 0%, transparent 100%);
+  background: linear-gradient(to left, var(--neutral-white) 0%, transparent 100%);
 }
 
+/* Menu artistique */
 .menu-artistic {
   display: flex;
   list-style: none;
@@ -1528,7 +1562,7 @@ body {
   will-change: transform;
 }
 
-/*footer parts*/
+/* Footer parts */
 .footer-artistic {
   background: var(--primary-deep);
   color: var(--neutral-white);

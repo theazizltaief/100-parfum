@@ -440,43 +440,9 @@
   }
 }
 
-/* Styles pour la section d'en-tête de la marque (logo, nom, slogan) */
-.brand-header-section { /* Assurez-vous que votre section d'en-tête a cette classe */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 40px; /* Espace sous l'en-tête de la marque */
-  text-align: center;
-}
-
-/* Styles pour le logo de la marque */
-.brand-logo-display { /* Nouvelle classe pour l'image du logo */
-  width: 180px; /* Taille par défaut du logo */
-  height: 180px;
-  max-width: 100%; /* S'assure qu'il ne dépasse pas la largeur du parent */
-  object-fit: contain; /* Empêche la déformation de l'image, s'assure qu'elle est entièrement visible */
-  margin-bottom: 20px; /* Espace entre le logo et le nom de la marque */
-  border-radius: 10px; /* Légers coins arrondis si désiré */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Ombre subtile pour le logo */
-  background-color: var(--neutral-white, #ffffff); /* Fond blanc pour les logos transparents */
-  padding: 10px; /* Petit padding interne pour le logo */
-}
-
 @media (max-width: 768px) {
   .brand-page-container {
     padding-top: 60px;
-  }
-  .brand-logo-display {
-    width: 150px; /* Taille légèrement plus petite sur mobile */
-    height: 150px;
-    margin-bottom: 15px;
-  }
-  .brand-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 40px; /* Espace sous l'en-tête de la marque */
-    text-align: center;
   }
   .brand-logo {
     width: 150px; /* Taille par défaut du logo */
@@ -488,6 +454,13 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Ombre subtile pour le logo */
     background-color: var(--neutral-white, #ffffff); /* Fond blanc pour les logos transparents */
     padding: 10px; /* Petit padding interne pour le logo */
+  }
+  .brand-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 40px; /* Espace sous l'en-tête de la marque */
+    text-align: center;
   }
   .brand-title {
     font-size: 2.5rem;
@@ -527,4 +500,26 @@
     font-size: 0.8rem;
     padding: 4px 8px;
   }
+}
+
+/* Styles pour la section d'en-tête de la marque (logo, nom, slogan) */
+.brand-header-section { /* Assurez-vous que votre section d'en-tête a cette classe */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px; /* Espace sous l'en-tête de la marque */
+  text-align: center;
+}
+
+/* Styles pour le logo de la marque */
+.brand-logo-display { /* Nouvelle classe pour l'image du logo */
+  width: 180px; /* Taille par défaut du logo */
+  height: 180px;
+  max-width: 100%; /* S'assure qu'il ne dépasse pas la largeur du parent */
+  object-fit: contain; /* Empêche la déformation de l'image, s'assure qu'elle est entièrement visible */
+  margin-bottom: 20px; /* Espace entre le logo et le nom de la marque */
+  border-radius: 10px; /* Légers coins arrondis si désiré */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Ombre subtile pour le logo */
+  background-color: var(--neutral-white, #ffffff); /* Fond blanc pour les logos transparents */
+  padding: 10px; /* Petit padding interne pour le logo */
 }
