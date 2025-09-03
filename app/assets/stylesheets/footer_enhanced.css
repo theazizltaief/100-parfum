@@ -135,17 +135,18 @@
   color: white;
 }
 
-/* Footer bottom */
+/* Footer bottom - Centré sur desktop */
 .footer-bottom {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding-top: 20px;
-  text-align: center;
+  text-align: center; /* Centrage explicite */
 }
 
 .footer-bottom p {
   color: #95a5a6;
-  margin: 0;
+  margin: 0 auto; /* Centre le texte horizontalement */
   font-size: 0.9rem;
+  max-width: 1200px; /* Limite optionnelle pour éviter un étirement excessif */
 }
 
 /* Responsive */
@@ -178,6 +179,10 @@
   .footer-thanks-icon {
     text-align: center;
   }
+
+  .footer-bottom {
+    text-align: center; /* Redondant mais assuré pour mobile */
+  }
 }
 
 @media (max-width: 480px) {
@@ -201,5 +206,9 @@
   .social-links svg {
     width: 20px;
     height: 20px;
+  }
+
+  .footer-bottom p {
+    font-size: 0.85rem; /* Légère réduction pour mobile */
   }
 }

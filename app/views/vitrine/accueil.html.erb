@@ -14,7 +14,7 @@
       </h1>
       <p class="hero-description">
         Plongez dans un univers sensoriel unique où chaque fragrance raconte une histoire. 
-        Nos décants premium révèlent l'essence même des plus grandes créations parfumées.
+        Nos extraits premium révèlent l'essence même des plus grandes créations parfumées.
       </p>
       <div class="hero-cta">
         <a href="<%= vitrine_all_perfumes_path %>" class="btn-primary btn-artistic primary">
@@ -23,8 +23,6 @@
           <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <path d="M5 12h14M12 5l7 7-7 7"/>
           </svg>
-        </a>
-
         </a>
       </div>
     </div>
@@ -35,7 +33,7 @@
           <div class="bottle-silhouette"></div>
           <div class="scent-waves">
             <div class="wave wave-1"></div>
-            <div class="wave wave-2"></div Establishment
+            <div class="wave wave-2"></div>
             <div class="wave wave-3"></div>
           </div>
         </div>
@@ -53,7 +51,6 @@
 <section class="collection-class-section signature-collections">
   <div class="container">
     <div class="section-header-artistic">
-      <span class="section-subtitle">Nos Signatures</span>
       <h2 class="section-title">Collections d'Exception</h2>
       <p class="section-description">
         Trois univers distincts pour explorer toute la richesse de la parfumerie contemporaine
@@ -62,26 +59,18 @@
     
     <div class="collection-class-grid collections-showcase">
       <a href="<%= category_perfumes_path(filter_type: 'fragrance_class', filter_value: 'designer') %>" class="collection-class-card collection-card-designer collection-card designer-collection" data-controller="collection-hover">
-        <div class="collection-class-overlay collection-visual">
-          <div class="collection-pattern pattern-designer"></div>
-          <div class="collection-icon">👑</div>
-        </div>
         <div class="collection-class-content collection-content">
           <h3 class="collection-class-title">Designer</h3>
           <p class="collection-class-description">Les créations iconiques des maisons de luxe internationales</p>
           <div class="collection-stats">
             <span class="stat">150+ fragrances</span>
-            <span class="stat">À partir de 12€</span>
+            <span class="stat">À partir de 12 DT</span>
           </div>
           <span class="collection-link">Explorer →</span>
         </div>
       </a>
       
       <a href="<%= category_perfumes_path(filter_type: 'fragrance_class', filter_value: 'niche') %>" class="collection-class-card collection-card-niche collection-card niche-collection" data-controller="collection-hover">
-        <div class="collection-class-overlay collection-visual">
-          <div class="collection-pattern pattern-niche"></div>
-          <div class="collection-icon">🎨</div>
-        </div>
         <div class="collection-class-content collection-content">
           <h3 class="collection-class-title">Niche</h3>
           <p class="collection-class-description">L'artisanat parfumé dans sa forme la plus pure et créative</p>
@@ -94,12 +83,8 @@
       </a>
       
       <a href="<%= category_perfumes_path(filter_type: 'fragrance_class', filter_value: 'collection_privee') %>" class="collection-class-card collection-card-private collection-card private-collection" data-controller="collection-hover">
-        <div class="collection-class-overlay collection-visual">
-          <div class="collection-pattern pattern-private"></div>
-          <div class="collection-icon">💎</div>
-        </div>
         <div class="collection-class-content collection-content">
-          <h3 class="collection-class-title">Collection Privée</h3>
+          <h3 class="class-title">Collection Privée</h3>
           <p class="collection-class-description">Fragrances rares et exclusives pour les connaisseurs</p>
           <div class="collection-stats">
             <span class="stat">80+ fragrances</span>
@@ -112,144 +97,53 @@
   </div>
 </section>
 
-<section class="why-choose-us featured-fragrances">
-  <div class="container">
-    <div class="section-header-artistic">
-      <span class="section-subtitle">Sélection Curateur</span>
-      <h2 class="section-title">Coups de Cœur</h2>
-      <p class="section-description">
-        Découvrez nos fragrances les plus prisées, sélectionnées pour leur caractère unique et leur élégance intemporelle.
-      </p>
+<section class="quality-section">
+  <h2>L'Authenticité et la Qualité de Nos Extraits de Parfums</h2>
+  <p>Chez 100% Parfums, nous nous engageons à offrir des extraits de parfums authentiques et de haute qualité. Chaque extrait est sélectionné avec soin auprès de maisons de parfumerie d'exception, garantissant une pureté et une tenue inégalées. Nos produits sont 100% originaux, sans additifs inutiles, pour une expérience olfactive pure et luxueuse.</p>
+  <div class="quality-chart">
+    <h3>Indicateurs de Qualité</h3>
+    <div class="bar-container">
+      <div class="bar-label">Authenticité (80%)</div>
+      <div class="bar" data-value="80"></div>
     </div>
-    
-    <div class="features-grid fragrances-grid">
-      <article class="feature-card luxury authenticity" data-controller="fragrance-hover">
-        <div class="fragrance-image feature-icon">
-          <img src="<%= asset_path('parfum1.jpeg') %>" alt="Tom Ford Oud Wood" />
-          <div class="fragrance-overlay">
-            <div class="scent-notes">
-              <span class="note">Oud</span>
-              <span class="note">Santal</span>
-              <span class="note">Épices</span>
-            </div>
-          </div>
-          <div class="fragrance-badge bestseller">Bestseller</div>
-        </div>
-        <div class="fragrance-info">
-          <div class="fragrance-header">
-            <div class="brand-info">
-              <span class="brand">Tom Ford</span>
-              <span class="collection-type">Designer</span>
-            </div>
-            <div class="rating">
-              <span class="stars">★★★★★</span>
-              <span class="rating-count">(127)</span>
-            </div>
-          </div>
-          <h3 class="fragrance-name">Oud Wood</h3>
-          <p class="fragrance-description">
-            Une symphonie boisée et épicée qui capture l'essence mystique de l'oud précieux
-          </p>
-          <div class="fragrance-details">
-            <div class="scent-family">Boisé Oriental</div>
-            <div class="longevity">8-10h</div>
-          </div>
-          <div class="pricing-info">
-            <div class="price-range">
-              <span class="from">À partir de</span>
-              <span class="price">22€</span>
-              <span class="volume">5ml</span>
-            </div>
-            <button class="add-to-cart">Ajouter</button>
-          </div>
-        </div>
-      </article>
-      
-      <article class="feature-card luxury fast-delivery" data-controller="fragrance-hover">
-        <div class="fragrance-image feature-icon">
-          <img src="<%= asset_path('parfum2.jpeg') %>" alt="Maison Margiela By the Fireplace" />
-          <div class="fragrance-overlay">
-            <div class="scent-notes">
-              <span class="note">Fumé</span>
-              <span class="note">Vanille</span>
-              <span class="note">Châtaigne</span>
-            </div>
-          </div>
-          <div class="fragrance-badge new">Nouveau</div>
-        </div>
-        <div class="fragrance-info">
-          <div class="fragrance-header">
-            <div class="brand-info">
-              <span class="brand">Maison Margiela</span>
-              <span class="collection-type">Niche</span>
-            </div>
-            <div class="rating">
-              <span class="stars">★★★★☆</span>
-              <span class="rating-count">(89)</span>
-            </div>
-          </div>
-          <h3 class="fragrance-name">By the Fireplace</h3>
-          <p class="fragrance-description">
-            L'intimité d'un foyer chaleureux capturée dans une fragrance gourmande et réconfortante
-          </p>
-          <div class="fragrance-details">
-            <div class="scent-family">Gourmand Fumé</div>
-            <div class="longevity">6-8h</div>
-          </div>
-          <div class="pricing-info">
-            <div class="price-range">
-              <span class="from">À partir de</span>
-              <span class="price">28€</span>
-              <span class="volume">5ml</span>
-            </div>
-            <button class="add-to-cart">Ajouter</button>
-          </div>
-        </div>
-      </article>
-      
-      <article class="feature-card luxury" data-controller="fragrance-hover">
-        <div class="fragrance-image feature-icon">
-          <img src="<%= asset_path('parfum3.jpg') %>" alt="Creed Aventus" />
-          <div class="fragrance-overlay">
-            <div class="scent-notes">
-              <span class="note">Ananas</span>
-              <span class="note">Fumé</span>
-              <span class="note">Musc</span>
-            </div>
-          </div>
-          <div class="fragrance-badge exclusive">Exclusif</div>
-        </div>
-        <div class="fragrance-info">
-          <div class="fragrance-header">
-            <div class="brand-info">
-              <span class="brand">Creed</span>
-              <span class="collection-type">Privé</span>
-            </div>
-            <div class="rating">
-              <span class="stars">★★★★★</span>
-              <span class="rating-count">(203)</span>
-            </div>
-          </div>
-          <h3 class="fragrance-name">Aventus</h3>
-          <p class="fragrance-description">
-            La fragrance légendaire qui incarne le succès et l'audace masculine
-          </p>
-          <div class="fragrance-details">
-            <div class="scent-family">Fruité Fumé</div>
-            <div class="longevity">10-12h</div>
-          </div>
-          <div class="pricing-info">
-            <div class="price-range">
-              <span class="from">À partir de</span>
-              <span class="price">38€</span>
-              <span class="volume">5ml</span>
-            </div>
-            <button class="add-to-cart">Ajouter</button>
-          </div>
-        </div>
-      </article>
+    <div class="bar-container">
+      <div class="bar-label">Qualité (90%)</div>
+      <div class="bar" data-value="90"></div>
+    </div>
+    <div class="bar-container">
+      <div class="bar-label">Tenue (70%)</div>
+      <div class="bar" data-value="70"></div>
     </div>
   </div>
+  <script>
+    document.addEventListener("turbo:load", () => {
+      const qualitySection = document.querySelector(".quality-section");
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            console.log("Quality section in viewport, animating bars");
+            animateBars();
+            observer.unobserve(qualitySection); // Arrête après une animation
+          }
+        });
+      }, { threshold: 0.5 });
+
+      observer.observe(qualitySection);
+
+      function animateBars() {
+        const bars = document.querySelectorAll(".bar");
+        bars.forEach(bar => {
+          const value = parseInt(bar.dataset.value, 10);
+          if (!isNaN(value)) {
+            console.log(`Animating bar to ${value}%`);
+            bar.style.width = `${value}%`;
+          } else {
+            console.error("Invalid data-value on bar:", bar.dataset.value);
+          }
+        });
+      }
+    });
+  </script>
 </section>
 
 <section class="gender-category-cards-section">
@@ -282,61 +176,12 @@
     </div>
   </div>
 </section>
-<!--
-<section class="testimonials-artistic">
-  <div class="container">
-    <div class="testimonials-content section-header-artistic">
-      <span class="section-subtitle">Témoignages</span>
-      <h2 class="section-title">Ce que disent nos clients</h2>
-      <p class="section-description">L'excellence reconnue par une communauté passionnée</p>
-    </div>
-    
-    <div class="testimonials-slider" data-controller="testimonials-slider">
-      <div class="testimonial active">
-        <div class="testimonial-content">
-          <p>"Une découverte olfactive exceptionnelle. La qualité des décants est irréprochable et le service client d'une rare expertise."</p>
-          <div class="testimonial-author">
-            <strong>Marie L.</strong>
-            <span>Collectionneuse de parfums</span>
-          </div>
-        </div>
-      </div>
-      
-      <div class="testimonial">
-        <div class="testimonial-content">
-          <p>"Bisso Fragrance m'a fait découvrir des fragrances niche extraordinaires. Un véritable voyage sensoriel à chaque commande."</p>
-          <div class="testimonial-author">
-            <strong>Alexandre D.</strong>
-            <span>Amateur de parfums</span>
-          </div>
-        </div>
-      </div>
-      
-      <div class="testimonial">
-        <div class="testimonial-content">
-          <p>"La sélection est remarquable et les conseils personnalisés m'ont permis de trouver ma signature olfactive parfaite."</p>
-          <div class="testimonial-author">
-            <strong>Sophie M.</strong>
-            <span>Cliente fidèle</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <div class="testimonials-navigation">
-      <button class="nav-dot active" data-slide="0"></button>
-      <button class="nav-dot" data-slide="1"></button>
-      <button class="nav-dot" data-slide="2"></button>
-    </div>
-  </div>
-</section>
--->
 
 <section class="brands-slider" data-controller="brands-slider">
   <div class="container">
     <div class="section-header">
       <h2>Nos Marques Partenaires</h2>
-      <p>Découvrez les maisons de parfumerie d'exception dont nous proposons les décants.</p>
+      <p>Découvrez les maisons de parfumerie d'exception dont nous proposons nos extraits.</p>
     </div>
   </div>
   <div class="slider-container">

@@ -137,6 +137,12 @@ body {
   box-shadow: var(--shadow-soft); /* Subtle shadow for depth */
 }
 
+.brands-slider .container {
+  width: 100%;
+  max-width: none;
+  padding: 0;
+}
+
 .section-header {
   text-align: center;
   margin-bottom: 3rem;
@@ -167,6 +173,7 @@ body {
 .slider-container {
   width: 100%;
   overflow: hidden;
+  padding: 0 2rem;
 }
 
 .brands-track {
@@ -811,229 +818,84 @@ body {
   color: var(--secondary-gold);
 }
 
-/* Fragrances featured */
-.featured-fragrances {
-  padding: 8rem 0;
-  background: var(--neutral-cream);
-}
-
-.fragrances-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  gap: 3rem;
-}
-
-.fragrance-card {
+/* Quality Section */
+.quality-section {
+  padding: 4rem 2rem;
   background: var(--neutral-white);
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: var(--shadow-soft);
-  transition: var(--transition-smooth);
+  text-align: center;
 }
 
-.fragrance-card:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--shadow-strong);
-}
-
-.fragrance-image {
-  position: relative;
-  height: 300px;
-  overflow: hidden;
-}
-
-.fragrance-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: var(--transition-smooth);
-}
-
-.fragrance-card:hover .fragrance-image img {
-  transform: scale(1.1);
-}
-
-.fragrance-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(28, 37, 32, 0.7); /* Darker green-black overlay */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: var(--transition-smooth);
-}
-
-.fragrance-card:hover .fragrance-overlay {
-  opacity: 1;
-}
-
-.scent-notes {
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
-
-.note {
-  background: var(--neutral-white);
-  color: var(--text-primary);
-  font-size: 0.8rem;
-  font-weight: 500;
-  padding: 0.3rem 0.8rem;
-  border-radius: 15px;
-}
-
-.fragrance-badge {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  font-size: 0.7rem;
-  font-weight: 600;
-  padding: 0.4rem 1rem;
-  border-radius: 15px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.fragrance-badge.bestseller {
-  background: var(--primary-gold);
-  color: var(--neutral-white);
-}
-
-.fragrance-badge.new {
-  background: var(--accent-purple);
-  color: var(--neutral-white);
-}
-
-.fragrance-badge.exclusive {
-  background: var(--accent-rose);
-  color: var(--neutral-white);
-}
-
-.fragrance-info {
-  padding: 2rem;
-}
-
-.fragrance-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 1rem;
-}
-
-.brand-info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-}
-
-.brand {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--primary-gold);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.collection-type {
-  font-size: 0.7rem;
-  color: var(--text-light);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.rating {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.stars {
-  color: var(--primary-gold);
-  font-size: 0.9rem;
-}
-
-.rating-count {
-  font-size: 0.8rem;
-  color: var(--text-light);
-}
-
-.fragrance-name {
+.quality-section h2 {
   font-family: "Cormorant Garamond", serif;
-  font-size: 1.5rem;
-  font-weight: 500;
-  margin-bottom: 1rem;
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
   color: var(--text-primary);
-}
-
-.fragrance-description {
-  color: var(--text-secondary);
-  font-size: 0.95rem;
-  line-height: 1.6;
   margin-bottom: 1.5rem;
 }
 
-.fragrance-details {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 2rem;
-  padding: 1rem;
-  background: var(--neutral-light);
-  border-radius: var(--border-radius);
-}
-
-.scent-family,
-.longevity {
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--text-primary);
-}
-
-.pricing-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.price-range {
-  display: flex;
-  align-items: baseline;
-  gap: 0.5rem;
-}
-
-.from {
-  font-size: 0.8rem;
-  color: var(--text-light);
-}
-
-.price {
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: var(--primary-gold);
-}
-
-.volume {
-  font-size: 0.8rem;
+.quality-section p {
+  font-size: 1.1rem;
   color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  line-height: 1.7;
 }
 
-.add-to-cart {
-  background: var(--gradient-primary);
-  color: var(--neutral-white);
-  border: none;
-  padding: 0.8rem 1.5rem;
-  border-radius: 25px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: var(--transition-smooth);
+.quality-chart {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  padding: 1rem;
 }
 
-.add-to-cart:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-medium);
+.bar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100px;
+}
+
+.bar-label {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.bar {
+  width: 20px;
+  background: var(--primary-gold);
+  border-radius: 4px;
+  transition: height 0.3s ease;
+}
+
+/* Gender Category Cards Section */
+.gender-category-cards-section {
+  padding: 4rem 0;
+  background: var(--neutral-cream);
+  width: 100%;
+}
+
+.gender-category-cards-section .container {
+  width: 100%;
+  max-width: none;
+  padding: 0;
+}
+
+.gender-category-cards-section h2 {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.gender-category-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  padding: 0 2rem;
+  margin: 0 auto;
+  max-width: 1400px; /* Limite optionnelle pour éviter un étirement excessif */
 }
 
 /* Testimonials artistiques */
@@ -1341,10 +1203,6 @@ body {
     grid-template-columns: 1fr;
   }
   
-  .fragrances-grid {
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  }
-  
   .footer-main {
     grid-template-columns: 1fr;
     gap: 3rem;
@@ -1415,23 +1273,6 @@ body {
     padding: 2rem;
   }
 
-  .fragrances-grid {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-
-  .fragrance-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
-  }
-
-  .pricing-info {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-  }
-
   .footer-links-artistic {
     grid-template-columns: 1fr;
     gap: 2rem;
@@ -1481,10 +1322,6 @@ body {
     padding: 1.5rem;
   }
 
-  .fragrance-info {
-    padding: 1.5rem;
-  }
-
   .footer-newsletter {
     padding: 2rem 1rem;
   }
@@ -1513,8 +1350,7 @@ body {
   }
 }
 
-.collection-card,
-.fragrance-card {
+.collection-card {
   animation: slideInUp 0.6s ease forwards;
 }
 
@@ -1526,21 +1362,9 @@ body {
   animation-delay: 0.2s;
 }
 
-.fragrance-card:nth-child(2) {
-  animation-delay: 0.1s;
-}
-
-.fragrance-card:nth-child(3) {
-  animation-delay: 0.2s;
-}
-
 /* Effets de survol avancés */
 .collection-card:hover .collection-pattern {
   transform: rotate(10deg) scale(1.1);
-}
-
-.fragrance-card:hover .fragrance-name {
-  color: var(--primary-gold);
 }
 
 /* États de focus pour l'accessibilité */
@@ -1557,7 +1381,6 @@ body {
   will-change: transform;
 }
 
-.fragrance-image img,
 .bottle-silhouette {
   will-change: transform;
 }

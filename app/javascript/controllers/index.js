@@ -17,7 +17,6 @@ import admin_search_controller from "./admin_search_controller"
 
 
 
-
 application.register("hello", HelloController)
 application.register("confirm", ConfirmController)
 application.register("vitrine1",vitrine1_controller)
@@ -30,6 +29,7 @@ application.register("search", search_controller)
 application.register("admin-orders", admin_orders_controller)
 application.register("admin-image-loader", admin_image_loader_controller)
 application.register("admin-search", admin_search_controller)
+
 
 
 
