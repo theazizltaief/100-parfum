@@ -141,35 +141,20 @@ export default class extends Controller {
           entry.target.style.animationPlayState = 'running';
           
           // Special effects for different sections
-          if (entry.target.classList.contains('collection-card')) {
-            this.animateCollectionCard(entry.target);
-          }
-          
           if (entry.target.classList.contains('fragrance-card')) {
             this.animateFragranceCard(entry.target);
+          }
+          
+          if (entry.target.classList.contains('testimonial')) {
+            this.animateTestimonial(entry.target);
           }
         }
       });
     }, observerOptions);
 
     // Observe elements
-    const elementsToObserve = document.querySelectorAll('.collection-card, .fragrance-card, .testimonial');
+    const elementsToObserve = document.querySelectorAll('.fragrance-card, .testimonial');
     elementsToObserve.forEach(el => observer.observe(el));
-  }
-
-  animateCollectionCard(card) {
-    const pattern = card.querySelector('.collection-pattern');
-    const icon = card.querySelector('.collection-icon');
-    
-    setTimeout(() => {
-      if (pattern) pattern.style.transform = 'scale(1.1) rotate(5deg)';
-      if (icon) icon.style.transform = 'scale(1.2)';
-    }, 200);
-
-    setTimeout(() => {
-      if (pattern) pattern.style.transform = 'scale(1) rotate(0deg)';
-      if (icon) icon.style.transform = 'scale(1)';
-    }, 800);
   }
 
   animateFragranceCard(card) {
@@ -188,6 +173,20 @@ export default class extends Controller {
       setTimeout(() => {
         badge.style.transform = 'scale(1) rotate(0deg)';
       }, 400);
+    }
+  }
+
+  animateTestimonial(testimonial) {
+    const content = testimonial.querySelector('.testimonial-content');
+    const author = testimonial.querySelector('.testimonial-author');
+    
+    if (content) {
+      content.style.transform = 'translateY(0)';
+      content.style.opacity = '1';
+    }
+    if (author) {
+      author.style.transform = 'translateY(0)';
+      author.style.opacity = '1';
     }
   }
 

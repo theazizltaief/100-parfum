@@ -65,13 +65,13 @@
 
 /* Images de fond symboliques (CHEMINS DIRECTS DEPUIS LE DOSSIER PUBLIC) */
 .gender-category-card-homme {
-  background-image: url('/images/parfum homme.jpg');
+  background-image: url('/images/homme.jpg');
 }
 .gender-category-card-femme {
-  background-image: url('/images/parfum femme.jpg');
+  background-image: url('/images/femme.jpg');
 }
 .gender-category-card-unisexe {
-  background-image: url('/images/parfum unisexe.jpg');
+  background-image: url('/images/unisexe.jpe');
 }
 
 /* Superposition dégradée pour le texte */

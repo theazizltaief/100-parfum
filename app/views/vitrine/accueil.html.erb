@@ -48,51 +48,38 @@
   </div>
 </section>
 
-<section class="collection-class-section signature-collections">
+<section class="collection-class-section">
   <div class="container">
-    <div class="section-header-artistic">
-      <h2 class="section-title">Collections d'Exception</h2>
-      <p class="section-description">
-        Trois univers distincts pour explorer toute la richesse de la parfumerie contemporaine
-      </p>
-    </div>
-    
-    <div class="collection-class-grid collections-showcase">
-      <a href="<%= category_perfumes_path(filter_type: 'fragrance_class', filter_value: 'designer') %>" class="collection-class-card collection-card-designer collection-card designer-collection" data-controller="collection-hover">
-        <div class="collection-class-content collection-content">
+    <h2>Nos Collections</h2>
+    <div class="collection-class-grid">
+
+     
+      <a href="<%= category_perfumes_path(filter_type: 'fragrance_class', filter_value: 'designer') %>" class="collection-class-card collection-card-designer">
+        <div class="collection-class-overlay"></div>
+        <div class="collection-class-content">
           <h3 class="collection-class-title">Designer</h3>
-          <p class="collection-class-description">Les créations iconiques des maisons de luxe internationales</p>
-          <div class="collection-stats">
-            <span class="stat">150+ fragrances</span>
-            <span class="stat">À partir de 12 DT</span>
-          </div>
-          <span class="collection-link">Explorer →</span>
+          <p class="collection-class-description">Les grandes maisons de parfumerie : l'essence du luxe, de l'histoire et de la sophistication.</p>
         </div>
       </a>
+
       
-      <a href="<%= category_perfumes_path(filter_type: 'fragrance_class', filter_value: 'niche') %>" class="collection-class-card collection-card-niche collection-card niche-collection" data-controller="collection-hover">
-        <div class="collection-class-content collection-content">
+      <a href="<%= category_perfumes_path(filter_type: 'fragrance_class', filter_value: 'niche') %>" class="collection-class-card collection-card-niche">
+        <div class="collection-class-overlay"></div>
+        <div class="collection-class-content">
           <h3 class="collection-class-title">Niche</h3>
-          <p class="collection-class-description">L'artisanat parfumé dans sa forme la plus pure et créative</p>
-          <div class="collection-stats">
-            <span class="stat">200+ fragrances</span>
-            <span class="stat">À partir de 18€</span>
-          </div>
-          <span class="collection-link">Explorer →</span>
+          <p class="collection-class-description">Les créations artisanales exclusives : l'essence de l'originalité, le savoir-faire unique et la rareté.</p>
         </div>
       </a>
+
       
-      <a href="<%= category_perfumes_path(filter_type: 'fragrance_class', filter_value: 'collection_privee') %>" class="collection-class-card collection-card-private collection-card private-collection" data-controller="collection-hover">
-        <div class="collection-class-content collection-content">
-          <h3 class="class-title">Collection Privée</h3>
-          <p class="collection-class-description">Fragrances rares et exclusives pour les connaisseurs</p>
-          <div class="collection-stats">
-            <span class="stat">80+ fragrances</span>
-            <span class="stat">À partir de 25€</span>
-          </div>
-          <span class="collection-link">Explorer →</span>
+      <a href="<%= category_perfumes_path(filter_type: 'fragrance_class', filter_value: 'collection_privee') %>" class="collection-class-card collection-card-private">
+        <div class="collection-class-overlay"></div>
+        <div class="collection-class-content">
+          <h3 class="collection-class-title">Collection Privée</h3>
+          <p class="collection-class-description">Plongez dans l'univers des éditions limitées et des créations exclusives.</p>
         </div>
       </a>
+
     </div>
   </div>
 </section>
