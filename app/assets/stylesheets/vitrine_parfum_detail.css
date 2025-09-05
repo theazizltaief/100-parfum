@@ -142,6 +142,7 @@
   font-weight: 700;
 }
 
+/* Style du badge de disponibilité */
 .vitrine-parfum-detail-availability {
   font-size: 1.1rem;
   font-weight: 600;
@@ -149,6 +150,8 @@
   border-radius: 5px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  flex-shrink: 1; /* Permet au badge de se réduire si nécessaire */
+  max-width: 100%; /* Empêche le débordement */
 }
 
 .vitrine-parfum-detail-availability.is-available {
@@ -159,6 +162,128 @@
 .vitrine-parfum-detail-availability.is-unavailable {
   background-color: #f8d7da; /* Rouge clair */
   color: #721c24; /* Rouge foncé */
+}
+
+/* Style amélioré pour le select des contenances */
+.vitrine-parfum-detail-volume-select {
+  padding: 12px 20px;
+  border: 2px solid var(--dark-gold);
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  background-color: var(--neutral-cream);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  appearance: none; /* Supprime le style par défaut du navigateur */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%232e8b57' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  cursor: pointer;
+  width: 150px; /* Largeur fixe pour une présentation cohérente */
+}
+
+.vitrine-parfum-detail-volume-select:hover {
+  background-color: var(--neutral-light);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.vitrine-parfum-detail-volume-select:focus {
+  outline: none;
+  border-color: var(--primary-gold);
+  box-shadow: 0 0 0 3px rgba(46, 139, 87, 0.2);
+}
+
+/* Ajustements responsives */
+@media (max-width: 768px) {
+  .vitrine-parfum-detail-volume-select {
+    font-size: 1rem;
+    padding: 10px 15px;
+    width: 120px;
+  }
+  .vitrine-parfum-detail-page-container {
+    padding: 60px 15px;
+  }
+  .vitrine-parfum-detail-content-wrapper {
+    padding: 20px;
+  }
+  .vitrine-parfum-detail-title {
+    font-size: 2.5rem;
+  }
+  .vitrine-parfum-detail-brand {
+    font-size: 1.2rem;
+  }
+  .vitrine-parfum-detail-description {
+    font-size: 1rem;
+  }
+  .vitrine-parfum-detail-price {
+    font-size: 2.2rem;
+  }
+  .vitrine-parfum-detail-availability {
+    font-size: 0.9rem; /* Réduction de la taille du texte */
+    padding: 3px 10px; /* Réduction du padding */
+    max-width: 100px; /* Limite la largeur maximale */
+    white-space: nowrap; /* Empêche le texte de passer à la ligne */
+    overflow: hidden; /* Cache le texte excédentaire */
+    text-overflow: ellipsis; /* Ajoute "..." si le texte est trop long */
+  }
+  .vitrine-parfum-detail-price-status {
+    flex-direction: column; /* Passage en colonne pour mieux s'adapter */
+    align-items: flex-start; /* Alignement à gauche */
+    gap: 10px; /* Réduction de l'espace */
+  }
+  .vitrine-parfum-detail-add-to-cart-btn,
+  .vitrine-parfum-detail-buy-now-btn {
+    font-size: 1rem;
+    padding: 12px 20px;
+  }
+  .vitrine-associated-parfums-title {
+    font-size: 2.2rem;
+  }
+  .vitrine-associated-parfums-grid {
+    grid-template-columns: 1fr; /* Une seule colonne sur les très petits écrans */
+  }
+  .vitrine-associated-parfum-image-wrapper {
+    height: 180px;
+  }
+  .vitrine-associated-parfum-name {
+    font-size: 1rem;
+  }
+  .vitrine-associated-parfum-price {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .vitrine-parfum-detail-content-wrapper {
+    flex-direction: column;
+    padding: 30px;
+    gap: 30px;
+  }
+  .vitrine-parfum-detail-image-section {
+    min-width: unset;
+    width: 100%;
+  }
+  .vitrine-parfum-detail-info-section {
+    min-width: unset;
+    width: 100%;
+  }
+  .vitrine-parfum-detail-title {
+    font-size: 3rem;
+  }
+  .vitrine-parfum-detail-price {
+    font-size: 2.8rem;
+  }
+  .vitrine-parfum-detail-actions {
+    flex-direction: column;
+  }
+  .vitrine-parfum-detail-add-to-cart-btn,
+  .vitrine-parfum-detail-buy-now-btn {
+    width: 100%;
+  }
+  .vitrine-associated-parfums-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
 }
 
 /* Boutons d'action */
@@ -187,11 +312,10 @@
 }
 
 .vitrine-parfum-detail-add-to-cart-btn:hover:not(:disabled) {
-  /* Conserve les couleurs d'origine, ajoute une ombre et l'animation */
-  background-color: var(--gold-accent); /* Reste la même couleur de fond */
-  color: #fff; /* Reste la même couleur de texte */
-  border-color: var(--gold-accent); /* Reste la même couleur de bordure */
-  box-shadow: 0 4px 10px rgba(212, 175, 55, 0.4); /* Ombre subtile */
+  background-color: var(--gold-accent);
+  color: #fff;
+  border-color: var(--gold-accent);
+  box-shadow: 0 4px 10px rgba(212, 175, 55, 0.4);
   transform: translateY(-2px);
 }
 
@@ -202,11 +326,10 @@
 }
 
 .vitrine-parfum-detail-buy-now-btn:hover:not(:disabled) {
-  /* Conserve les couleurs d'origine, ajoute une ombre et l'animation */
-  background-color: transparent; /* Reste transparent */
-  color: var(--dark-gold); /* Reste la même couleur de texte */
-  border-color: var(--dark-gold); /* Reste la même couleur de bordure */
-  box-shadow: 0 4px 10px rgba(212, 175, 55, 0.4); /* Ombre subtile */
+  background-color: transparent;
+  color: var(--dark-gold);
+  border-color: var(--dark-gold);
+  box-shadow: 0 4px 10px rgba(212, 175, 55, 0.4);
   transform: translateY(-2px);
 }
 
@@ -350,79 +473,18 @@
   color: #fff;
 }
 
-/* Responsive Adjustments */
-@media (max-width: 992px) {
-  .vitrine-parfum-detail-content-wrapper {
-    flex-direction: column;
-    padding: 30px;
-    gap: 30px;
-  }
-  .vitrine-parfum-detail-image-section {
-    min-width: unset;
-    width: 100%;
-  }
-  .vitrine-parfum-detail-info-section {
-    min-width: unset;
-    width: 100%;
-  }
-  .vitrine-parfum-detail-title {
-    font-size: 3rem;
-  }
-  .vitrine-parfum-detail-price {
-    font-size: 2.8rem;
-  }
-  .vitrine-parfum-detail-actions {
-    flex-direction: column;
-  }
-  .vitrine-parfum-detail-add-to-cart-btn,
-  .vitrine-parfum-detail-buy-now-btn {
-    width: 100%;
-  }
-  .vitrine-associated-parfums-grid {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  }
+/* Style pour les boutons indisponibles */
+.unavailable {
+  opacity: 0.5; /* Effet "demi-éclairé" */
+  cursor: not-allowed; /* Curseur indiquant l'inactivité */
+  pointer-events: none; /* Empêche les clics */
 }
 
-@media (max-width: 768px) {
-  .vitrine-parfum-detail-page-container {
-    padding: 60px 15px;
-  }
-  .vitrine-parfum-detail-content-wrapper {
-    padding: 20px;
-  }
-  .vitrine-parfum-detail-title {
-    font-size: 2.5rem;
-  }
-  .vitrine-parfum-detail-brand {
-    font-size: 1.2rem;
-  }
-  .vitrine-parfum-detail-description {
-    font-size: 1rem;
-  }
-  .vitrine-parfum-detail-price {
-    font-size: 2.2rem;
-  }
-  .vitrine-parfum-detail-availability {
-    font-size: 0.9rem;
-  }
-  .vitrine-parfum-detail-add-to-cart-btn,
-  .vitrine-parfum-detail-buy-now-btn {
-    font-size: 1rem;
-    padding: 12px 20px;
-  }
-  .vitrine-associated-parfums-title {
-    font-size: 2.2rem;
-  }
-  .vitrine-associated-parfums-grid {
-    grid-template-columns: 1fr; /* Une seule colonne sur les très petits écrans */
-  }
-  .vitrine-associated-parfum-image-wrapper {
-    height: 180px;
-  }
-  .vitrine-associated-parfum-name {
-    font-size: 1rem;
-  }
-  .vitrine-associated-parfum-price {
-    font-size: 0.9rem;
-  }
+/* Surcharge pour désactiver les effets de survol sur les boutons indisponibles */
+.unavailable:hover {
+  background-color: inherit; /* Conserve la couleur de fond d'origine */
+  color: inherit; /* Conserve la couleur de texte d'origine */
+  border-color: inherit; /* Conserve la couleur de bordure d'origine */
+  box-shadow: none; /* Supprime l'ombre au survol */
+  transform: none; /* Supprime l'animation de survol */
 }

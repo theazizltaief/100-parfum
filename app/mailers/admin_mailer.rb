@@ -4,6 +4,6 @@ class AdminMailer < ApplicationMailer
   def invitation_instructions(admin, password)
     @admin = admin
     @password = password
-    mail(to: @admin.email, subject: "Invitation à rejoindre l'équipe Bisso Fragrance comme admin")
+    mail(to: @admin.email, subject: "Invitation à rejoindre l'équipe Kmar perfume comme admin")
   end
 end

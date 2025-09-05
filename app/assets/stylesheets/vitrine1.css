@@ -1214,6 +1214,11 @@ body {
 }
 
 @media (max-width: 768px) {
+  .vitrine-parfum-detail-volume-select {
+    font-size: 1rem;
+    padding: 10px 15px;
+    width: 120px;
+  }
   .nav-artistic {
     padding: 1rem;
   }
@@ -1314,7 +1319,10 @@ body {
   }
 
   .btn-artistic {
-    width: 100%;
+    padding: 0.8rem 1.5rem; /* Réduction du padding */
+    font-size: 0.9rem; /* Réduction de la taille du texte */
+    max-width: 200px; /* Limite la largeur maximale */
+    width: auto; /* Réinitialise la largeur à auto au lieu de 100% */
     justify-content: center;
   }
 
@@ -1478,4 +1486,34 @@ body {
 }
 .filter-group.hidden {
   display: none;
+}
+
+/* Style amélioré pour le select des contenances */
+.vitrine-parfum-detail-volume-select {
+  padding: 12px 20px;
+  border: 2px solid var(--dark-gold);
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  background-color: var(--neutral-cream);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  appearance: none; /* Supprime le style par défaut du navigateur */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%232e8b57' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  cursor: pointer;
+  width: 150px; /* Largeur fixe pour une présentation cohérente */
+}
+
+.vitrine-parfum-detail-volume-select:hover {
+  background-color: var(--neutral-light);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.vitrine-parfum-detail-volume-select:focus {
+  outline: none;
+  border-color: var(--primary-gold);
+  box-shadow: 0 0 0 3px rgba(46, 139, 87, 0.2);
 }

@@ -34,7 +34,7 @@
         </div>
         <div class="vitrine-parfum-detail-actions">
           <button
-            class="vitrine-parfum-detail-add-to-cart-btn"
+            class="vitrine-parfum-detail-add-to-cart-btn <%= 'unavailable' unless @parfum.disponible %>"
             <%= 'disabled' unless @parfum.disponible && @variants.any? && @variants.first.price.to_f > 0 %>
             data-action="click->cart#addToCart"
             data-parfum-id="<%= @parfum.id %>"
@@ -46,7 +46,7 @@
             Ajouter au panier
           </button>
           <button
-            class="vitrine-parfum-detail-buy-now-btn"
+            class="vitrine-parfum-detail-buy-now-btn <%= 'unavailable' unless @parfum.disponible %>"
             <%= 'disabled' unless @parfum.disponible && @variants.any? && @variants.first.price.to_f > 0 %>
             data-action="click->cart#buyNow"
             data-parfum-id="<%= @parfum.id %>"
@@ -80,7 +80,7 @@
             </div>
             <div class="vitrine-associated-parfum-content">
               <h3 class="vitrine-associated-parfum-name"><%= associated_parfum.name %></h3>
-              <p class="vitrine-associated-parfum-price"><%= number_to_currency(associated_parfum.variants.minimum(:price) || 0, unit: "TND", separator: ",", delimiter: " ", format: "%n %u") %></p>
+              <p class="vitrine-parfum-detail-price"><%= number_to_currency(associated_parfum.variants.minimum(:price) || 0, unit: "TND", separator: ",", delimiter: " ", format: "%n %u") %></p>
             </div>
           </a>
         <% end %>
