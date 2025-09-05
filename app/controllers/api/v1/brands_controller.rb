@@ -1,4 +1,3 @@
-# app/controllers/api/v1/brands_controller.rb
 module Api
   module V1
     class BrandsController < ApplicationController
@@ -15,12 +14,13 @@ module Api
               {
                 id: parfum.id,
                 name: parfum.name,
-                prix: parfum.prix,
                 description: parfum.description,
                 category: parfum.category,
                 fragrance_class: parfum.fragrance_class,
                 image_url: parfum.image.attached? ? url_for(parfum.image) : nil,
-                disponible: parfum.disponible # AJOUTÉ : Inclure le statut de disponibilité
+                disponible: parfum.disponible,
+                variants: parfum.variants.map { |v| { size: v.size, price: v.price } },
+                min_price: parfum.variants.minimum(:price) || 0
               }
             }
           }
@@ -48,15 +48,18 @@ module Api
             {
               id: parfum.id,
               name: parfum.name,
-              prix: parfum.prix,
               description: parfum.description,
               category: parfum.category,
               fragrance_class: parfum.fragrance_class,
               image_url: parfum.image.attached? ? url_for(parfum.image) : nil,
-              disponible: parfum.disponible # AJOUTÉ : Inclure le statut de disponibilité
+              disponible: parfum.disponible,
+              variants: parfum.variants.map { |v| { size: v.size, price: v.price } },
+              min_price: parfum.variants.minimum(:price) || 0
             }
           }
         }
+      rescue ActiveRecord::RecordNotFound
+        render json: { error: "Marque non trouvée" }, status: :not_found
       end
     end
   end

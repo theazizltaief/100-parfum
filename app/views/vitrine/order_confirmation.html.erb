@@ -44,7 +44,7 @@
           <h3>Articles commandés:</h3>
           <% @order.items.each do |item| %>
             <div class="confirmation-item">
-              <span><%= item['name'] %> × <%= item['quantity'] %></span>
+              <span><%= item['name'] %> (<%= item['size'] %>) × <%= item['quantity'] %></span>
               <span><%= number_to_currency(item['price'].to_f * item['quantity'].to_i, unit: '', precision: 2) %> TND</span>
             </div>
           <% end %>

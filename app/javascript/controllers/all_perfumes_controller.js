@@ -3,10 +3,10 @@ import { Controller } from "@hotwired/stimulus";
 export default class extends Controller {
   static targets = ["pageTitle", "pageSlogan", "perfumesGrid", "pagination", "genderFilter", "classFilter", "priceFilter"];
 
-  allRawPerfumes = []; // Stores all perfumes fetched from the API
-  filteredAndSortedPerfumes = []; // Stores perfumes after applying all filters and sorting
+  allRawPerfumes = [];
+  filteredAndSortedPerfumes = [];
   currentPage = 1;
-  perfumesPerPage = 12; // Number of perfumes to display per page
+  perfumesPerPage = 12;
 
   currentGenderFilter = 'all_genders';
   currentClassFilter = 'all_classes';
@@ -26,9 +26,16 @@ export default class extends Controller {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
-      this.allRawPerfumes = data; // Store all unfiltered perfumes
-
-      this.applyFiltersAndSortAndRender(); // Apply filters and render display
+      this.allRawPerfumes = data.map(perfume => {
+        const validVariants = perfume.variants && perfume.variants.length > 0 
+          ? perfume.variants.filter(v => v.price && parseFloat(v.price) > 0)
+          : [{ size: 'N/A', price: 0 }];
+        return {
+          ...perfume,
+          min_price: validVariants.length > 0 ? Math.min(...validVariants.map(v => parseFloat(v.price))) : 0
+        };
+      });
+      this.applyFiltersAndSortAndRender();
     } catch (error) {
       console.error("Error fetching perfumes:", error);
       this.perfumesGridTarget.innerHTML = "<p class='error-message'>Impossible de charger les parfums. Veuillez réessayer plus tard.</p>";
@@ -38,7 +45,6 @@ export default class extends Controller {
   }
 
   filterPerfumes(event) {
-    // This method is called when any filter dropdown changes
     if (event.currentTarget === this.genderFilterTarget) {
       this.currentGenderFilter = event.target.value;
     } else if (event.currentTarget === this.classFilterTarget) {
@@ -51,9 +57,8 @@ export default class extends Controller {
 
   applyFiltersAndSortAndRender() {
     console.log("--- applyFiltersAndSortAndRender called for All Perfumes ---");
-    let tempPerfumes = [...this.allRawPerfumes]; // Create a mutable copy
+    let tempPerfumes = [...this.allRawPerfumes];
 
-    // 1. Apply Gender filter
     if (this.currentGenderFilter !== 'all_genders') {
       tempPerfumes = tempPerfumes.filter(perfume => {
         const perfumeCategoryLower = perfume.category ? perfume.category.toLowerCase() : '';
@@ -62,7 +67,6 @@ export default class extends Controller {
     }
     console.log("Perfumes after gender filter:", tempPerfumes.length);
 
-    // 2. Apply Class filter
     if (this.currentClassFilter !== 'all_classes') {
       tempPerfumes = tempPerfumes.filter(perfume => {
         const perfumeFragranceClassLower = perfume.fragrance_class ? perfume.fragrance_class.toLowerCase() : '';
@@ -71,16 +75,15 @@ export default class extends Controller {
     }
     console.log("Perfumes after class filter:", tempPerfumes.length);
 
-    // 3. Apply price sort
     if (this.currentPriceSort === 'asc') {
-      tempPerfumes.sort((a, b) => a.prix - b.prix);
+      tempPerfumes.sort((a, b) => a.min_price - b.min_price);
     } else if (this.currentPriceSort === 'desc') {
-      tempPerfumes.sort((a, b) => b.prix - a.prix);
+      tempPerfumes.sort((a, b) => b.min_price - a.min_price);
     }
     console.log("Perfumes after price sort:", tempPerfumes.length);
 
     this.filteredAndSortedPerfumes = tempPerfumes;
-    this.currentPage = 1; // Reset to first page after any filter/sort change
+    this.currentPage = 1;
 
     if (this.filteredAndSortedPerfumes.length === 0) {
       this.perfumesGridTarget.innerHTML = "<p class='no-perfumes-message'>Aucun parfum trouvé pour cette sélection pour le moment.</p>";
@@ -102,6 +105,12 @@ export default class extends Controller {
       const imageUrl = perfume.image_url || "/placeholder.svg?height=250&width=250&text=Parfum";
       const availabilityStatus = perfume.disponible ? 'Disponible' : 'Rupture de stock';
       const availabilityClass = perfume.disponible ? 'perfume-availability-badge--available' : 'perfume-availability-badge--unavailable';
+      const validVariants = perfume.variants && perfume.variants.length > 0 
+        ? perfume.variants.filter(v => v.price && parseFloat(v.price) > 0)
+        : [{ size: 'N/A', price: 0 }];
+      const defaultVariant = validVariants.length > 0 ? validVariants[0] : { size: 'N/A', price: 0 };
+      const safePrice = parseFloat(defaultVariant.price) || 0;
+      const safeSize = defaultVariant.size || 'N/A';
 
       return `
         <div class="perfume-card">
@@ -118,17 +127,18 @@ export default class extends Controller {
                 <span class="perfume-category">${perfume.category ? this.capitalizeFirstLetter(perfume.category) : ''}</span>
                 <span class="perfume-class">${perfume.fragrance_class ? this.capitalizeFirstLetter(perfume.fragrance_class) : ''}</span>
               </div>
-              <p class="perfume-price">${this.formatCurrency(perfume.prix)}</p>
-              <div class="perfume-volume">10ml</div>
+              <p class="perfume-price">${this.formatCurrency(safePrice)}</p>
+              <div class="perfume-volume">${safeSize}</div>
               <div class="perfume-card-actions">
                 <button
                   class="perfume-card-add-to-cart-btn"
                   data-action="click->cart#addToCart"
                   data-parfum-id="${perfume.id}"
                   data-parfum-name="${perfume.name}"
-                  data-parfum-price="${perfume.prix}"
+                  data-parfum-price="${safePrice}"
+                  data-parfum-size="${safeSize}"
                   data-parfum-image-url="${imageUrl}"
-                  ${!perfume.disponible ? 'disabled' : ''}
+                  ${!perfume.disponible || validVariants.length === 0 || safePrice <= 0 ? 'disabled' : ''}
                 >
                   Ajouter au panier
                 </button>
@@ -160,7 +170,7 @@ export default class extends Controller {
       paginationHtml += `
         <li class="page-item ${this.currentPage === i ? 'current' : ''}">
           <a href="#" data-action="click->all-perfumes#goToPage" data-page="${i}" class="page-link">${i}</a>
-      </li>
+        </li>
       `;
     }
     paginationHtml += `
@@ -205,14 +215,13 @@ export default class extends Controller {
   }
 
   formatCurrency(amount) {
-    const num = parseFloat(amount);
-    if (isNaN(num)) return amount;
+    const num = parseFloat(amount) || 0;
     return new Intl.NumberFormat('fr-TN', { style: 'currency', currency: 'TND' }).format(num);
   }
 
   truncateText(text, maxLength) {
     if (!text || text.length <= maxLength) {
-      return text;
+      return text || '';
     }
     return text.substring(0, maxLength) + '...';
   }

@@ -263,5 +263,21 @@
       </div>
     </div>
   </div>
+<script defer>
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('loaded');
+        }
+      });
+    }, { rootMargin: '0px 0px 50px 0px' });
+
+    const elements = document.querySelectorAll('.lazy-load');
+    if (elements.length > 0) {
+      elements.forEach(element => observer.observe(element));
+    }
+  });
+</script>
 </body>
 </html>

@@ -108,7 +108,7 @@
                 <img src="<%= item['imageUrl'] %>" alt="<%= item['name'] %>" class="order-item-image">
                 <div class="order-item-info">
                   <h4 class="order-item-name"><%= item['name'] %></h4>
-                  <p class="order-item-details">10ml × <%= item['quantity'] %></p>
+                  <p class="order-item-details"><%= item['size'] %> × <%= item['quantity'] %></p>
                 </div>
                 <div class="order-item-total">
                   <%= number_to_currency(item['price'].to_f * item['quantity'].to_i, unit: '', precision: 2) %> TND

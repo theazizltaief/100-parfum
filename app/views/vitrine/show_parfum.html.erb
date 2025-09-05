@@ -1,4 +1,4 @@
-<div class="vitrine-parfum-detail-page-container" data-controller="cart">
+<div class="vitrine-parfum-detail-page-container" data-controller="cart variant-selector">
   <div class="vitrine-parfum-detail-content-wrapper">
     <div class="vitrine-parfum-detail-image-section">
       <% if @parfum.image.attached? %>
@@ -18,35 +18,50 @@
         <span class="vitrine-parfum-detail-category">Catégorie : <%= @parfum.category ? @parfum.category.capitalize : 'N/A' %></span>
         <span class="vitrine-parfum-detail-class">Classe : <%= @parfum.fragrance_class ? @parfum.fragrance_class.capitalize : 'N/A' %></span>
       </div>
-      <div class="vitrine-parfum-detail-price-status">
-        <span class="vitrine-parfum-detail-price"><%= number_to_currency(@parfum.prix, unit: "TND", separator: ",", delimiter: " ", format: "%n %u") %></span>
-        <span class="vitrine-parfum-detail-volume">10ml</span>
-        <span class="vitrine-parfum-detail-availability <%= @parfum.disponible ? 'is-available' : 'is-unavailable' %>">
-          <%= @parfum.disponible ? 'Disponible' : 'Rupture de stock' %>
-        </span>
-      </div>
-      <div class="vitrine-parfum-detail-actions">
-        <button
-          class="vitrine-parfum-detail-add-to-cart-btn"
-          <%= 'disabled' unless @parfum.disponible %>
-          data-action="click->cart#addToCart"
-          data-parfum-id="<%= @parfum.id %>"
-          data-parfum-name="<%= @parfum.name %>"
-          data-parfum-price="<%= @parfum.prix %>"
-          data-parfum-image-url="<%= @parfum.image.attached? ? url_for(@parfum.image) : '/placeholder.svg?height=50&width=50&text=P' %>"
-        >
-          Ajouter au panier
-        </button>
-        <button 
-          class="vitrine-parfum-detail-buy-now-btn" 
-          <%= 'disabled' unless @parfum.disponible %>
-          data-action="click->cart#buyNow"
-          data-parfum-id="<%= @parfum.id %>"
-          data-quantity="1"
-        >
-          Acheter maintenant
-        </button>
-      </div>
+      <% if @variants.any? %>
+        <div class="vitrine-parfum-detail-price-status">
+          <span class="vitrine-parfum-detail-price" data-variant-selector-target="price">
+            <%= number_to_currency(@variants.first.price || 0, unit: "TND", separator: ",", delimiter: " ", format: "%n %u") %>
+          </span>
+          <select class="vitrine-parfum-detail-volume-select" data-variant-selector-target="select" data-action="change->variant-selector#updatePrice">
+            <% @variants.each do |variant| %>
+              <option value="<%= variant.price %>" data-size="<%= variant.size %>" <%= 'selected' if variant == @variants.first %>><%= variant.size %></option>
+            <% end %>
+          </select>
+          <span class="vitrine-parfum-detail-availability <%= @parfum.disponible ? 'is-available' : 'is-unavailable' %>">
+            <%= @parfum.disponible ? 'Disponible' : 'Rupture de stock' %>
+          </span>
+        </div>
+        <div class="vitrine-parfum-detail-actions">
+          <button
+            class="vitrine-parfum-detail-add-to-cart-btn"
+            <%= 'disabled' unless @parfum.disponible && @variants.any? && @variants.first.price.to_f > 0 %>
+            data-action="click->cart#addToCart"
+            data-parfum-id="<%= @parfum.id %>"
+            data-parfum-name="<%= @parfum.name %>"
+            data-parfum-price="<%= @variants.first.price || 0 %>"
+            data-parfum-size="<%= @variants.first.size || 'N/A' %>"
+            data-parfum-image-url="<%= @parfum.image.attached? ? url_for(@parfum.image) : '/placeholder.svg?height=50&width=50&text=P' %>"
+          >
+            Ajouter au panier
+          </button>
+          <button
+            class="vitrine-parfum-detail-buy-now-btn"
+            <%= 'disabled' unless @parfum.disponible && @variants.any? && @variants.first.price.to_f > 0 %>
+            data-action="click->cart#buyNow"
+            data-parfum-id="<%= @parfum.id %>"
+            data-quantity="1"
+            data-parfum-price="<%= @variants.first.price || 0 %>"
+            data-parfum-size="<%= @variants.first.size || 'N/A' %>"
+          >
+            Acheter maintenant
+          </button>
+        </div>
+      <% else %>
+        <div class="vitrine-parfum-detail-price-status">
+          <p class="text-danger">Aucune contenance disponible pour ce parfum.</p>
+        </div>
+      <% end %>
     </div>
   </div>
   <% if @associated_parfums.any? %>
@@ -65,7 +80,7 @@
             </div>
             <div class="vitrine-associated-parfum-content">
               <h3 class="vitrine-associated-parfum-name"><%= associated_parfum.name %></h3>
-              <p class="vitrine-associated-parfum-price"><%= number_to_currency(associated_parfum.prix, unit: "TND", separator: ",", delimiter: " ", format: "%n %u") %></p>
+              <p class="vitrine-associated-parfum-price"><%= number_to_currency(associated_parfum.variants.minimum(:price) || 0, unit: "TND", separator: ",", delimiter: " ", format: "%n %u") %></p>
             </div>
           </a>
         <% end %>

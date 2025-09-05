@@ -6,15 +6,10 @@ export default class extends Controller {
 
   connect() {
     console.log("Search controller connected!");
-
-    // Ne pas forcer false si une valeur est fournie via data-search-open-value
     if (this.openValue === undefined || this.openValue === null) {
       this.openValue = false;
     }
-
     this.debounceTimeout = null;
-
-    // Si on demande explicitement l'ouverture par défaut (ex: mobile dans le menu)
     if (this.openValue && window.innerWidth <= 768) {
       this._openUI();
       if (this.hasInputTarget) {
@@ -23,7 +18,6 @@ export default class extends Controller {
     }
   }
 
-  // --- Helpers sûrs (ne crashent pas si certains targets manquent) ---
   _openUI() {
     if (this.hasWrapperTarget) this.wrapperTarget.classList.add("is-open");
     if (this.hasInputAreaTarget) this.inputAreaTarget.classList.add("is-open");
@@ -34,7 +28,6 @@ export default class extends Controller {
     if (this.hasInputAreaTarget) this.inputAreaTarget.classList.remove("is-open");
   }
 
-  // --- UI ---
   toggle() {
     this.openValue = !this.openValue;
     if (this.openValue) {
@@ -52,12 +45,11 @@ export default class extends Controller {
     this.clear();
   }
 
-  // --- Search ---
   search() {
     clearTimeout(this.debounceTimeout);
     this.debounceTimeout = setTimeout(() => {
       const query = this.hasInputTarget ? this.inputTarget.value.trim() : "";
-      console.log("Search query:", query); // DEBUG
+      console.log("Search query:", query);
       if (query.length > 2) {
         this.fetchResults(query);
       } else {
@@ -71,7 +63,6 @@ export default class extends Controller {
       const url = `/api/v1/search?query=${encodeURIComponent(query)}`;
       console.log("Fetching from URL:", url);
       const response = await fetch(url);
-
       if (!response.ok) {
         const errorText = await response.text();
         console.error(`HTTP error! Status: ${response.status}, Response: ${errorText}`);
@@ -81,7 +72,6 @@ export default class extends Controller {
         }
         return;
       }
-
       const data = await response.json();
       console.log("Received data:", data);
       this.displayResults(data);
@@ -100,15 +90,27 @@ export default class extends Controller {
 
     if (data.perfumes && data.perfumes.length > 0) {
       perfumeHtml += '<h3>Parfums</h3><div class="inline-search-results-grid">';
-      perfumeHtml += data.perfumes.map(perfume => `
-        <a href="/vitrine/parfums/${perfume.id}" class="inline-search-result-item">
-          <img src="${perfume.image_url || '/placeholder.svg?height=50&width=50&text=P'}" alt="${perfume.name}" class="inline-search-result-image">
-          <div class="inline-search-result-info">
-            <h4>${perfume.name}</h4>
-            <p>${this.truncateText(perfume.description, 50)}</p>
-          </div>
-        </a>
-      `).join('');
+      perfumeHtml += data.perfumes.map(perfume => {
+        const imageUrl = perfume.image_url || "https://via.placeholder.com/50x50?text=P";
+        const validVariants = perfume.variants && perfume.variants.length > 0 
+          ? perfume.variants.filter(v => v.price && parseFloat(v.price) > 0)
+          : [{ size: 'N/A', price: 0 }];
+        const defaultVariant = validVariants.length > 0 ? validVariants[0] : { size: 'N/A', price: 0 };
+        const safePrice = parseFloat(defaultVariant.price) || 0;
+        const safeSize = defaultVariant.size || 'N/A';
+
+        return `
+          <a href="/vitrine/parfums/${perfume.id}" class="inline-search-result-item">
+            <img src="${imageUrl}" alt="${perfume.name}" class="inline-search-result-image">
+            <div class="inline-search-result-info">
+              <h4>${perfume.name}</h4>
+              <p>${this.truncateText(perfume.description, 50)}</p>
+              <p class="search-result-price">${this.formatCurrency(safePrice)}</p>
+              <p class="search-result-volume">${safeSize}</p>
+            </div>
+          </a>
+        `;
+      }).join('');
       perfumeHtml += '</div>';
     } else {
       perfumeHtml = '<p class="inline-search-no-results-message">Aucun parfum trouvé.</p>';
@@ -118,7 +120,7 @@ export default class extends Controller {
       brandHtml += '<h3>Marques</h3><div class="inline-search-results-grid">';
       brandHtml += data.brands.map(brand => `
         <a href="/vitrine/brands/${brand.id}" class="inline-search-result-item">
-          <img src="${brand.image_url || '/placeholder.svg?height=50&width=50&text=M'}" alt="${brand.name} Logo" class="inline-search-result-image">
+          <img src="${brand.image_url || 'https://via.placeholder.com/50x50?text=M'}" alt="${brand.name} Logo" class="inline-search-result-image">
           <div class="inline-search-result-info">
             <h4>${brand.name}</h4>
             ${brand.description ? `<p>${this.truncateText(brand.description, 50)}</p>` : ""}
@@ -153,9 +155,14 @@ export default class extends Controller {
     this.clearResults();
   }
 
+  formatCurrency(amount) {
+    const num = parseFloat(amount) || 0;
+    return new Intl.NumberFormat('fr-TN', { style: 'currency', currency: 'TND' }).format(num);
+  }
+
   truncateText(text, maxLength) {
     if (!text || text.length <= maxLength) {
-      return text;
+      return text || '';
     }
     return text.substring(0, maxLength) + '...';
   }

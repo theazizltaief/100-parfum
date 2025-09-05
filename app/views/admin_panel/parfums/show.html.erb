@@ -15,9 +15,13 @@
         </div>
         
         <div class="parfum-info-item">
-          <h5 class="parfum-info-label">Prix</h5>
-          <p class="parfum-info-value"><%= number_to_currency(@parfum.prix, unit: "Dt") %></p>
-        </div>
+            <h5 class="parfum-info-label">Contenances et Prix</h5>
+            <ul>
+              <% @parfum.variants.each do |variant| %>
+                <li><%= variant.size %> - <%= number_to_currency(variant.price, unit: "Dt") %></li>
+              <% end %>
+            </ul>
+          </div>
         
         <div class="parfum-info-item">
           <h5 class="parfum-info-label">Catégorie</h5>

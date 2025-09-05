@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_09_230545) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_04_215329) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -89,7 +89,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_09_230545) do
 
   create_table "parfums", force: :cascade do |t|
     t.string "name"
-    t.decimal "prix"
     t.bigint "brand_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -100,7 +99,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_09_230545) do
     t.index ["brand_id"], name: "index_parfums_on_brand_id"
   end
 
+  create_table "variants", force: :cascade do |t|
+    t.bigint "parfum_id", null: false
+    t.string "size"
+    t.decimal "price", precision: 10, scale: 2
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["parfum_id"], name: "index_variants_on_parfum_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "parfums", "brands"
+  add_foreign_key "variants", "parfums"
 end

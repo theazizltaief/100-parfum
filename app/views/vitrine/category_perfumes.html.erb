@@ -21,13 +21,16 @@
     <section class="perfume-class-listing-filter-section">
       <div class="filter-group">
         <label for="dynamic-filter-dropdown" class="perfume-class-listing-filter-label" data-category-perfumes-target="dynamicFilterLabel">
-          Filtrer :
+          Filtrer par classe :
         </label>
         <select id="dynamic-filter-dropdown"
                 class="perfume-class-listing-filter-dropdown"
                 data-category-perfumes-target="dynamicFilterDropdown"
                 data-action="change->category-perfumes#filterPerfumes">
-          <!-- Options will be dynamically inserted by Stimulus -->
+          <option value="all_classes">Toutes les classes</option>
+          <option value="designer">Designer</option>
+          <option value="niche">Niche</option>
+          <option value="collection_privee">Collection Privée</option>
         </select>
       </div>
 
@@ -48,7 +51,6 @@
       <h2 class="section-subtitle">Parfums</h2>
       <div class="perfumes-grid" data-category-perfumes-target="perfumesGrid">
         <!-- Les cartes de parfums seront insérées ici par le contrôleur Stimulus -->
-        <p class="loading-message">Chargement des parfums...</p>
       </div>
       <div class="pagination-container" data-category-perfumes-target="pagination">
         <!-- La pagination sera insérée ici par le contrôleur Stimulus -->

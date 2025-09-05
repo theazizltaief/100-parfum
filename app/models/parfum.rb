@@ -1,9 +1,11 @@
 class Parfum < ApplicationRecord
   belongs_to :brand
+  has_many :variants, dependent: :destroy
+  accepts_nested_attributes_for :variants, allow_destroy: true, reject_if: :all_blank  # Pour nested forms
+
   has_one_attached :image
   validates :name, presence: { message: "Le nom est obligatoire" }
-  validates :prix, presence: { message: "Le prix est obligatoire" },
-                   numericality: { greater_than: 0, message: "Doit être supérieur à 0" }
+  validates :variants, presence: true
   validates :brand_id, presence: { message: "La marque est obligatoire" }
   validates :description, presence: { message: "La description est obligatoire" },
                          length: { minimum: 5, message: "Minimum 5 caractères" }
@@ -14,6 +16,8 @@ class Parfum < ApplicationRecord
   attr_accessor :remove_image
 
   before_save :purge_image_if_requested
+
+
 
   private
 

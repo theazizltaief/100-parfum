@@ -1,42 +1,24 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["categoryTitle", "categorySlogan", "perfumesGrid", "pagination", "dynamicFilterLabel", "dynamicFilterDropdown", "priceFilter"];
-  static values = { filterType: String, filterValue: String };
+  static targets = ["categoryTitle", "categorySlogan", "perfumesGrid", "pagination", "dynamicFilterDropdown", "priceFilter", "dynamicFilterLabel"];
+  static values = {
+    filterType: String,
+    filterValue: String
+  };
 
-  allRawPerfumes = []; // Stores all perfumes fetched from the API
-  filteredAndSortedPerfumes = []; // Stores perfumes after applying all filters and sorting
+  allRawPerfumes = [];
+  filteredAndSortedPerfumes = [];
   currentPage = 1;
   perfumesPerPage = 12;
-  currentSecondaryFilterType = ''; // 'category' (for gender) or 'fragrance_class'
-  currentSecondaryFilterValue = ''; // 'all_genders', 'homme', 'designer', etc.
+  currentClassFilter = 'all_classes';
   currentPriceSort = 'none';
 
   connect() {
-    console.log(`Category Perfumes controller connected. Primary Filter Type: ${this.filterTypeValue}, Value: ${this.filterValueValue}`);
-    this.updateHeaderContent();
+    console.log(`Category Perfumes controller connected. Filter Type: ${this.filterTypeValue}, Value: ${this.filterValueValue}`);
+    this.populateFilterOptions();
+    this.updateTitleAndSlogan();
     this.fetchPerfumes();
-    this.setupDynamicFilter(); // Setup the dynamic dropdown based on primary filter
-  }
-
-  updateHeaderContent() {
-    let titleText = '';
-    let sloganText = '';
-    const filterValueLower = this.filterValueValue.toLowerCase();
-
-    if (this.filterTypeValue === 'category') {
-      titleText = `Parfums ${this.capitalizeFirstLetter(filterValueLower)}`;
-      sloganText = `Découvrez notre sélection de parfums pour ${filterValueLower}.`;
-    } else if (this.filterTypeValue === 'fragrance_class') {
-      titleText = `Parfums ${this.capitalizeFirstLetter(filterValueLower.replace('_', ' '))}`;
-      sloganText = `Explorez l'univers des parfums de classe ${filterValueLower.replace('_', ' ')}.`;
-    } else {
-      titleText = "Parfums";
-      sloganText = "Découvrez toutes nos fragrances.";
-    }
-
-    this.categoryTitleTarget.textContent = titleText;
-    this.categorySloganTarget.textContent = sloganText;
   }
 
   async fetchPerfumes() {
@@ -48,109 +30,134 @@ export default class extends Controller {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
-      this.allRawPerfumes = data; // Store all unfiltered perfumes
-
-      this.applyFiltersAndSortAndRender(); // Apply filters and render display
+      this.allRawPerfumes = data.map(perfume => {
+        const validVariants = perfume.variants && perfume.variants.length > 0 
+          ? perfume.variants.filter(v => v.price && parseFloat(v.price) > 0)
+          : [{ size: 'N/A', price: 0 }];
+        return {
+          ...perfume,
+          min_price: validVariants.length > 0 ? Math.min(...validVariants.map(v => parseFloat(v.price))) : 0
+        };
+      });
+      console.log("Fetched perfumes:", this.allRawPerfumes.length);
+      this.applyFiltersAndSortAndRender();
     } catch (error) {
       console.error("Error fetching perfumes:", error);
       this.perfumesGridTarget.innerHTML = "<p class='error-message'>Impossible de charger les parfums. Veuillez réessayer plus tard.</p>";
-      this.categoryTitleTarget.textContent = "Erreur de chargement";
-      this.categorySloganTarget.textContent = "Une erreur est survenue lors du chargement des parfums.";
+      if (this.hasCategoryTitleTarget) this.categoryTitleTarget.textContent = "Erreur de chargement";
+      if (this.hasCategorySloganTarget) this.categorySloganTarget.textContent = "Une erreur est survenue lors du chargement des parfums.";
     }
   }
 
-  setupDynamicFilter() {
-    if (this.filterTypeValue === 'category') { // Primary filter is by gender (e.g., Homme, Femme)
-      this.dynamicFilterLabelTarget.textContent = "Filtrer par classe :";
-      this.dynamicFilterDropdownTarget.innerHTML = `
-        <option value="all_classes">Toutes les classes</option>
-        <option value="designer">Designer</option>
-        <option value="niche">Niche</option>
-        <option value="collection_privee">Collection Privée</option>
-      `;
-      this.currentSecondaryFilterType = 'fragrance_class';
-      this.currentSecondaryFilterValue = 'all_classes'; // Default for this dropdown
-    } else if (this.filterTypeValue === 'fragrance_class') { // Primary filter is by class (e.g., Designer, Niche)
-      this.dynamicFilterLabelTarget.textContent = "Filtrer par genre :";
-      this.dynamicFilterDropdownTarget.innerHTML = `
-        <option value="all_genders">Tous les genres</option>
-        <option value="homme">Homme</option>
-        <option value="femme">Femme</option>
-        <option value="unisexe">Unisexe</option>
-      `;
-      this.currentSecondaryFilterType = 'category';
-      this.currentSecondaryFilterValue = 'all_genders'; // Default for this dropdown
+  populateFilterOptions() {
+    console.log("Populating filter options...");
+    if (this.hasDynamicFilterDropdownTarget && this.dynamicFilterDropdownTarget.options.length <= 1) {
+      const classOptions = [
+        { value: 'all_classes', label: 'Toutes les classes' },
+        { value: 'designer', label: 'Designer' },
+        { value: 'niche', label: 'Niche' },
+        { value: 'collection_privee', label: 'Collection Privée' }
+      ];
+      this.dynamicFilterDropdownTarget.innerHTML = classOptions.map(opt => 
+        `<option value="${opt.value}" ${opt.value === this.currentClassFilter ? 'selected' : ''}>${opt.label}</option>`
+      ).join('');
+      console.log("Class filter options populated:", classOptions.map(opt => opt.label));
     }
-    // You might want to set the dropdown's value if it was previously selected (e.g., browser back button)
-    // For simplicity, it resets to 'all' or 'all_classes' on page load for now.
+
+    if (this.hasDynamicFilterLabelTarget) {
+      this.dynamicFilterLabelTarget.textContent = 'Filtrer par classe :';
+      console.log("Dynamic filter label set to: Filtrer par classe");
+    }
+  }
+
+  updateTitleAndSlogan() {
+    if (!this.hasCategoryTitleTarget || !this.hasCategorySloganTarget) {
+      console.warn("Missing categoryTitleTarget or categorySloganTarget in DOM");
+      return;
+    }
+
+    let title = "Parfums";
+    let slogan = "Découvrez notre sélection de fragrances exquises.";
+
+    if (this.filterTypeValue && this.filterValueValue) {
+      if (this.filterTypeValue === 'category') {
+        title = `Parfums ${this.formatFilterValue(this.filterValueValue)}`;
+        slogan = `Explorez nos parfums pour ${this.filterValueValue.toLowerCase()}.`;
+      } else if (this.filterTypeValue === 'fragrance_class') {
+        title = `Parfums ${this.formatFilterValue(this.filterValueValue)}`;
+        slogan = `Découvrez notre collection de parfums ${this.formatFilterValue(this.filterValueValue).toLowerCase()}.`;
+      }
+    }
+
+    console.log(`Updating title to: ${title}, slogan to: ${slogan}`);
+    this.categoryTitleTarget.textContent = title;
+    this.categorySloganTarget.textContent = slogan;
   }
 
   filterPerfumes(event) {
-    // This method is called when either the dynamic filter or price filter changes
     if (event.currentTarget === this.dynamicFilterDropdownTarget) {
-      this.currentSecondaryFilterValue = event.target.value;
+      this.currentClassFilter = event.target.value;
     } else if (event.currentTarget === this.priceFilterTarget) {
       this.currentPriceSort = event.target.value;
     }
+    console.log(`Filters updated: class=${this.currentClassFilter}, priceSort=${this.currentPriceSort}`);
     this.applyFiltersAndSortAndRender();
   }
 
   applyFiltersAndSortAndRender() {
     console.log("--- applyFiltersAndSortAndRender called ---");
     console.log("Raw perfumes count:", this.allRawPerfumes.length);
-    console.log("Primary filter type (from URL):", this.filterTypeValue, "value:", this.filterValueValue);
+    console.log(`Primary filter type (from URL): ${this.filterTypeValue}, value: ${this.filterValueValue}`);
+    
+    let tempPerfumes = [...this.allRawPerfumes];
 
-    let tempPerfumes = [...this.allRawPerfumes]; // Create a mutable copy
-
-    // 1. Apply primary filter from URL (gender or fragrance class)
-    tempPerfumes = tempPerfumes.filter(perfume => {
-      const perfumeCategoryLower = perfume.category ? perfume.category.toLowerCase() : '';
-      const perfumeFragranceClassLower = perfume.fragrance_class ? perfume.fragrance_class.toLowerCase() : '';
-      const urlFilterValueLower = this.filterValueValue.toLowerCase();
-
+    // Apply primary filter from URL
+    if (this.filterTypeValue && this.filterValueValue) {
       if (this.filterTypeValue === 'category') {
-        return perfumeCategoryLower === urlFilterValueLower;
+        tempPerfumes = tempPerfumes.filter(perfume => {
+          const perfumeCategoryLower = perfume.category ? perfume.category.toLowerCase() : '';
+          return perfumeCategoryLower === this.filterValueValue.toLowerCase();
+        });
       } else if (this.filterTypeValue === 'fragrance_class') {
-        return perfumeFragranceClassLower === urlFilterValueLower;
+        tempPerfumes = tempPerfumes.filter(perfume => {
+          const perfumeFragranceClassLower = perfume.fragrance_class ? perfume.fragrance_class.toLowerCase() : '';
+          return perfumeFragranceClassLower === this.filterValueValue.toLowerCase();
+        });
       }
-      return true; // Should not happen if filterType is always set
-    });
+    }
     console.log("Perfumes after primary URL filter:", tempPerfumes.length);
 
-    // 2. Apply secondary filter from dynamic dropdown (gender or fragrance class, depending on primary)
-    if (this.currentSecondaryFilterType === 'category' && this.currentSecondaryFilterValue !== 'all_genders') {
-      tempPerfumes = tempPerfumes.filter(perfume => {
-        const perfumeCategoryLower = perfume.category ? perfume.category.toLowerCase() : '';
-        return perfumeCategoryLower === this.currentSecondaryFilterValue;
-      });
-      console.log("Perfumes after secondary gender filter:", tempPerfumes.length);
-    } else if (this.currentSecondaryFilterType === 'fragrance_class' && this.currentSecondaryFilterValue !== 'all_classes') {
+    // Apply additional class filter
+    if (this.currentClassFilter !== 'all_classes') {
       tempPerfumes = tempPerfumes.filter(perfume => {
         const perfumeFragranceClassLower = perfume.fragrance_class ? perfume.fragrance_class.toLowerCase() : '';
-        return perfumeFragranceClassLower === this.currentSecondaryFilterValue;
+        return perfumeFragranceClassLower === this.currentClassFilter;
       });
-      console.log("Perfumes after secondary class filter:", tempPerfumes.length);
     }
+    console.log("Perfumes after class filter:", tempPerfumes.length);
 
-    // 3. Apply price sort
+    // Apply price sort
     if (this.currentPriceSort === 'asc') {
-      tempPerfumes.sort((a, b) => a.prix - b.prix);
+      tempPerfumes.sort((a, b) => (a.min_price || 0) - (b.min_price || 0));
     } else if (this.currentPriceSort === 'desc') {
-      tempPerfumes.sort((a, b) => b.prix - a.prix);
+      tempPerfumes.sort((a, b) => (b.min_price || 0) - (a.min_price || 0));
     }
     console.log("Perfumes after price sort:", tempPerfumes.length);
 
     this.filteredAndSortedPerfumes = tempPerfumes;
-    this.currentPage = 1; // Reset to first page after any filter/sort change
+    this.currentPage = 1;
 
     if (this.filteredAndSortedPerfumes.length === 0) {
       this.perfumesGridTarget.innerHTML = "<p class='no-perfumes-message'>Aucun parfum trouvé pour cette sélection pour le moment.</p>";
       this.paginationTarget.innerHTML = '';
+      if (this.hasCategoryTitleTarget) this.categoryTitleTarget.textContent = "Aucun résultat";
+      if (this.hasCategorySloganTarget) this.categorySloganTarget.textContent = "Aucun parfum ne correspond à votre recherche.";
       return;
     }
 
     this.renderPerfumes();
     this.renderPagination();
+    this.updateTitleAndSlogan();
     console.log("--- Rendering complete ---");
   }
 
@@ -160,9 +167,15 @@ export default class extends Controller {
     const perfumesToDisplay = this.filteredAndSortedPerfumes.slice(startIndex, endIndex);
 
     const perfumeHtml = perfumesToDisplay.map(perfume => {
-      const imageUrl = perfume.image_url || "/placeholder.svg?height=250&width=250&text=Parfum";
+      const imageUrl = perfume.image_url || "https://via.placeholder.com/250x250?text=Parfum";
       const availabilityStatus = perfume.disponible ? 'Disponible' : 'Rupture de stock';
       const availabilityClass = perfume.disponible ? 'perfume-availability-badge--available' : 'perfume-availability-badge--unavailable';
+      const validVariants = perfume.variants && perfume.variants.length > 0 
+        ? perfume.variants.filter(v => v.price && parseFloat(v.price) > 0)
+        : [{ size: 'N/A', price: 0 }];
+      const defaultVariant = validVariants.length > 0 ? validVariants[0] : { size: 'N/A', price: 0 };
+      const safePrice = parseFloat(defaultVariant.price) || 0;
+      const safeSize = defaultVariant.size || 'N/A';
 
       return `
         <div class="perfume-card">
@@ -176,20 +189,21 @@ export default class extends Controller {
               <p class="perfume-brand">${perfume.brand ? perfume.brand.name : 'Inconnue'}</p>
               <p class="perfume-description">${this.truncateText(perfume.description, 100)}</p>
               <div class="perfume-meta">
-                <span class="perfume-category">${perfume.category ? this.capitalizeFirstLetter(perfume.category) : ''}</span>
-                <span class="perfume-class">${perfume.fragrance_class ? this.capitalizeFirstLetter(perfume.fragrance_class) : ''}</span>
+                <span class="perfume-category">${perfume.category ? this.formatFilterValue(perfume.category) : ''}</span>
+                <span class="perfume-class">${perfume.fragrance_class ? this.formatFilterValue(perfume.fragrance_class) : ''}</span>
               </div>
-              <p class="perfume-price">${this.formatCurrency(perfume.prix)}</p>
-              <div class="perfume-volume">10ml</div>
+              <p class="perfume-price">${this.formatCurrency(safePrice)}</p>
+              <div class="perfume-volume">${safeSize}</div>
               <div class="perfume-card-actions">
                 <button
                   class="perfume-card-add-to-cart-btn"
                   data-action="click->cart#addToCart"
                   data-parfum-id="${perfume.id}"
                   data-parfum-name="${perfume.name}"
-                  data-parfum-price="${perfume.prix}"
+                  data-parfum-price="${safePrice}"
+                  data-parfum-size="${safeSize}"
                   data-parfum-image-url="${imageUrl}"
-                  ${!perfume.disponible ? 'disabled' : ''}
+                  ${!perfume.disponible || validVariants.length === 0 || safePrice <= 0 ? 'disabled' : ''}
                 >
                   Ajouter au panier
                 </button>
@@ -221,7 +235,7 @@ export default class extends Controller {
       paginationHtml += `
         <li class="page-item ${this.currentPage === i ? 'current' : ''}">
           <a href="#" data-action="click->category-perfumes#goToPage" data-page="${i}" class="page-link">${i}</a>
-      </li>
+        </li>
       `;
     }
     paginationHtml += `
@@ -266,20 +280,20 @@ export default class extends Controller {
   }
 
   formatCurrency(amount) {
-    const num = parseFloat(amount);
-    if (isNaN(num)) return amount;
+    const num = parseFloat(amount) || 0;
     return new Intl.NumberFormat('fr-TN', { style: 'currency', currency: 'TND' }).format(num);
   }
 
   truncateText(text, maxLength) {
     if (!text || text.length <= maxLength) {
-      return text;
+      return text || '';
     }
     return text.substring(0, maxLength) + '...';
   }
 
-  capitalizeFirstLetter(string) {
-    if (!string) return '';
-    return string.charAt(0).toUpperCase() + string.slice(1);
+  formatFilterValue(value) {
+    if (!value) return '';
+    if (value.toLowerCase() === 'collection_privee') return 'Collection Privée';
+    return value.charAt(0).toUpperCase() + value.slice(1);
   }
 }
