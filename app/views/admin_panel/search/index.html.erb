@@ -3,7 +3,7 @@
 <div class="admin-search-results-container">
   <div class="admin-search-header">
     <h2>Résultats pour "<%= @query %>"</h2>
-    <p class="text-muted">
+    <p class="search-subtext">
       <%= pluralize(@total_results, 'résultat') %> trouvé<%= 's' if @total_results > 1 %>
     </p>
   </div>
@@ -13,7 +13,7 @@
     <% if @results[:parfums].any? %>
       <div class="admin-search-section">
         <h3 class="admin-search-section-title">
-          <i class="fas fa-box-open me-2"></i>
+          <i class="fas fa-box-open"></i>
           Parfums (<%= @results[:parfums].count %>)
         </h3>
         <div class="admin-search-results-grid">
@@ -22,9 +22,7 @@
               <%= link_to admin_panel_parfum_path(parfum), class: "admin-search-result-link" do %>
                 <div class="admin-search-result-image">
                   <% if parfum.image.attached? %>
-                    <img src="<%= url_for(parfum.image.variant(resize_to_limit: [60, 60])) %>" 
-                         alt="<%= parfum.name %>" 
-                         class="img-fluid rounded">
+                    <img src="<%= url_for(parfum.image.variant(resize_to_limit: [60, 60])) %>" alt="<%= parfum.name %>">
                   <% else %>
                     <div class="admin-search-no-image">
                       <i class="fas fa-image"></i>
@@ -37,11 +35,11 @@
                     <%= parfum.brand&.name || 'Sans marque' %>
                   </p>
                   <div class="admin-search-result-meta">
-                    <span class="badge bg-<%= parfum.disponible? ? 'success' : 'danger' %>">
+                    <span class="status-tag <%= parfum.disponible? ? 'status-available' : 'status-out' %>">
                       <%= parfum.disponible? ? 'Disponible' : 'Rupture' %>
                     </span>
                     <span class="admin-search-result-price">
-                      <%= number_to_currency(parfum.prix, unit: 'TND', separator: ',', delimiter: ' ', format: '%n %u') %>
+                      <%= number_to_currency(parfum.variants.minimum(:price) || 0, unit: 'TND', separator: ',', delimiter: ' ', format: '%n %u') %>
                     </span>
                   </div>
                 </div>
@@ -56,7 +54,7 @@
     <% if @results[:brands].any? %>
       <div class="admin-search-section">
         <h3 class="admin-search-section-title">
-          <i class="fas fa-tags me-2"></i>
+          <i class="fas fa-tags"></i>
           Marques (<%= @results[:brands].count %>)
         </h3>
         <div class="admin-search-results-grid">
@@ -65,9 +63,7 @@
               <%= link_to admin_panel_brand_path(brand), class: "admin-search-result-link" do %>
                 <div class="admin-search-result-image">
                   <% if brand.image.attached? %>
-                    <img src="<%= url_for(brand.image.variant(resize_to_limit: [60, 60])) %>" 
-                         alt="<%= brand.name %>" 
-                         class="img-fluid rounded">
+                    <img src="<%= url_for(brand.image.variant(resize_to_limit: [60, 60])) %>" alt="<%= brand.name %>">
                   <% else %>
                     <div class="admin-search-no-image">
                       <i class="fas fa-tag"></i>
@@ -91,7 +87,7 @@
     <% if @results[:orders].any? %>
       <div class="admin-search-section">
         <h3 class="admin-search-section-title">
-          <i class="fas fa-shopping-cart me-2"></i>
+          <i class="fas fa-shopping-cart"></i>
           Commandes (<%= @results[:orders].count %>)
         </h3>
         <div class="admin-search-results-list">
@@ -101,7 +97,7 @@
                 <div class="admin-search-order-info">
                   <div class="admin-search-order-header">
                     <h4 class="admin-search-result-title">Commande #<%= order.id %></h4>
-                    <span class="admin-status-badge admin-status-<%= order.status_name %>">
+                    <span class="status-tag status-<%= order.status_name %>">
                       <%= case order.status_name
                           when 'pending' then 'En attente'
                           when 'confirmed' then 'Confirmée'

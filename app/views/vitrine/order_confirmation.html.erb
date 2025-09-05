@@ -34,19 +34,36 @@
         <h2>Détails de votre commande</h2>
         <div class="order-info">
           <p><strong>Numéro de commande:</strong> #<%= @order.id %></p>
-          <p><strong>Nom:</strong> <%= @order.full_name %></p>
-          <p><strong>Téléphone:</strong> <%= @order.phone %></p>
-          <p><strong>Adresse:</strong> <%= @order.address %>, <%= @order.city %> <%= @order.postal_code %></p>
-          <p><strong>Total:</strong> <%= @order.formatted_total %></p>
+          <p><strong>Nom:</strong> <%= @order.full_name || 'Non spécifié' %></p>
+          <p><strong>Téléphone:</strong> <%= @order.phone || 'Non spécifié' %></p>
+          <p><strong>Adresse:</strong> <%= @order.address || 'Non spécifié' %>, <%= @order.city || 'Non spécifié' %> <%= @order.postal_code || 'Non spécifié' %></p>
+          <p><strong>Total:</strong> <%= number_to_currency(@order.total, unit: 'TND ', separator: ',', delimiter: ' ', precision: 2) %></p>
         </div>
 
         <div class="order-items-summary">
           <h3>Articles commandés:</h3>
-          <% @order.items.each do |item| %>
-            <div class="confirmation-item">
-              <span><%= item['name'] %> (<%= item['size'] %>) × <%= item['quantity'] %></span>
-              <span><%= number_to_currency(item['price'].to_f * item['quantity'].to_i, unit: '', precision: 2) %> TND</span>
-            </div>
+          <% if @order.items.empty? %>
+            <p class="no-items-message">Aucun article dans cette commande.</p>
+          <% else %>
+            <% @order.items.each do |item| %>
+              <% 
+                image_url = item['image_url'] || item['imageUrl'] || 'https://via.placeholder.com/250x250?text=Parfum'
+                name = item['name'] || 'Produit inconnu'
+                size = item['size'] || 'N/A'
+                quantity = item['quantity']&.to_i || 1
+                price = item['price']&.to_f || 0
+                category = item['category'] ? (item['category'] == 'unisexe' ? 'Unisexe' : item['category'].capitalize) : 'Non spécifié'
+                fragrance_class = item['fragrance_class'] ? (item['fragrance_class'] == 'collection_privee' ? 'Collection Privée' : item['fragrance_class'].capitalize) : 'Non spécifié'
+              %>
+              <div class="confirmation-item">
+                <img src="<%= image_url %>" alt="<%= name %>" class="item-image">
+                <div class="item-info">
+                  <span><%= name %> (<%= size %>) × <%= quantity %></span>
+                  <span class="item-meta">(<%= category %>, <%= fragrance_class %>)</span>
+                </div>
+                <span class="item-total"><%= number_to_currency(price * quantity, unit: 'TND ', separator: ',', delimiter: ' ', precision: 2) %></span>
+              </div>
+            <% end %>
           <% end %>
         </div>
       </div>

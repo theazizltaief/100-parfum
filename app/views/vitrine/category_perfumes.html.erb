@@ -19,7 +19,7 @@
 
     <!-- Section des filtres -->
     <section class="perfume-class-listing-filter-section">
-      <div class="filter-group">
+      <div class="filter-group" data-category-perfumes-target="dynamicFilterGroup">
         <label for="dynamic-filter-dropdown" class="perfume-class-listing-filter-label" data-category-perfumes-target="dynamicFilterLabel">
           Filtrer par classe :
         </label>
@@ -27,10 +27,17 @@
                 class="perfume-class-listing-filter-dropdown"
                 data-category-perfumes-target="dynamicFilterDropdown"
                 data-action="change->category-perfumes#filterPerfumes">
-          <option value="all_classes">Toutes les classes</option>
-          <option value="designer">Designer</option>
-          <option value="niche">Niche</option>
-          <option value="collection_privee">Collection Privée</option>
+          <% if params[:filter_type] == 'fragrance_class' %>
+            <option value="all_genders">Tous les genres</option>
+            <option value="femme">Femme</option>
+            <option value="homme">Homme</option>
+            <option value="unisexe">Unisexe</option>
+          <% else %>
+            <option value="all_classes">Toutes les classes</option>
+            <option value="designer">Designer</option>
+            <option value="niche">Niche</option>
+            <option value="collection_privee">Collection Privée</option>
+          <% end %>
         </select>
       </div>
 

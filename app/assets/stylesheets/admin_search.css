@@ -42,7 +42,7 @@
   color: #4b3cc4;
 }
 
-/* Dropdown de suggestions (pour plus tard) */
+/* Dropdown de suggestions */
 .admin-search-dropdown {
   position: absolute;
   top: 100%;
@@ -66,7 +66,10 @@
 .admin-search-results-container {
   max-width: 100%;
   margin: 0;
-  padding: 0;
+  padding: 0 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 0; /* Supprime toute contrainte minimale */
 }
 
 .admin-search-header {
@@ -81,6 +84,12 @@
   margin: 0 0 0.5rem 0;
   color: #333;
   font-size: 1.5rem;
+}
+
+.search-subtext {
+  margin: 0;
+  color: #6c757d;
+  font-size: 0.9rem;
 }
 
 .admin-search-section {
@@ -103,8 +112,12 @@
 /* Grille de résultats */
 .admin-search-results-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Réduit pour s'adapter */
   gap: 1rem;
+  width: 100%;
+  min-width: 0; /* Permet de s'adapter à la largeur restante */
+  overflow-x: auto; /* Scroll si nécessaire */
+  padding-left: 250px; /* Compense le sidebar */
 }
 
 .admin-search-result-card {
@@ -112,6 +125,12 @@
   border-radius: 8px;
   overflow: hidden;
   transition: all 0.2s ease;
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  margin-left: auto; /* Centre dans l'espace disponible */
+  margin-right: auto; /* Centre dans l'espace disponible */
 }
 
 .admin-search-result-card:hover {
@@ -122,11 +141,15 @@
 
 .admin-search-result-link {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 1rem;
   padding: 1rem;
   text-decoration: none;
   color: inherit;
+  min-height: 80px;
+  width: 100%;
+  flex-grow: 1;
+  min-width: 200px;
 }
 
 .admin-search-result-link:hover {
@@ -145,6 +168,11 @@
   overflow: hidden;
 }
 
+.admin-search-result-image img {
+  max-width: 100%;
+  height: auto;
+}
+
 .admin-search-no-image {
   width: 100%;
   height: 100%;
@@ -158,7 +186,11 @@
 
 .admin-search-result-info {
   flex-grow: 1;
-  min-width: 0;
+  min-width: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .admin-search-result-title {
@@ -166,18 +198,16 @@
   font-size: 1rem;
   font-weight: 600;
   color: #333;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  overflow: visible;
 }
 
 .admin-search-result-subtitle {
   margin: 0 0 0.5rem 0;
   font-size: 0.9rem;
   color: #6c757d;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  overflow: visible;
 }
 
 .admin-search-result-meta {
@@ -185,7 +215,24 @@
   align-items: center;
   gap: 0.5rem;
   flex-wrap: wrap;
+  margin-top: auto;
+  min-width: 0;
 }
+
+.status-tag {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+.status-available { background-color: #28a745; color: white; }
+.status-out { background-color: #dc3545; color: white; }
+.status-pending { background-color: #ffc107; color: white; }
+.status-confirmed { background-color: #17a2b8; color: white; }
+.status-shipped { background-color: #6c757d; color: white; }
+.status-delivered { background-color: #28a745; color: white; }
+.status-cancelled { background-color: #dc3545; color: white; }
 
 .admin-search-result-price {
   font-weight: 600;
@@ -208,6 +255,7 @@
 .admin-search-order-card {
   border: 1px solid #dee2e6;
   border-radius: 8px;
+  overflow: hidden;
   transition: all 0.2s ease;
 }
 
@@ -246,13 +294,14 @@
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .admin-search-form {
     max-width: 100%;
   }
 
   .admin-search-results-grid {
     grid-template-columns: 1fr;
+    padding-left: 0; /* Supprime le padding sur mobile */
   }
 
   .admin-search-result-link {
@@ -275,20 +324,28 @@
   .admin-search-section {
     padding: 1rem;
   }
+
+  .admin-search-results-container {
+    padding: 0 0.5rem;
+  }
 }
 
-@media (max-width: 480px) {
-  .admin-search-result-meta {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.25rem;
+@media (min-width: 768px) {
+  .admin-search-results-grid {
+    min-width: 0;
+    padding-left: 250px; /* Compense le sidebar */
   }
 
-  .admin-search-empty {
-    padding: 2rem 1rem;
+  .admin-search-result-card {
+    min-width: 250px;
+    flex-grow: 1;
   }
 
-  .admin-search-empty-icon {
-    font-size: 3rem;
+  .admin-search-result-link {
+    min-width: 200px;
+  }
+
+  .admin-search-result-info {
+    min-width: 150px;
   }
 }

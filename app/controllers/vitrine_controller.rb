@@ -114,6 +114,18 @@ end
 
   def order_confirmation
     @order = Order.find(params[:id])
+    @order.items = @order.items.map do |item|
+      parfum = item["parfum_id"] ? Parfum.find_by(id: item["parfum_id"]) : Parfum.find_by(name: item["name"])
+      {
+        image_url: item["imageUrl"] || item["image_url"] || parfum&.image_url || "https://via.placeholder.com/250x250?text=Parfum",
+        name: item["name"] || "Produit inconnu",
+        size: item["size"] || "N/A",
+        quantity: item["quantity"]&.to_i || 1,
+        price: item["price"]&.to_f || 0,
+        category: parfum&.category || "Non spécifié",
+        fragrance_class: parfum&.fragrance_class || "Non spécifié"
+      }
+    end
   end
 
   private

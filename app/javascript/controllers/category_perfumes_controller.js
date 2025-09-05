@@ -11,7 +11,7 @@ export default class extends Controller {
   filteredAndSortedPerfumes = [];
   currentPage = 1;
   perfumesPerPage = 12;
-  currentClassFilter = 'all_classes';
+  currentDynamicFilter = 'all_classes';
   currentPriceSort = 'none';
 
   connect() {
@@ -51,22 +51,40 @@ export default class extends Controller {
 
   populateFilterOptions() {
     console.log("Populating filter options...");
-    if (this.hasDynamicFilterDropdownTarget && this.dynamicFilterDropdownTarget.options.length <= 1) {
-      const classOptions = [
-        { value: 'all_classes', label: 'Toutes les classes' },
-        { value: 'designer', label: 'Designer' },
-        { value: 'niche', label: 'Niche' },
-        { value: 'collection_privee', label: 'Collection Privée' }
-      ];
-      this.dynamicFilterDropdownTarget.innerHTML = classOptions.map(opt => 
-        `<option value="${opt.value}" ${opt.value === this.currentClassFilter ? 'selected' : ''}>${opt.label}</option>`
-      ).join('');
-      console.log("Class filter options populated:", classOptions.map(opt => opt.label));
+    if (!this.hasDynamicFilterDropdownTarget) {
+      console.warn("dynamicFilterDropdownTarget missing in DOM");
+      return;
     }
 
+    const isFragranceClassFilter = this.filterTypeValue === 'fragrance_class';
+    const filterOptions = isFragranceClassFilter
+      ? [
+          { value: 'all_genders', label: 'Tous les genres' },
+          { value: 'femme', label: 'Femme' },
+          { value: 'homme', label: 'Homme' },
+          { value: 'unisexe', label: 'Unisexe' }
+        ]
+      : [
+          { value: 'all_classes', label: 'Toutes les classes' },
+          { value: 'designer', label: 'Designer' },
+          { value: 'niche', label: 'Niche' },
+          { value: 'collection_privee', label: 'Collection Privée' }
+        ];
+
+    this.dynamicFilterDropdownTarget.innerHTML = filterOptions.map(opt => 
+      `<option value="${opt.value}" ${opt.value === this.currentDynamicFilter ? 'selected' : ''}>${opt.label}</option>`
+    ).join('');
+    console.log(`Dynamic filter options populated:`, filterOptions.map(opt => opt.label));
+
     if (this.hasDynamicFilterLabelTarget) {
-      this.dynamicFilterLabelTarget.textContent = 'Filtrer par classe :';
-      console.log("Dynamic filter label set to: Filtrer par classe");
+      this.dynamicFilterLabelTarget.textContent = isFragranceClassFilter ? 'Filtrer par genre :' : 'Filtrer par classe :';
+      console.log(`Dynamic filter label set to: ${this.dynamicFilterLabelTarget.textContent}`);
+    }
+
+    // Show/hide filter group based on filter type
+    const filterGroup = this.dynamicFilterDropdownTarget.closest('.filter-group');
+    if (filterGroup) {
+      filterGroup.style.display = isFragranceClassFilter ? 'block' : 'block'; // Always show for now, adjust if needed
     }
   }
 
@@ -96,11 +114,11 @@ export default class extends Controller {
 
   filterPerfumes(event) {
     if (event.currentTarget === this.dynamicFilterDropdownTarget) {
-      this.currentClassFilter = event.target.value;
+      this.currentDynamicFilter = event.target.value;
     } else if (event.currentTarget === this.priceFilterTarget) {
       this.currentPriceSort = event.target.value;
     }
-    console.log(`Filters updated: class=${this.currentClassFilter}, priceSort=${this.currentPriceSort}`);
+    console.log(`Filters updated: dynamic=${this.currentDynamicFilter}, priceSort=${this.currentPriceSort}`);
     this.applyFiltersAndSortAndRender();
   }
 
@@ -127,14 +145,23 @@ export default class extends Controller {
     }
     console.log("Perfumes after primary URL filter:", tempPerfumes.length);
 
-    // Apply additional class filter
-    if (this.currentClassFilter !== 'all_classes') {
-      tempPerfumes = tempPerfumes.filter(perfume => {
-        const perfumeFragranceClassLower = perfume.fragrance_class ? perfume.fragrance_class.toLowerCase() : '';
-        return perfumeFragranceClassLower === this.currentClassFilter;
-      });
+    // Apply dynamic filter (class or gender)
+    if (this.currentDynamicFilter !== 'all_classes' && this.currentDynamicFilter !== 'all_genders') {
+      if (this.filterTypeValue === 'fragrance_class') {
+        // Filter by gender
+        tempPerfumes = tempPerfumes.filter(perfume => {
+          const perfumeCategoryLower = perfume.category ? perfume.category.toLowerCase() : '';
+          return perfumeCategoryLower === this.currentDynamicFilter;
+        });
+      } else {
+        // Filter by class
+        tempPerfumes = tempPerfumes.filter(perfume => {
+          const perfumeFragranceClassLower = perfume.fragrance_class ? perfume.fragrance_class.toLowerCase() : '';
+          return perfumeFragranceClassLower === this.currentDynamicFilter;
+        });
+      }
     }
-    console.log("Perfumes after class filter:", tempPerfumes.length);
+    console.log("Perfumes after dynamic filter:", tempPerfumes.length);
 
     // Apply price sort
     if (this.currentPriceSort === 'asc') {

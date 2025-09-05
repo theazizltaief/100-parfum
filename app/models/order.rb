@@ -55,11 +55,24 @@ class Order < ApplicationRecord
     self.items_data = items_array.to_json
   end
 
+  def subtotal
+    items.sum { |item| (item["price"]&.to_f || 0) * (item["quantity"]&.to_i || 1) }
+  end
+
+  def delivery_fee
+    # Supposons un frais de livraison fixe ou stocké, ajustez selon votre logique
+    attributes["delivery_fee"]&.to_f || 7.0 # Exemple : 7 TND par défaut
+  end
+
+  def total
+    subtotal + delivery_fee
+  end
+
   def full_name
     "#{first_name} #{last_name}"
   end
 
   def formatted_total
-    "#{total_amount} TND"
+    total # Retourne le total brut, le formatage est géré dans les vues
   end
 end

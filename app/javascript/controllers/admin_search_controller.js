@@ -34,6 +34,7 @@ export default class extends Controller {
 
   async performSearch(query) {
     try {
+      console.log(`Performing search for query: ${query}`)
       const response = await fetch(`${this.urlValue}?q=${encodeURIComponent(query)}`, {
         headers: {
           Accept: "application/json",
@@ -41,10 +42,14 @@ export default class extends Controller {
         },
       })
 
-      if (response.ok) {
-        const data = await response.json()
-        this.displayResults(data)
+      console.log(`Response status: ${response.status}`)
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
       }
+
+      const data = await response.json()
+      console.log("Response data:", data)
+      this.displayResults(data)
     } catch (error) {
       console.error("Search error:", error)
     }

@@ -40,7 +40,7 @@ export default class extends Controller {
     this.brandNameTarget.textContent = brand.name || "Marque Inconnue";
     this.brandImageTarget.src = brand.image_url || "https://via.placeholder.com/200x200?text=Marque";
     this.brandImageTarget.alt = `${brand.name} Logo`;
-    this.brandSloganTarget.textContent = `Découvrez l'essence de ${brand.name} à travers nos décants exclusifs.`;
+    this.brandSloganTarget.textContent = `Découvrez l'essence de ${brand.name} à travers nos extraits exclusifs.`;
   }
 
   renderPerfumes() {

@@ -26,23 +26,23 @@
       <div class="admin-order-info-grid">
         <div class="admin-info-item">
           <label>Nom complet</label>
-          <span><%= @order.full_name %></span>
+          <span><%= @order.full_name || 'Non spécifié' %></span>
         </div>
         <div class="admin-info-item">
           <label>Téléphone</label>
-          <span><%= @order.phone %></span>
+          <span><%= @order.phone || 'Non spécifié' %></span>
         </div>
         <div class="admin-info-item">
           <label>Ville</label>
-          <span><%= @order.city %></span>
+          <span><%= @order.city || 'Non spécifié' %></span>
         </div>
         <div class="admin-info-item">
           <label>Code postal</label>
-          <span><%= @order.postal_code %></span>
+          <span><%= @order.postal_code || 'Non spécifié' %></span>
         </div>
         <div class="admin-info-item admin-info-full">
           <label>Adresse de livraison</label>
-          <span><%= @order.address %></span>
+          <span><%= @order.address || 'Non spécifié' %></span>
         </div>
         <% if @order.notes.present? %>
           <div class="admin-info-item admin-info-full">
@@ -56,17 +56,34 @@
     <div class="admin-order-section">
       <h3 class="admin-section-title">Articles commandés</h3>
       <div class="admin-order-items">
-        <% @order.items.each do |item| %>
-          <div class="admin-order-item">
-            <img src="<%= item['imageUrl'] %>" alt="<%= item['name'] %>" class="admin-item-image">
-            <div class="admin-item-info">
-              <h4 class="admin-item-name"><%= item['name'] %></h4>
-              <p class="admin-item-details">10ml × <%= item['quantity'] %></p>
+        <% if @order.items.empty? %>
+          <p class="no-items-message">Aucun article dans cette commande.</p>
+        <% else %>
+          <% @order.items.each do |item| %>
+            <% 
+              image_url = item['image_url'] || 'https://via.placeholder.com/250x250?text=Parfum'
+              name = item['name'] || 'Produit inconnu'
+              size = item['size'] || 'N/A'
+              quantity = item['quantity']&.to_i || 1
+              price = item['price']&.to_f || 0
+              category = item['category'] ? (item['category'] == 'unisexe' ? 'Unisexe' : item['category'].capitalize) : 'Non spécifié'
+              fragrance_class = item['fragrance_class'] ? (item['fragrance_class'] == 'collection_privee' ? 'Collection Privée' : item['fragrance_class'].capitalize) : 'Non spécifié'
+            %>
+            <div class="admin-order-item">
+              <img src="<%= image_url %>" alt="<%= name %>" class="admin-item-image">
+              <div class="admin-item-info">
+                <h4 class="admin-item-name"><%= name %></h4>
+                <p class="admin-item-details">
+                  <%= size %> × <%= quantity %>
+                  <br>
+                  <span class="admin-item-meta">(<%= category %>, <%= fragrance_class %>)</span>
+                </p>
+              </div>
+              <div class="admin-item-total">
+                <%= number_to_currency(price * quantity, unit: 'TND ', separator: ',', delimiter: ' ', precision: 2) %>
+              </div>
             </div>
-            <div class="admin-item-total">
-              <%= number_to_currency(item['price'].to_f * item['quantity'].to_i, unit: '', precision: 2) %> TND
-            </div>
-          </div>
+          <% end %>
         <% end %>
       </div>
     </div>
@@ -76,15 +93,15 @@
       <div class="admin-order-totals">
         <div class="admin-total-line">
           <span>Sous-total</span>
-          <span><%= number_to_currency(@order.subtotal, unit: '', precision: 2) %> TND</span>
+          <span><%= number_to_currency(@order.subtotal, unit: 'TND ', separator: ',', delimiter: ' ', precision: 2) %></span>
         </div>
         <div class="admin-total-line">
           <span>Frais de livraison</span>
-          <span><%= number_to_currency(@order.delivery_fee, unit: '', precision: 2) %> TND</span>
+          <span><%= number_to_currency(@order.delivery_fee, unit: 'TND ', separator: ',', delimiter: ' ', precision: 2) %></span>
         </div>
         <div class="admin-total-line admin-total-final">
           <span>Total</span>
-          <span><%= @order.formatted_total %></span>
+          <span><%= number_to_currency(@order.total, unit: 'TND ', separator: ',', delimiter: ' ', precision: 2) %></span>
         </div>
       </div>
     </div>
